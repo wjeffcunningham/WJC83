@@ -10,7 +10,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=2">
   <meta name="theme-color" content="#0b0b0c"/>
 
- <link rel="stylesheet" href="assets/style.css?v=3">
+  <!-- CSS (cache-busted) -->
+  <link rel="stylesheet" href="assets/style.css?v=4">
   <noscript><style>.route{display:none}.route#home{display:block}</style></noscript>
 </head>
 <body>
@@ -118,7 +119,7 @@
   <script>
   (function () {
     // --- GitHub API fallback to list /photos files (public repo only)
-    const GH_OWNER  = 'wjeffcunningham';
+    const GH_OWNER  = 'jeffcunningham';   // fixed owner
     const GH_REPO   = 'WJC83';
     const GH_BRANCH = 'main';
 
@@ -129,7 +130,6 @@
     // Router (also works on first load)
     function setActiveRoute() {
       const hash = location.hash || '#home';
-      // HTML hidden attribute is respected by UA styles; JS toggles for SPA feel.
       $$('.route').forEach(sec => { sec.hidden = ('#' + sec.id) !== hash; });
       $$('#topNav a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
     }
