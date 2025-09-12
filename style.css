@@ -1,53 +1,70 @@
+/* THEME TOKENS */
+:root {
+  --bg: #fdfdfd;
+  --ink: #0b0b0c;
+}
+
 body {
   margin: 0;
   font-family: Helvetica, Arial, sans-serif;
-  background: #fdfdfd;
-  color: #0b0b0c;
+  background: var(--bg);
+  color: var(--ink);
   text-align: center;
 }
 
 body.dark {
-  background: #0b0b0c;
-  color: #fdfdfd;
+  --bg: #0b0b0c;
+  --ink: #fdfdfd;
+  background: var(--bg);
+  color: var(--ink);
 }
 
+/* HEADER (masthead) */
 .site-header {
   position: relative;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 1.25rem 1rem 0.5rem;
+  text-align: center;
 }
 
+/* MASTHEAD TITLE */
 .site-title {
   font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
-  font-size: clamp(2.5rem, 6vw, 4rem); /* scales by screen */
-  letter-spacing: 0.25em;              /* kerning-like spacing */
-  margin: 1rem 0;
-  text-align: center;
-  -webkit-text-stroke: 2px currentColor; /* outline */
-  color: transparent; /* hollow letters */
+  font-size: clamp(2.75rem, 7vw, 4.75rem);
+  letter-spacing: 0.25em;
+  margin: 0.5rem 0 0.75rem;
+  color: transparent;                          /* hollow fill */
+  -webkit-text-stroke: 2px var(--ink);         /* visible outline */
+  text-transform: uppercase;
+}
+
+/* HAMBURGER pinned top-right */
+.hamburger-menu {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
 }
 
 .hamburger-menu ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem;
   display: none;
   flex-direction: column;
   position: absolute;
-  right: 1rem;
-  top: 3rem;
-  background: inherit;
+  right: 0;
+  top: 2rem;
+  background: var(--bg);
+  border: 1px solid rgba(0,0,0,0.08);
 }
 
 .hamburger-menu ul.open {
   display: flex;
 }
 
+/* HERO (capped headshot) */
 .hero {
-  max-height: 60vh;   /* cap hero at 60% of viewport height */
+  max-height: 60vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -55,15 +72,16 @@ body.dark {
 }
 
 .hero img {
-  width: auto;        /* keep natural aspect ratio */
-  max-width: 100%;    /* don’t overflow horizontally */
-  max-height: 60vh;   /* respect the cap */
+  width: auto;
+  max-width: 100%;
+  max-height: 60vh;
   display: block;
-  object-fit: contain; /* show whole image */
+  object-fit: contain;
 }
 
+/* LINKS */
 .links {
-  margin: 2rem 0;
+  margin: 1.75rem 0 2.25rem;
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -72,5 +90,5 @@ body.dark {
 .links a {
   font-weight: bold;
   text-decoration: none;
-  color: inherit;
+  color: var(--ink);
 }
