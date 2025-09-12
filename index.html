@@ -4,207 +4,52 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WJC83.CA</title>
-
-  <!-- Icons -->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico?v=2">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=2">
-  <meta name="theme-color" content="#0b0b0c"/>
-
-  <!-- CSS (cache-busted) -->
-  <link rel="stylesheet" href="assets/style.css?v=4">
-  <noscript><style>.route{display:none}.route#home{display:block}</style></noscript>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Header -->
-  <header class="site-header">
-    <h1 class="site-title"><a href="#home">WJC83.CA</a></h1>
-    <nav class="top-nav" id="topNav">
-      <a data-route="#home"   href="#home"   class="active">Home</a>
-      <a data-route="#about"  href="#about">About</a>
-      <a data-route="#archive" href="#archive">Archive</a>
+ <header class="site-header">
+    <h1 class="site-title">WJC83.CA</h1>
+    <nav class="hamburger-menu">
+      <button id="menu-toggle" aria-label="Menu">&#9776;</button>
+      <ul id="menu">
+        <li><button id="mode-toggle">☀︎ / ☾</button></li>
+        <li><a href="#about">About</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!-- Main -->
-  <main class="page-shell">
-    <!-- Home -->
-    <section id="home" class="route">
-      <div class="center-wrap">
-        <figure class="hero-wrap">
-          <div class="hero-frame">
-            <img id="hero" class="hero" alt="WJC83.CA — featured photograph" decoding="async" loading="eager"/>
-          </div>
-          <figcaption id="heroCaption" class="caption"></figcaption>
-        </figure>
-      </div>
-    </section>
+  <!-- Hero -->
+  <section class="hero">
+    <img src="assets/hero.jpg" alt="Hero Image">
+  </section>
 
-    <!-- About -->
-    <section id="about" class="route" hidden>
-      <div class="page">
-        <section class="block">
-          <h2>About</h2>
-          <p>This is the website of W. Jeff Cunningham, born: 1983, resides: Vancouver, B.C., Canada.
-            “Free 🇵🇸; May G_d Forgive the West.”</p>
-        </section>
+  <!-- Links -->
+  <section class="links">
+    <a href="/ijpauc">IJPAUC?</a>
+    <a href="/vvip25">VVIP25</a>
+    <a href="/archive">ARCHIVE</a>
+    <a href="/notes">NOTES</a>
+  </section>
 
-        <section class="block">
-          <h2>Links</h2>
-          <ul class="link-grid">
-            <li><a class="icon-link" href="https://portal1.example/" target="_blank" rel="noopener"><span>PORTAL1</span></a></li>
-            <li><a class="icon-link" href="https://ijpauc.example/" target="_blank" rel="noopener"><span>IJPAUC?</span></a></li>
-            <li><a class="icon-link" href="https://vvipmedia.net" target="_blank" rel="noopener"><span>VVIPmedia</span></a></li>
-            <li><a class="icon-link" href="https://github.com/jeffcunningham" target="_blank" rel="noopener"><span>Jeff’s GitHubs</span></a></li>
-            <li><a class="icon-link" href="https://www.threads.net/@your-handle" target="_blank" rel="noopener"><span>Threads</span></a></li>
-            <li><a class="icon-link" href="https://www.instagram.com/your-handle" target="_blank" rel="noopener"><span>Instagram</span></a></li>
-            <li><a class="icon-link" href="https://www.facebook.com/your-handle" target="_blank" rel="noopener"><span>Facebook</span></a></li>
-          </ul>
-        </section>
-
-        <section class="block">
-          <h2>Notes</h2>
-          <div class="notes">
-            <p>— Minimal static single-file site. Images shown by filename.</p>
-            <p>— Put images in <code>photos/</code>. You may inline a list (below), add <code>photos/photos.json</code>,
-              or let the page auto-discover via the GitHub API.</p>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <!-- Archive -->
-    <section id="archive" class="route" hidden>
-      <div class="page">
-        <section class="block">
-          <h2>Old essays</h2>
-          <ul class="archive-list" id="essaysList"></ul>
-        </section>
-
-        <section class="block">
-          <h2>Old tournament reports</h2>
-          <ul class="archive-list" id="reportsList">
-            <li><span class="muted">[Add reports later]</span></li>
-          </ul>
-        </section>
-
-        <section class="block">
-          <h2>Old photographs</h2>
-          <ul class="archive-list" id="photosList">
-            <li><a href="#home">See random photo on Home</a></li>
-          </ul>
-        </section>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <a class="foot-link" href="#about">About</a>
-    <a class="foot-link" href="#archive">Archive</a>
-  </footer>
-
-  <!-- Inline essays (optional) -->
-  <script type="application/json" id="essays-data">
-  [
-    {"title":"Is Jurassic Park (1993) an Unconscious Confession? — Preview","url":"https://substack.com/home/post/p-170664918","date":"2025-08-20","source":"substack"},
-    {"title":"Old Essay Example (Local)","url":"/archive/essays/essay-01.html","date":"2019-02-14","source":"local"}
-  ]
-  </script>
-
-  <!-- Optional inline photos list; otherwise photos.json or GitHub API will be used -->
-  <!--
-  <script type="application/json" id="photos-data">["2019-04-12_gastown-lamppost.jpg","2023-11-05_granville-street.webp","2025-08-23_bridge-at-dusk.jpg"]</script>
-  -->
+  <!-- About -->
+  <section id="about" class="about">
+    <p>This is the personal website of W. Jeff Cunningham, born Nov 8, 1983. Resides in Vancouver, B.C.</p>
+  </section>
 
   <script>
-  (function () {
-    // --- GitHub API fallback to list /photos files (public repo only)
-    const GH_OWNER  = 'jeffcunningham';   // fixed owner
-    const GH_REPO   = 'WJC83';
-    const GH_BRANCH = 'main';
+    // Hamburger toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('open');
+    });
 
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
-    const byId = id => document.getElementById(id);
-
-    // Router (also works on first load)
-    function setActiveRoute() {
-      const hash = location.hash || '#home';
-      $$('.route').forEach(sec => { sec.hidden = ('#' + sec.id) !== hash; });
-      $$('#topNav a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
-    }
-    window.addEventListener('hashchange', setActiveRoute);
-    setActiveRoute();
-
-    // ----- Photo list sources
-    async function listFromInline() {
-      const el = byId('photos-data'); if (!el) return null;
-      try { const arr = JSON.parse(el.textContent); return Array.isArray(arr) && arr.length ? arr : null; } catch { return null; }
-    }
-    async function listFromJSON() {
-      try {
-        const res = await fetch('photos/photos.json', { cache: 'no-store' });
-        if (!res.ok) return null; const arr = await res.json();
-        return Array.isArray(arr) && arr.length ? arr : null;
-      } catch { return null; }
-    }
-    async function listFromGitHubAPI() {
-      const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/photos?ref=${encodeURIComponent(GH_BRANCH)}`;
-      try {
-        const res = await fetch(url, { headers: { 'Accept': 'application/vnd.github.v3+json' }});
-        if (!res.ok) return null;
-        const items = await res.json();
-        const exts = /\.(jpe?g|png|gif|webp|avif)$/i;
-        const files = (Array.isArray(items) ? items : []).filter(x => x.type === 'file' && exts.test(x.name)).map(x => x.name);
-        return files.length ? files : null;
-      } catch { return null; }
-    }
-    async function getPhotosList() {
-      return await listFromInline() || await listFromJSON() || await listFromGitHubAPI() || [];
-    }
-
-    // ----- Random hero with ?img= override
-    const imgEl = byId('hero'), capEl = byId('heroCaption');
-    function setHero(src){ if(!imgEl||!capEl) return; imgEl.src = src; capEl.textContent = src.split('/').pop(); }
-    async function pickRandomHero(){
-      const list = await getPhotosList();
-      if (list.length){ const i = Math.floor(Math.random()*list.length); return 'photos/' + list[i]; }
-      return 'photos/hero.jpg';
-    }
-    (async () => {
-      if (!imgEl || !capEl) return;
-      const paramImg = new URLSearchParams(location.search).get('img');
-      if (paramImg){
-        const candidate = 'photos/' + paramImg;
-        setHero(candidate);
-        imgEl.addEventListener('error', async () => setHero(await pickRandomHero()), { once: true });
-      } else {
-        setHero(await pickRandomHero());
-      }
-    })();
-
-    // ----- Essays (Substack + local)
-    (async function renderEssays(){
-      const mount = byId('essaysList'); if (!mount) return;
-      const badge = (src, ext) => src === 'substack' ? '<span class="pill pill-ext" title="Substack">Substack</span>' :
-                                (ext ? '<span class="pill pill-ext" title="External">External</span>' : '<span class="pill" title="Local file">Local</span>');
-      const fmt = d => { try{const dt=new Date(d); if(!isNaN(dt)) return dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'2-digit'});}catch{} return ''; };
-
-      let items = [];
-      const inline = byId('essays-data'); if (inline){ try{ items = JSON.parse(inline.textContent)||[]; }catch{} }
-      if (!Array.isArray(items)) items = [];
-      items.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-
-      mount.innerHTML = items.map(it=>{
-        const href = it.url || '#';
-        const title = it.title || href;
-        const isExt = /^https?:\/\//i.test(href);
-        const date  = it.date ? ` <span class="muted">(${fmt(it.date)})</span>` : '';
-        const attrs = isExt ? 'target="_blank" rel="noopener noreferrer"' : '';
-        return `<li><a href="${href}" ${attrs}>${title}</a>${date} ${badge(it.source, isExt)}</li>`;
-      }).join('') || '<li class="muted">No essays yet.</li>';
-    })();
-  })();
+    // Dark/light toggle
+    const modeToggle = document.getElementById('mode-toggle');
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
   </script>
 </body>
 </html>
