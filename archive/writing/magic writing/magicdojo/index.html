@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Dojo Archive | WJC83</title>
+  <link rel="stylesheet" href="../../style.css">
+  <style>
+    /* Old-school, readable, simple */
+    body { text-align: left; }
+    .wrap { max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
+    header h1 { font-family: Helvetica, Arial, sans-serif; letter-spacing: .04em; margin: .25rem 0 .5rem; }
+    .intro { opacity: .85; margin-bottom: 1rem; }
+    .dojo-list { border-top: 2px solid var(--ink); margin-top: 1rem; }
+    .dojo-item { padding: .65rem 0; border-bottom: 1px dashed rgba(0,0,0,.2); }
+    .dojo-item a { color: var(--ink); text-decoration: none; font-weight: bold; }
+    .dojo-meta { font-size: .9rem; opacity: .7; }
+    .badge { font-size: .75rem; border: 1px solid rgba(0,0,0,.3); padding: 0.1rem .35rem; border-radius: 4px; margin-left: .35rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Magic Dojo Archive</h1>
+      <p class="intro">Direct-to-text links for legacy/“medium” MTG pieces, in a simple index inspired by the old Dojo.</p>
+      <p><a href="../">← Back to Archive</a></p>
+    </header>
+
+    <section id="list" class="dojo-list"></section>
+  </div>
+
+  <script>
+  (async function () {
+    // Pull everything, then filter to magic-writing entries you want on this page.
+    const res = await fetch('../manifest.json');
+    const data = await res.json();
+    const container = document.getElementById('list');
+
+    // Decide which ones show here: either explicit flag `dojo: true`, or tier >=3 within magic-writing.
+    const dojoItems = data.items
+      .filter(x => x.bucket === 'writing' && x.category === 'magic-writing' && (x.dojo === true || (x.tier||3) >= 3))
+      .sort((a,b) => (b.date||'').localeCompare(a.date||''));
+
+    container.innerHTML = dojoItems.map(it => `
+      <div class="dojo-item">
+        <div><a href="../${it.path}" target="_blank">${it.title}</a>${(it.tier||3) === 1 ? '<span class="badge">feature</span>':''}</div>
+        <div class="dojo-meta">${it.date || ''}${it.blurb ? ' — ' + it.blurb : ''}</div>
+      </div>
+    `).join('');
+  })();
+  </script>
+</body>
+</html>

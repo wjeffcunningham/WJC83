@@ -1,0 +1,36 @@
+[
+  {
+    "title": "Lands and Spells",
+    "date": "2019-02-21",
+    "author": "Jeff Cunningham",
+    "site": "TCGplayer",
+    "category": [
+      "mtg",
+      "tournament-report"
+    ],
+    "format": [
+      "html",
+      "pdf"
+    ],
+    "source_html": "Lands and Spells | TCGplayer.html",
+    "source_pdf": "Lands and Spells | TCGplayer.pdf",
+    "url": "https://www.tcgplayer.com/content/article/Lands-and-Spells/1ffc0dff-c878-42e3-94f8-be1647f32f04"
+  },
+  {
+    "title": "The End of the Magic: The Gathering Pro Tour",
+    "date": "2019-11-06",
+    "author": "Jeff Cunningham",
+    "site": "TCGplayer",
+    "category": [
+      "mtg",
+      "op-ed"
+    ],
+    "format": [
+      "html",
+      "pdf"
+    ],
+    "source_html": "The End of the Magic: The Gathering Pro Tour | TCGplayer.html",
+    "source_pdf": "The End of the Magic: The Gathering Pro Tour | TCGplayer.pdf",
+    "url": "https://www.tcgplayer.com/content/article/The-End-of-the-Magic-The-Gathering-Pro-Tour/ca36d9c5-0a18-48a8-9f08-cc80e2889314"
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.1",
+  "buckets": {
+    "writing": {
+      "label": "Writing",
+      "blurb": "Academic work, criticism, and Magic: The Gathering writing."
+    },
+    "old-movies": {
+      "label": "Old Movies",
+      "blurb": "Film/academia era archives, papers, and related PDFs."
+    }
+  },
+  "categories": {
+    "academic": "Scholarly work (2013–2017): philosophy, thesis materials, seminar papers.",
+    "criticism": "Film & culture criticism; reviews, essays, and reflections.",
+    "magic-writing": "Strategy, history, and essays about Magic: The Gathering."
+  },
+  "items": [
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "MPhil Thesis",
+      "date": "2016-12-17",
+      "tier": 2,
+      "blurb": "Master’s thesis; core argument and literature review condensed here.",
+      "path": "archive/old movies/writing/academic/2016-12-17-thesis.pdf",
+      "thumbnail": "assets/thumbs/thesis.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "Strauss — UHS",
+      "date": "2013-08-11",
+      "tier": 3,
+      "blurb": "Situates Strauss within the University High School tradition.",
+      "path": "archive/old movies/writing/academic/2013-08-11-strauss-UHS.pdf",
+      "thumbnail": "assets/thumbs/pdf.png"
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "On Metaphysics",
+      "date": "2015-08-26",
+      "tier": 3,
+      "blurb": "Seminar paper on first principles and explanatory priority.",
+      "path": "archive/old movies/writing/academic/2015-08-26-metaphysics.pdf",
+      "thumbnail": "assets/thumbs/pdf.png"
+    },
+    {
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Digital Exile: AirBnB Black Mirror",
+      "date": "2015-01-01",
+      "tier": 3,
+      "blurb": "Medium; Second Most-Read Article *Ever*. Written by Jackson Cunningham; Edited by W. Jeff Cunningham.",
+      "path": "archive/criticism/digital-exile.html",
+      "thumbnail": "assets/thumbs/digital-exile.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Interview with Richard Garfield",
+      "date": "2009-01-01",
+      "tier": 1,
+      "blurb": "Longform interview with Magic’s creator.",
+      "path": "archive/magic-writing/richard-garfield.html",
+      "thumbnail": "assets/thumbs/garfield.jpg"
+    },
+    {
+      "bucket": "old-movies",
+      "category": "misc",
+      "title": "Production Notes (sample)",
+      "date": "2012-01-01",
+      "tier": 4,
+      "blurb": "Placeholder for non-writing artifacts.",
+      "path": "archive/old movies/notes/2012-notes.pdf",
+      "thumbnail": "assets/thumbs/pdf.png"
+    }
+  ]
+}

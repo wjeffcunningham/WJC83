@@ -1,0 +1,292 @@
+[
+  {
+    "title": "Your First Sealed Deck",
+    "date": "2006-12-02",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Your First Sealed Deck.html",
+    "source_pdf": "Your First Sealed Deck.pdf"
+  },
+  {
+    "title": "Getting Better at Sealed",
+    "date": "2006-12-09",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Getting Better at Sealed.html",
+    "source_pdf": "Getting Better at Sealed.pdf"
+  },
+  {
+    "title": "Sealed Deck Walkthrough",
+    "date": "2006-12-16",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Sealed Deck Walkthrough.html",
+    "source_pdf": "Sealed Deck Walkthrough.pdf"
+  },
+  {
+    "title": "What is the Metagame?",
+    "date": "2007-01-06",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "What is the Metagame?.html",
+    "source_pdf": "What is the Metagame?.pdf"
+  },
+  {
+    "title": "Introducing Sideboards",
+    "date": "2007-01-13",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introducing Sideboards.html",
+    "source_pdf": "Introducing Sideboards.pdf"
+  },
+  {
+    "title": "What Are The Formats?",
+    "date": "2007-01-20",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "What Are The Formats?.html",
+    "source_pdf": "What Are The Formats?.pdf"
+  },
+  {
+    "title": "Agresivo, Combo y Control",
+    "date": "2007-01-27",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Agresivo, Combo y Control.html",
+    "source_pdf": "Agresivo, Combo y Control.pdf"
+  },
+  {
+    "title": "Your First Tournament",
+    "date": "2007-02-03",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Your First Tournament.html",
+    "source_pdf": "Your First Tournament.pdf"
+  },
+  {
+    "title": "In-Game Protocol",
+    "date": "2007-02-10",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "In-Game Protocol.html",
+    "source_pdf": "In-Game Protocol.pdf"
+  },
+  {
+    "title": "Introduction to Mana base",
+    "date": "2007-02-17",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Mana base.html",
+    "source_pdf": "Introduction to Mana base.pdf"
+  },
+  {
+    "title": "Introduction to Mana Base, Part 2",
+    "date": "2007-02-24",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Mana Base, Part 2.html",
+    "source_pdf": "Introduction to Mana Base, Part 2.pdf"
+  },
+  {
+    "title": "Seven Steps to a Better Mana Base",
+    "date": "2007-03-03",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Seven Steps to a Better Mana Base.html",
+    "source_pdf": "Seven Steps to a Better Mana Base.pdf"
+  },
+  {
+    "title": "Mana Base Walkthrough",
+    "date": "2007-03-10",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Mana Base Walkthrough.html",
+    "source_pdf": "Mana Base Walkthrough.pdf"
+  },
+  {
+    "title": "Tactical Protocol: Your Own Turn",
+    "date": "2007-04-07",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Tactical Protocol: Your Own Turn.html",
+    "source_pdf": "Tactical Protocol: Your Own Turn.pdf"
+  },
+  {
+    "title": "Tactical Protocol: Your Opponent's Turn",
+    "date": "2007-04-14",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Tactical Protocol: Your Opponent's Turn.html",
+    "source_pdf": "Tactical Protocol: Your Opponent's Turn.pdf"
+  },
+  {
+    "title": "Tactical Protocol: Introduction to Information & Resources",
+    "date": "2007-04-21",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Tactical Protocol: Introduction to Information & Resources.html",
+    "source_pdf": "Tactical Protocol: Introduction to Information & Resources.pdf"
+  },
+  {
+    "title": "Strategies and Techniques for Booster Draft",
+    "date": "2007-05-12",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Strategies and Techniques for Booster Draft.html",
+    "source_pdf": "Strategies and Techniques for Booster Draft.pdf"
+  },
+  {
+    "title": "Card Evaluation",
+    "date": "2007-05-19",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Card Evaluation.html",
+    "source_pdf": "Card Evaluation.pdf"
+  },
+  {
+    "title": "Playing the Game",
+    "date": "2007-05-26",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Playing the Game.html",
+    "source_pdf": "Playing the Game.pdf"
+  },
+  {
+    "title": "Playing Against Control",
+    "date": "2007-06-02",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Playing Against Control.html",
+    "source_pdf": "Playing Against Control.pdf"
+  },
+  {
+    "title": "Playing Against Aggro",
+    "date": "2007-06-09",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Playing Against Aggro.html",
+    "source_pdf": "Playing Against Aggro.pdf"
+  },
+  {
+    "title": "Playing Against Combo",
+    "date": "2007-06-16",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Playing Against Combo.html",
+    "source_pdf": "Playing Against Combo.pdf"
+  },
+  {
+    "title": "Metagame Workshop",
+    "date": "2007-06-23",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Metagame Workshop.html",
+    "source_pdf": "Metagame Workshop.pdf"
+  },
+  {
+    "title": "Introduction to Bluffing",
+    "date": "2007-06-30",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Bluffing.html",
+    "source_pdf": "Introduction to Bluffing.pdf"
+  },
+  {
+    "title": "Introduction to Efficiency",
+    "date": "2007-07-07",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Efficiency.html",
+    "source_pdf": "Introduction to Efficiency.pdf"
+  },
+  {
+    "title": "Ten Beginner Mistakes",
+    "date": "2007-07-14",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Ten Beginner Mistakes.html",
+    "source_pdf": "Ten Beginner Mistakes.pdf"
+  },
+  {
+    "title": "Introduction to Combat",
+    "date": "2007-07-21",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Combat.html",
+    "source_pdf": "Introduction to Combat.pdf"
+  },
+  {
+    "title": "Introduction to Innovation",
+    "date": "2007-07-28",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Introduction to Innovation.html",
+    "source_pdf": "Introduction to Innovation.pdf"
+  },
+  {
+    "title": "Lessons Learned",
+    "date": "2007-08-04",
+    "author": "Jeff Cunningham",
+    "column": "Magic Academy",
+    "category": ["mtg","article"],
+    "format": ["html","pdf"],
+    "source_html": "Lessons Learned.html",
+    "source_pdf": "Lessons Learned.pdf"
+  }
+]

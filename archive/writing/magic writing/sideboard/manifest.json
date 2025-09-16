@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Inside Magic Colony",
+    "date": "2002-02-21",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Inside Magic Colony copy.pdf"
+  },
+  {
+    "title": "Week in Review: May 27-June 3",
+    "date": "2003-06-05",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Week in Review",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Week in Review: May 27-June 3.pdf"
+  },
+  {
+    "title": "Chewing the Fat: Scourge",
+    "date": "2003-06-02",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Strategy",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Chewing the Fat: Scourge.pdf"
+  },
+  {
+    "title": "Week in Review: June 4-10",
+    "date": "2003-06-11",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Week in Review",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Week in Review: June 4-10.pdf"
+  },
+  {
+    "title": "Week in Review: June 11-17",
+    "date": "2003-06-18",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Week in Review",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Week in Review: June 11-17.pdf"
+  },
+  {
+    "title": "Giant-Sized Week in Review: June 18-July 1",
+    "date": "2003-07-03",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Week in Review",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Giant-Sized Week in Review: June 18-July 1.pdf"
+  },
+  {
+    "title": "Week in Review: July 2-8",
+    "date": "2003-07-09",
+    "author": "Jeff Cunningham",
+    "column": "Sideboard Online - Week in Review",
+    "category": ["mtg", "article"],
+    "format": ["pdf"],
+    "source_pdf": "Week in Review: July 2-8.pdf"
+  }
+]
