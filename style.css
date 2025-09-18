@@ -38,6 +38,11 @@ body.dark {
   text-transform: uppercase;
 }
 
+/* tier accents */
+.tier-2 .meta h3 { font-size: 1.2rem; letter-spacing: .01em; }
+.tier-2 .card { border-color: rgba(0,0,0,0.12); }
+.tier-1 .meta h3 { font-size: 1.35rem; }
+
 /* HAMBURGER pinned top-right */
 .hamburger-menu {
   position: absolute;
@@ -92,3 +97,14 @@ body.dark {
   text-decoration: none;
   color: var(--ink);
 }
+
+/* Archive item base */
+li.item { transition: box-shadow .15s ease, transform .05s ease; }
+li.item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); transform: translateY(-1px); }
+
+/* Tier-2 “enhanced” card look (no tier label shown) */
+li.item.tier-2 { border-color: #e7e7ef; background: #fcfcff; }
+li.item.tier-2 .row { display: grid; grid-template-columns: 96px 1fr; gap: .85rem; align-items: center; }
+li.item.tier-2 .thumb { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
+li.item .title a { color: var(--ink, #111); text-decoration: none; }
+li.item .title a:hover { text-decoration: underline; }

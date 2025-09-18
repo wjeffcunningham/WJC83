@@ -6,8 +6,8 @@
       "blurb": "Academic work, criticism, and Magic: The Gathering writing."
     },
     "old-movies": {
-      "label": "Old Movies",
-      "blurb": "Film/academia era archives, papers, and related PDFs."
+      "label": "Old Movies (2001-2019)",
+      "blurb": "Acting work, short films"
     }
   },
   "categories": {
@@ -19,32 +19,120 @@
     {
       "bucket": "writing",
       "category": "academic",
+      "title": "On the Variable Perception of Time in Proclus and Aristotle",
+      "date": "2017-05-29",
+      "tier": 3,
+      "blurb": "PDF • 2017-05-29 • archive/writing/academic/2017-05-29-plato-and-the-platonic-tradition.pdf",
+      "path": "archive/writing/academic/2017-05-29-plato-and-the-platonic-tradition.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "D'Hoine; Opsomer",
+      "course": "Plato and the Platonic Tradition",
+      "school": "KU Leuven",
+      "grade": "14"
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
       "title": "MPhil Thesis",
       "date": "2016-12-17",
       "tier": 2,
-      "blurb": "Master’s thesis; core argument and literature review condensed here.",
-      "path": "archive/old movies/writing/academic/2016-12-17-thesis.pdf",
-      "thumbnail": "assets/thumbs/thesis.jpg"
+      "blurb": "PDF • 2016-12-17 • archive/writing/academic/2016-12-17-thesis.pdf",
+      "path": "archive/writing/academic/2016-12-17-thesis.pdf",
+      "thumbnail": "assets/thumbs/thesis.jpg",
+      "professors": "N/A",
+      "course": "N/A",
+      "school": "KU Leuven",
+      "grade": "16.33"
     },
     {
       "bucket": "writing",
       "category": "academic",
-      "title": "Strauss — UHS",
-      "date": "2013-08-11",
+      "title": "On the Discursive Intellect's Use of Phantasms in Aquinas's Theory of Cognition",
+      "date": "2016-01-11",
       "tier": 3,
-      "blurb": "Situates Strauss within the University High School tradition.",
-      "path": "archive/old movies/writing/academic/2013-08-11-strauss-UHS.pdf",
-      "thumbnail": "assets/thumbs/pdf.png"
+      "blurb": "PDF • 2016-01-11 • archive/writing/academic/2016-01-11-aquinas-in-context.pdf",
+      "path": "archive/writing/academic/2016-01-11-aquinas-in-context.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "Robiglio",
+      "course": "Aquinas in Context",
+      "school": "KU Leuven",
+      "grade": "15"
     },
     {
       "bucket": "writing",
       "category": "academic",
-      "title": "On Metaphysics",
+      "title": "Accounting for the Reflective Shift in Aquinas's Theory of Cognition",
+      "date": "2015-08-31",
+      "tier": 3,
+      "blurb": "PDF • 2015-08-31 • archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
+      "path": "archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "",
+      "course": "",
+      "school": "",
+      "grade": ""
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "On the Role and Significance of Δύναμις / Ἐνέργεια κατὰ κίνησιν in Aristotle's Sublunar Natural Ontology",
       "date": "2015-08-26",
       "tier": 3,
-      "blurb": "Seminar paper on first principles and explanatory priority.",
-      "path": "archive/old movies/writing/academic/2015-08-26-metaphysics.pdf",
-      "thumbnail": "assets/thumbs/pdf.png"
+      "blurb": "PDF • 2015-08-26 • archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
+      "path": "archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "",
+      "course": "",
+      "school": "",
+      "grade": ""
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "On Phantasia's Tactual Aspect",
+      "date": "2015-01-03",
+      "tier": 3,
+      "blurb": "PDF • 2015-01-03 • archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
+      "path": "archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "",
+      "course": "",
+      "school": "",
+      "grade": ""
+    },
+    {
+      "bucket": "writing",
+      "category": "academic",
+      "title": "Strauss' Interpretation of Xenophon's Hiero and its Implications for the Organization of the UHS",
+      "date": "2013-06-05",
+      "tier": 3,
+      "blurb": "PDF • 2013-06-05 • archive/writing/academic/2013-06-05-strauss-UHS.pdf",
+      "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
+      "thumbnail": "assets/thumbs/pdf.png",
+      "professors": "",
+      "course": "",
+      "school": "",
+      "grade": ""
+    },
+    {
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
+      "date": "2023-05-01",
+      "tier": 3,
+      "blurb": "HTML • 2023-05-01 • archive/writing/criticism/2023-05-01-big-ick-energy.html",
+      "path": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
+      "thumbnail": "assets/thumbs/curse.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Review: Colossal Cave Adventure (VR) — 5/5",
+      "date": "2023-03-01",
+      "tier": 3,
+      "blurb": "HTML • 2023-03-01 • archive/writing/criticism/2023-03-01-colossal-cave.html",
+      "path": "archive/writing/criticism/2023-03-01-colossal-cave.html",
+      "thumbnail": "assets/thumbs/colossal-cave.jpg"
     },
     {
       "bucket": "writing",
@@ -52,9 +140,40 @@
       "title": "Digital Exile: AirBnB Black Mirror",
       "date": "2015-01-01",
       "tier": 3,
-      "blurb": "Medium; Second Most-Read Article *Ever*. Written by Jackson Cunningham; Edited by W. Jeff Cunningham.",
-      "path": "archive/criticism/digital-exile.html",
+      "blurb": "HTML • 2015-01-01 • archive/writing/criticism/digital-exile.html",
+      "path": "archive/writing/criticism/digital-exile.html",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Lands and Spells",
+      "date": "2019-06-01",
+      "tier": 1,
+      "blurb": "HTML • 2019-06-01 • archive/writing/magic writing/lands-and-spells.html",
+      "path": "archive/writing/magic writing/lands-and-spells.html",
+      "thumbnail": "assets/thumbs/lands-spells.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends of the $1,000,000 Pro Tour",
+      "date": "2019-02-01",
+      "tier": 1,
+      "blurb": "HTML • 2019-02-01 • archive/writing/magic writing/untold-legends.html",
+      "path": "archive/writing/magic writing/untold-legends.html",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "subcategory": "dojo",
+      "title": "The Dojo Archive (1998)",
+      "date": "1998-01-01",
+      "tier": 3,
+      "blurb": "Index page for preserved Magic Dojo text files (1998).",
+      "path": "archive/writing/magic writing/magic dojo/index.html",
+      "thumbnail": "assets/thumbs/dojo.png"
     },
     {
       "bucket": "writing",
@@ -62,8 +181,8 @@
       "title": "Interview with Richard Garfield",
       "date": "2009-01-01",
       "tier": 1,
-      "blurb": "Longform interview with Magic’s creator.",
-      "path": "archive/magic-writing/richard-garfield.html",
+      "blurb": "HTML • 2009-01-01 • archive/writing/magic writing/richard-garfield.html",
+      "path": "archive/writing/magic writing/richard-garfield.html",
       "thumbnail": "assets/thumbs/garfield.jpg"
     },
     {
@@ -72,7 +191,7 @@
       "title": "Production Notes (sample)",
       "date": "2012-01-01",
       "tier": 4,
-      "blurb": "Placeholder for non-writing artifacts.",
+      "blurb": "PDF • 2012-01-01 • archive/old movies/notes/2012-notes.pdf",
       "path": "archive/old movies/notes/2012-notes.pdf",
       "thumbnail": "assets/thumbs/pdf.png"
     }

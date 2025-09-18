@@ -7,12 +7,25 @@
   <link rel="stylesheet" href="../style.css">
   <style>
     .wrap { max-width: 900px; margin: 1.25rem auto 3rem; padding: 0 1rem; text-align: left; }
-    .msg { padding:.75rem 1rem; border:1px solid rgba(0,0,0,.1); border-radius:8px; margin:.5rem 0; }
+    .msg { padding:.75rem 1rem; border:1px solid rgba(0,0,0,.12); border-radius:8px; margin:.5rem 0; }
     .ok { background: rgba(0,255,0,.06); }
     .err { background: rgba(255,0,0,.06); }
+    details { margin: 1rem 0; }
+    summary { font-weight: 700; cursor: pointer; }
+    h3 { margin:.9rem 0 .35rem; font-size:1.05rem; }
+    h4 { margin:.5rem 0 .25rem; font-size:.95rem; opacity:.85 }
+    ul { list-style: none; padding-left: 0; margin: .25rem 0 1rem; }
+    li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; }
+    .meta { font-size:.9rem; opacity:.7; }
+    .bucket-blurb { font-size:.95rem; opacity:.85; margin:.25rem 0 .5rem; }
+    .cat-blurb { font-size:.9rem; opacity:.75; margin:.1rem 0 .35rem; }
+    .school { font-size:.85rem; opacity:.85; margin-top:.25rem; }
+    /* Tier-2 gets a nicer card layout (no "Tier" label shown) */
+    .item.tier-2 { border-color:#e7e7ef; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+    .item.tier-2 .row { display:grid; grid-template-columns: 96px 1fr; gap:.85rem; align-items:center; }
+    .item.tier-2 .thumb { width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
+    .item.tier-2 .title { font-weight:600; }
   </style>
-  <!-- Load JS after parsing, guaranteed -->
-  <script src="app.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -20,7 +33,170 @@
   </header>
 
   <main class="wrap" id="app">
-    <div class="msg ok">HTML loaded. Waiting for JS…</div>
+    <div class="msg ok" id="status">HTML loaded. Waiting for JS…</div>
+
+    <details open data-bucket="writing">
+      <summary>Writing</summary>
+      <div class="bucket-blurb" id="blurb-writing"></div>
+      <div id="bucket-writing"></div>
+    </details>
+
+    <details data-bucket="old-movies">
+      <summary>Old Movies</summary>
+      <div class="bucket-blurb" id="blurb-old-movies"></div>
+      <div id="bucket-old-movies"></div>
+    </details>
   </main>
+
+  <script>
+    if (window.__ARCHIVE_APP_RAN__) {
+      console.debug('Archive app already ran, skipping.');
+    } else {
+      window.__ARCHIVE_APP_RAN__ = true;
+
+      const ROOT_MANIFEST = './manifest.json';
+      const $ = (s, c=document)=>c.querySelector(s);
+      const statusEl = $('#status');
+      const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies') };
+      const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'old-movies': $('#blurb-old-movies') };
+
+      const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
+
+      function itemLI(it){
+        const href  = (it.path || '').replace(/^\/*/, '');
+        const title = it.title || it.path?.split('/').pop() || 'Untitled';
+        const date  = prettyDate(it.date);
+        const isAcademic = (it.category||'') === 'academic';
+        const schoolLine = isAcademic && it.school ? `<div class="school">School: ${it.school}</div>` : '';
+
+        // Default body (no explicit "Tier" text anywhere)
+        let inner = `
+          <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+          <div class="meta">${[date].filter(Boolean).join(' • ')}</div>
+          ${it.blurb && it.tier !== 4 ? `<div>${it.blurb}</div>` : ''}
+          ${schoolLine}
+        `;
+
+        // Tier-2: nicer card with optional thumbnail
+        if (it.tier === 2) {
+          const thumb = it.thumbnail ? `<img class="thumb" src="/${it.thumbnail}" alt="">` : '';
+          inner = `
+            <div class="row">
+              ${thumb || '<div></div>'}
+              <div>
+                <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+                <div class="meta">${[date].filter(Boolean).join(' • ')}</div>
+                ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+                ${schoolLine}
+              </div>
+            </div>
+          `;
+        }
+
+        // Tier-4: super minimal (title + date only)
+        if (it.tier === 4) {
+          inner = `
+            <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+            <div class="meta">${[date].filter(Boolean).join(' • ')}</div>
+            ${schoolLine}
+          `;
+        }
+
+        const cls = ['item'];
+        if (it.tier === 2) cls.push('tier-2');
+
+        return `<li class="${cls.join(' ')}">${inner}</li>`;
+      }
+
+      function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
+        const target = bucketEls[bucketKey];
+        const blurb  = bucketBlurbEl[bucketKey];
+        if (!target) return;
+
+        blurb.textContent = bucketMeta?.blurb || '';
+
+        // group by category → subcategory; sort each (desc)
+        const grouped = {};
+        for (const it of items) {
+          const cat = it.category || 'misc';
+          const sub = it.subcategory || '';
+          (grouped[cat] ||= {});
+          (grouped[cat][sub] ||= []);
+          grouped[cat][sub].push(it);
+        }
+
+        const frag = document.createDocumentFragment();
+
+        for (const [cat, subMap] of Object.entries(grouped)) {
+          const sec = document.createElement('section');
+
+          const h3 = document.createElement('h3');
+          h3.textContent = cat.replace(/-/g, ' ').replace(/\b\w/g, m=>m.toUpperCase());
+          sec.appendChild(h3);
+
+          const cblurb = document.createElement('div');
+          cblurb.className = 'cat-blurb';
+          const catText = categoriesMap?.[cat];
+          if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
+
+          for (const [sub, arr] of Object.entries(subMap)) {
+            arr.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+            if (sub) {
+              const h4 = document.createElement('h4');
+              h4.textContent = sub.replace(/-/g, ' ').replace(/\b\w/g, m=>m.toUpperCase());
+              sec.appendChild(h4);
+            }
+
+            const ul = document.createElement('ul');
+            ul.innerHTML = arr.map(itemLI).join('');
+            sec.appendChild(ul);
+          }
+
+          frag.appendChild(sec);
+        }
+
+        target.innerHTML = '';
+        target.appendChild(frag);
+      }
+
+      async function loadJSON(url){
+        const res = await fetch(url, {cache:'no-store'});
+        if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+        return res.json();
+      }
+
+      async function render(){
+        try {
+          const root = await loadJSON(ROOT_MANIFEST);
+          const bucketsMeta = root.buckets || {};
+          const categories  = root.categories || {};
+          const items       = Array.isArray(root.items) ? root.items.slice() : [];
+
+          const byBucket = {};
+          for (const it of items) {
+            const b = it.bucket || 'misc';
+            (byBucket[b] ||= []).push(it);
+          }
+
+          renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
+          renderBucket('old-movies', bucketsMeta['old-movies'], byBucket['old-movies'] || [], categories);
+
+          statusEl.textContent = `Archive loaded (${items.length} items).`;
+          statusEl.classList.add('ok'); statusEl.classList.remove('err');
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent = `Error loading archive: ${e.message}`;
+          statusEl.classList.add('err'); statusEl.classList.remove('ok');
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', render);
+      } else {
+        render();
+      }
+    }
+  </script>
 </body>
 </html>

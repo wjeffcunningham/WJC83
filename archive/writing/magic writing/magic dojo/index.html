@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Dojo Archive | WJC83</title>
+  <link rel="stylesheet" href="../../../../style.css">
+  <style>
+    body { text-align: left; }
+    .wrap { max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
+    header h1 { margin:.25rem 0 .5rem; }
+    .intro { opacity:.85; margin-bottom:1rem; }
+    .dojo-list { border-top: 2px solid var(--ink, #000); margin-top: 1rem; }
+    .dojo-item { padding: .65rem 0; border-bottom: 1px dashed rgba(0,0,0,.2); }
+    .dojo-item a { color: var(--ink, #000); text-decoration: none; font-weight: bold; }
+    .dojo-meta { font-size: .9rem; opacity: .7; }
+    .msg { padding:.5rem .75rem; border:1px solid #ddd; border-radius:6px; margin:.75rem 0; background:#f6fff6; }
+    .err { background:#fff6f6; border-color:#f1c5c5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Magic Dojo Archive</h1>
+      <p class="intro">Direct-to-text links for legacy MTG pieces, in a simple index inspired by The Dojo.</p>
+      <p><a href="../../..">← Back to Archive</a></p>
+    </header>
+
+    <div id="status" class="msg">Loading…</div>
+    <section id="list" class="dojo-list"></section>
+  </div>
+
+  <script>
+  (async function () {
+    const status = document.getElementById('status');
+    const container = document.getElementById('list');
+
+    try {
+      // Manifest is in THIS folder
+      const res = await fetch('./manifest.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const items = Array.isArray(data.items) ? data.items.slice() : [];
+      items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+      container.innerHTML = items.map(it => `
+        <div class="dojo-item">
+          <div>
+            <a href="${String(it.url||'').replace(/^\.\//,'./')}" target="_blank" rel="noopener">
+              ${it.title || it.filename || 'Untitled'}
+            </a>
+          </div>
+          <div class="dojo-meta">
+            ${[ (typeof it.date==='string' && /^\d{4}-\d{2}-\d{2}$/.test(it.date) ? it.date : ''),
+               (it.format||'').toUpperCase()
+              ].filter(Boolean).join(' • ')}
+            ${it.blurb ? ' — ' + it.blurb : ''}
+          </div>
+        </div>
+      `).join('');
+
+      status.textContent = `Loaded ${items.length} items.`;
+    } catch (err) {
+      console.error(err);
+      status.classList.add('err');
+      status.textContent = `Error loading manifest: ${err.message}`;
+    }
+  })();
+  </script>
+</body>
+</html>
