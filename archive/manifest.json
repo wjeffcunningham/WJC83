@@ -114,36 +114,45 @@
       "school": "",
       "grade": ""
     },
-    {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
-      "date": "2023-05-01",
-      "tier": 3,
-      "blurb": "HTML • 2023-05-01 • archive/writing/criticism/2023-05-01-big-ick-energy.html",
-      "path": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
-      "thumbnail": "assets/thumbs/curse.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Review: Colossal Cave Adventure (VR) — 5/5",
-      "date": "2023-03-01",
-      "tier": 3,
-      "blurb": "HTML • 2023-03-01 • archive/writing/criticism/2023-03-01-colossal-cave.html",
-      "path": "archive/writing/criticism/2023-03-01-colossal-cave.html",
-      "thumbnail": "assets/thumbs/colossal-cave.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Digital Exile: AirBnB Black Mirror",
-      "date": "2015-01-01",
-      "tier": 3,
-      "blurb": "HTML • 2015-01-01 • archive/writing/criticism/digital-exile.html",
-      "path": "archive/writing/criticism/digital-exile.html",
-      "thumbnail": "assets/thumbs/digital-exile.jpg"
-    },
+ {
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
+  "date": "2023-05-01",
+  "tier": 3,
+  "blurb": "Unpublished draft; on tone, authorship, and manufacturing consent.",
+  "path": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
+  "path_html": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
+  "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
+  "external": "",
+  "thumbnail": "assets/thumbs/curse.jpg"
+},
+{
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Review: Colossal Cave Adventure (VR) — 5/5",
+  "date": "2023-03-09",
+  "tier": 3,
+  "blurb": "John & Roberta Williams’s return: design austerity meets modern presence.",
+  "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.html",
+  "path_html": "archive/writing/criticism/2023-03-09-colossal-cave-review.html",
+  "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
+  "external": "",
+  "thumbnail": "assets/thumbs/colossal-cave.jpg"
+},
+{
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Digital Exile: How I Got Banned For Life From AirBNB",
+  "date": "2018-07-18",
+  "tier": 3,
+  "blurb": "Second most-read Medium piece; mirrored locally.",
+  "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
+  "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
+  "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
+  "external": "",
+  "thumbnail": "assets/thumbs/digital-exile.jpg"
+},
     {
       "bucket": "writing",
       "category": "magic-writing",

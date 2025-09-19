@@ -2,29 +2,9 @@
   "collection": "The Dojo",
   "items": [
     {
-      "filename": "t2.980117jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
-      "author": "Jeff Cunningham",
-      "source": "The Dojo",
-      "date": "1998-01-17",
-      "format": "text",
-      "url": "./t2.980117jcu.txt"
-    },
-    {
-      "filename": "t2.980120jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
-      "author": "Jeff Cunningham",
-      "source": "The Dojo",
-      "date": "1998-01-20",
-      "format": "text",
-      "url": "./t2.980120jcu.txt"
-    },
-    {
       "filename": "bif.981123jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "title": "Junior Super Series & My Hero Jasar Elarar",
+      "blurb": "Mon, 23 Nov 1998 09:52:13 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
       "date": "1998-11-23",
@@ -32,9 +12,19 @@
       "url": "./bif.981123jcu.txt"
     },
     {
+      "filename": "ptq.980823jcu.txt",
+      "title": "[Report] PTQ , Top 4",
+      "blurb": "Sun, 23 Aug 1998 22:40:22 -0700",
+      "author": "Jeff Cunningham",
+      "source": "The Dojo",
+      "date": "1998-08-23",
+      "format": "text",
+      "url": "./ptq.980823jcu.txt"
+    },
+    {
       "filename": "imp.980620jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "title": "Tournament Report - 4CU T2",
+      "blurb": "Sun, 11 Jan 1998 14:57:57 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
       "date": "1998-06-20",
@@ -43,8 +33,8 @@
     },
     {
       "filename": "jss.980611jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "title": "JSS Championship Report - Top 37!!!",
+      "blurb": "Thu, 11 Jun 1998 21:43:47 -0700",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
       "date": "1998-06-11",
@@ -53,8 +43,8 @@
     },
     {
       "filename": "ptq.980304jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "title": "BC PTQ NY",
+      "blurb": "Wed, 04 Mar 1998 23:49:43 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
       "date": "1998-03-04",
@@ -62,39 +52,19 @@
       "url": "./ptq.980304jcu.txt"
     },
     {
-      "filename": "ptq.980823jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "filename": "te2.980201jcu.txt",
+      "title": "Tempest Contructed Tounrey Report - W/r Scroll Weenie",
+      "blurb": "Sun, 01 Feb 1998 23:05:26 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
-      "date": "1998-08-23",
+      "date": "1998-02-01",
       "format": "text",
-      "url": "./ptq.980823jcu.txt"
-    },
-    {
-      "filename": "t2.980111jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
-      "author": "Jeff Cunningham",
-      "source": "The Dojo",
-      "date": "1998-01-11",
-      "format": "text",
-      "url": "./t2.980111jcu.txt"
-    },
-    {
-      "filename": "t2.980117jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
-      "author": "Jeff Cunningham",
-      "source": "The Dojo",
-      "date": "1998-01-17",
-      "format": "text",
-      "url": "./t2.980117jcu.txt"
+      "url": "./te2.980201jcu.txt"
     },
     {
       "filename": "t2.980120jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "title": "T2 Tourney Report-4CU-BC Super Series",
+      "blurb": "Tue, 20 Jan 1998 22:42:16 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
       "date": "1998-01-20",
@@ -102,14 +72,24 @@
       "url": "./t2.980120jcu.txt"
     },
     {
-      "filename": "te2.980201jcu.txt",
-      "title": "[ADD TITLE]",
-      "blurb": "[Add a blurb.]",
+      "filename": "t2.980117jcu.txt",
+      "title": "Subject: Tourney Report - WW/r/b",
+      "blurb": "Sat, 17 Jan 1998 00:38:17 -0800",
       "author": "Jeff Cunningham",
       "source": "The Dojo",
-      "date": "1998-02-01",
+      "date": "1998-01-17",
       "format": "text",
-      "url": "./te2.980201jcu.txt"
+      "url": "./t2.980117jcu.txt"
+    },
+    {
+      "filename": "t2.980111jcu.txt",
+      "title": "Tournament Report - 4CU T2",
+      "blurb": "Sun, 11 Jan 1998 14:57:57 -0800",
+      "author": "Jeff Cunningham",
+      "source": "The Dojo",
+      "date": "1998-01-11",
+      "format": "text",
+      "url": "./t2.980111jcu.txt"
     }
   ]
 }

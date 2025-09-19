@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{TITLE}}</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <style>
+    .wrap { max-width: 760px; margin: 1.25rem auto 3rem; padding: 0 1rem; text-align: left; }
+    .article h1 { margin: .25rem 0 .75rem; }
+    .article p  { line-height: 1.6; margin: .85rem 0; }
+    .article img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
+    figure { margin: 1rem 0; }
+    figcaption { font-size:.9rem; opacity:.75; margin-top:.25rem; }
+    blockquote { border-left: 3px solid rgba(0,0,0,.15); padding-left:.85rem; margin:.85rem 0; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { overflow:auto; padding:.75rem; background:rgba(0,0,0,.04); border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header class="site-header"><h1 class="site-title">Archive</h1></header>
+  <main class="wrap article">
+    <h1>{{TITLE}}</h1>
+    <p><em>Originally published on {{SOURCE}}. Local mirror for preservation.</em></p>
+
+    {{BODY}}
+
+  </main>
+</body>
+</html>
