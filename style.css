@@ -108,3 +108,24 @@ li.item.tier-2 .row { display: grid; grid-template-columns: 96px 1fr; gap: .85re
 li.item.tier-2 .thumb { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
 li.item .title a { color: var(--ink, #111); text-decoration: none; }
 li.item .title a:hover { text-decoration: underline; }
+
+/* Archive: link pills (scoped) */
+.pills {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-top: .4rem;
+}
+.pills a {
+  display: inline-block;
+  padding: .25rem .55rem;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 999px;
+  font-size: .85rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.pills a:hover {
+  background: rgba(0,0,0,.04);
+}
+

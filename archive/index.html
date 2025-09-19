@@ -67,8 +67,9 @@
       const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
 
       const effectiveTier = (it) => {
-        // Dojo shows like a Tier-3 card on the main index
-        if ((it.subcategory || '') === 'dojo' && it.tier === 4) return 3;
+        // Show certain Tier-4 subcategories (dojo/misetings) as Tier-3 cards on the index
+        const sub = (it.subcategory || '').toLowerCase();
+        if ((sub === 'dojo' || sub === 'misetings') && it.tier === 4) return 3;
         return it.tier;
       };
 
@@ -83,7 +84,9 @@
       function itemLI(it){
         const etier = effectiveTier(it);
         const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
-        const href  = (it.path_html || it.path || it.pdf || '').replace(/^\/*/, '');
+        // Prefer HTML → path → PDF; strip leading slashes for consistent / prefix below
+        const primary = (it.path_html || it.path || it.pdf || '').replace(/^\/*/, '');
+        const href  = primary; // may be empty string if truly no link yet
         const date  = prettyDate(it.date);
         const isAcademic = (it.category||'') === 'academic';
         const schoolLine = isAcademic && it.school ? `<div class="school">School: ${it.school}</div>` : '';
@@ -97,7 +100,7 @@
               <div class="row">
                 ${thumb}
                 <div>
-                  <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+                  <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
                   <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
                   ${it.blurb ? `<div>${it.blurb}</div>` : ''}
                   ${schoolLine}
@@ -108,11 +111,11 @@
           `;
         }
 
-        // Tier-4 minimal (but Dojo is shown as Tier-3 via effectiveTier)
+        // Tier-4 minimal (but dojo/misetings can render as tier-3 via effectiveTier)
         if (etier === 4) {
           return `
             <li class="item">
-              <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+              <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
               <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
               ${schoolLine}
               ${pills}
@@ -123,7 +126,7 @@
         // Default (Tier-1/3 normal card)
         return `
           <li class="item">
-            <div class="title"><a href="/${href}" target="_blank" rel="noopener">${title}</a></div>
+            <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
             <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
             ${it.blurb ? `<div>${it.blurb}</div>` : ''}
             ${schoolLine}

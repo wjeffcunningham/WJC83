@@ -1,112 +1,105 @@
-[
-  {
-    "title": "Kai Unsure How to Spend Other Two Wishes",
-    "date": "2001-11-07",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Kai Unsure How to Spend Other Two Wishes.pdf",
-    "url_archive": "http://misetings.com/article/83"
-  },
-  {
-    "title": "Jesse Cornelissen Fails to Deliver",
-    "date": "2001-11-08",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Jesse Cornelissen Fails to Deliver.pdf",
-    "url_archive": "http://www.misetings.com/article/85"
-  },
-  {
-    "title": "Bennett Informed, \"Incompetence\" Not In Job Description",
-    "date": "2001-11-09",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Bennett Informed, \"Incompetence\" Not In Job Description.pdf",
-    "url_archive": "http://www.misetings.com/article/87"
-  },
-  {
-    "title": "Cheating Scare Spawns Paranoia known as \"McCarrelism\"",
-    "date": "2001-11-16",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Cheating Scare Spawns Paranoia known as \"McCarrelism\".pdf",
-    "url_archive": "http://www.misetings.com/article/95"
-  },
-  {
-    "title": "Some Guy Finally Gets Feature Match",
-    "date": "2001-11-19",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Some Guy Finally Gets Feature Match.pdf",
-    "url_archive": "http://www.misetings.com/article/99"
-  },
-  {
-    "title": "Apprehended Shoplifter Claims Only Trying to ‘Mise’",
-    "date": "2001-11-28",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Apprehended Shoplifter Claims Only Trying to ‘Mise’.pdf",
-    "url_archive": "http://www.misetings.com/article/106"
-  },
-  {
-    "title": "Mike Long Admits “My Story” Complete Lie",
-    "date": "2001-11-28",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Mike Long Admits “My Story” Complete Lie.pdf",
-    "url_archive": "http://misetings.com/article/109"
-  },
-  {
-    "title": "Wizards of the Coast Reveals New “Slammer” Mechanic",
-    "date": "2001-11-28",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Wizards of the Coast Reveals New “Slammer” Mechanic.pdf",
-    "url_archive": "http://misetings.com/article/114"
-  },
-  {
-    "title": "Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias",
-    "date": "2001-12-05",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias.pdf",
-    "url_archive": "http://www.misetings.com/article/129"
-  },
-  {
-    "title": "Pro Tour Player Attends PTQ: \"The Horror, The Horror\"",
-    "date": "2001-12-05",
-    "author": "JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - Pro Tour Player Attends PTQ: \"The Horror, The Horror\".pdf",
-    "url_archive": "http://www.misetings.com/article/128"
-  },
-  {
-    "title": "The Magic Colony Presents: Who D'd It",
-    "date": "2002-02-20",
-    "author": "PTR & JC",
-    "site": "MiseTings.com",
-    "category": ["mtg","humor","article"],
-    "format": ["pdf"],
-    "source_pdf": "MiseTings.Com - The Magic Colony Presents: Who D'd It.pdf",
-    "url_archive": "http://misetings.com/article/376"
-  }
-]
+{
+  "collection": "MiseTings (2001)",
+  "items": [
+    {
+      "filename": "MiseTings.Com - Wizards of the Coast Reveals New “Slammer” Mechanic.pdf",
+      "title": "Wizards of the Coast Reveals New “Slammer” Mechanic",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Wizards of the Coast Reveals New “Slammer” Mechanic.pdf",
+      "pdf": "./MiseTings.Com - Wizards of the Coast Reveals New “Slammer” Mechanic.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - The Magic Colony Presents_ Who D'd It.pdf",
+      "title": "The Magic Colony Presents: Who D'd It",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - The Magic Colony Presents_ Who D'd It.pdf",
+      "pdf": "./MiseTings.Com - The Magic Colony Presents_ Who D'd It.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Some Guy Finally Gets Feature Match.pdf",
+      "title": "Some Guy Finally Gets Feature Match",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Some Guy Finally Gets Feature Match.pdf",
+      "pdf": "./MiseTings.Com - Some Guy Finally Gets Feature Match.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Pro Tour Player Attends PTQ_ _The Horror, The Horror_.pdf",
+      "title": "Pro Tour Player Attends PTQ — The Horror, The Horror",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Pro Tour Player Attends PTQ_ _The Horror, The Horror_.pdf",
+      "pdf": "./MiseTings.Com - Pro Tour Player Attends PTQ_ _The Horror, The Horror_.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Mike Long Admits “My Story” Complete Lie.pdf",
+      "title": "Mike Long Admits “My Story” Complete Lie",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Mike Long Admits “My Story” Complete Lie.pdf",
+      "pdf": "./MiseTings.Com - Mike Long Admits “My Story” Complete Lie.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Jesse Cornelissen Fails to Deliver.pdf",
+      "title": "Jesse Cornelissen Fails to Deliver",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Jesse Cornelissen Fails to Deliver.pdf",
+      "pdf": "./MiseTings.Com - Jesse Cornelissen Fails to Deliver.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias.pdf",
+      "title": "Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias.pdf",
+      "pdf": "./MiseTings.Com - Fuller Throws Eggs at Mr. Jenkins' Car, Stomps on Abigail's Petunias.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Cheating Scare Spawns Paranoia known as _McCarrelism_.pdf",
+      "title": "Cheating Scare Spawns Paranoia known as “McCarrelism”",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Cheating Scare Spawns Paranoia known as _McCarrelism_.pdf",
+      "pdf": "./MiseTings.Com - Cheating Scare Spawns Paranoia known as _McCarrelism_.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Bennett Informed, _Incompetence_ Not In Job Description.pdf",
+      "title": "Bennett Informed, “Incompetence” Not In Job Description",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Bennett Informed, _Incompetence_ Not In Job Description.pdf",
+      "pdf": "./MiseTings.Com - Bennett Informed, _Incompetence_ Not In Job Description.pdf"
+    },
+    {
+      "filename": "MiseTings.Com - Apprehended Shoplifter Claims Only Trying to ‘Mise’.pdf",
+      "title": "Apprehended Shoplifter Claims Only Trying to ‘Mise’",
+      "author": "MiseTings",
+      "source": "MiseTings.com",
+      "date": "2001-01-01",
+      "format": "pdf",
+      "url": "./MiseTings.Com - Apprehended Shoplifter Claims Only Trying to ‘Mise’.pdf",
+      "pdf": "./MiseTings.Com - Apprehended Shoplifter Claims Only Trying to ‘Mise’.pdf"
+    }
+  ]
+}

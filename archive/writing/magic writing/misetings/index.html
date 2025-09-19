@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiseTings Archive (2001) | WJC83</title>
+  <link rel="stylesheet" href="../../../../style.css">
+  <style>
+    body { text-align: left; }
+    .wrap { max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
+    header h1 { margin:.25rem 0 .5rem; }
+    .intro { opacity:.85; margin-bottom:1rem; }
+    .list { border-top: 2px solid var(--ink, #000); margin-top: 1rem; }
+    .item { padding:.65rem 0; border-bottom: 1px dashed rgba(0,0,0,.2); }
+    .item a { color: var(--ink, #000); text-decoration: none; font-weight: bold; }
+    .meta { font-size:.9rem; opacity:.7; }
+    .msg { padding:.5rem .75rem; border:1px solid #ddd; border-radius:6px; margin:.75rem 0; background:#f6fff6; }
+    .err { background:#fff6f6; border-color:#f1c5c5; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>MiseTings Archive (2001)</h1>
+      <p class="intro">Preserved PDFs of the 2001 MiseTings posts. HTML mirrors are optional backups.</p>
+      <p><a href="../../..">← Back to Archive</a></p>
+    </header>
+
+    <div id="status" class="msg">Loading…</div>
+    <section id="list" class="list"></section>
+  </div>
+
+  <script>
+  (async function () {
+    const status = document.getElementById('status');
+    const container = document.getElementById('list');
+
+    function safeDate(d){ return (typeof d==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : ''; }
+
+    try {
+      // manifest lives in this folder
+      const res = await fetch('./manifest.json', { cache:'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const items = Array.isArray(data.items) ? data.items.slice() : [];
+      // newest first
+      items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+      container.innerHTML = items.map(it => {
+        const href = encodeURI(String(it.url || it.pdf || it.html || '').replace(/^\.\//,'./'));
+        const fmt  = (it.format || (/\.(pdf)$/i.test(href) ? 'pdf':'text')).toUpperCase();
+        const date = safeDate(it.date);
+        const title= it.title || it.filename || 'Untitled';
+        const pills = [
+          it.url  ? `<a href="${encodeURI(it.url)}" target="_blank" rel="noopener">Open</a>` : '',
+          it.pdf  ? `<a href="${encodeURI(it.pdf)}" target="_blank" rel="noopener">PDF</a>`   : '',
+          it.html ? `<a href="${encodeURI(it.html)}" target="_blank" rel="noopener">HTML</a>` : ''
+        ].filter(Boolean).join(' · ');
+
+        return `
+          <div class="item">
+            <div><a href="${href}" target="_blank" rel="noopener">${title}</a></div>
+            <div class="meta">${[date, fmt].filter(Boolean).join(' • ')}${it.blurb ? ' — ' + it.blurb : ''}</div>
+            ${pills ? `<div class="meta">${pills}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      status.textContent = `Loaded ${items.length} items.`;
+    } catch (err) {
+      console.error(err);
+      status.classList.add('err');
+      status.textContent = `Error loading manifest: ${err.message}`;
+    }
+  })();
+  </script>
+</body>
+</html>

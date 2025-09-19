@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 /**
  * Usage:
  *   node tools/clean-article.js "<inputSavedHtml>" <category> <date:YYYY-MM-DD> <slug>
  *
  * Example:
- *   node tools/clean-article.js "imports/Digital Exile_ How I Got Banned for Life from AirBnB _ by Jackson Cunningham _ Medium.html" criticism 2018-07-18 digital-exile
+ *   node tools/clean-article.js "imports/The End of the Magic_ The Gathering Pro Tour _ TCGplayer.html" magic-writing 2020-03-18 end-of-pro-tour
  */
 const fs = require('fs');
 const path = require('path');
@@ -11,6 +12,7 @@ const { JSDOM } = require('jsdom');
 const sanitizeHtml = require('sanitize-html');
 const slugify = require('slugify');
 
+/* ------------ args & paths ------------ */
 const [,, inputHtmlPath, category, dateStr, slugArg] = process.argv;
 if (!inputHtmlPath || !category || !dateStr || !slugArg) {
   console.error('Usage: node tools/clean-article.js "<inputSavedHtml>" <category> <date:YYYY-MM-DD> <slug>');
@@ -24,8 +26,8 @@ const inputDir       = path.dirname(inputHtmlPath);
 const inputBase      = path.basename(inputHtmlPath, '.html');
 const savedAssetsDir = path.join(inputDir, inputBase + '_files');
 
-const outHtmlDir   = path.join(siteRoot, 'archive', 'writing', category);
-const outHtmlPath  = path.join(outHtmlDir, `${dateStr}-${slug}.html`);
+const outHtmlDir   = path.join(siteRoot, 'archive', 'writing', category, `${dateStr}-${slug}`);
+const outHtmlPath  = path.join(outHtmlDir, 'index.html');
 const outAssetsDir = path.join(siteRoot, 'assets', category, slug);
 
 fs.mkdirSync(outHtmlDir, { recursive: true });
@@ -34,8 +36,7 @@ fs.mkdirSync(outAssetsDir, { recursive: true });
 const read  = (p) => fs.readFileSync(p, 'utf8');
 const write = (p, s) => fs.writeFileSync(p, s, 'utf8');
 
-/* ---------------- helpers ---------------- */
-
+/* ------------ helpers ------------ */
 function cleanUrlParams(u) {
   try {
     const url = new URL(u, 'https://example.com');
@@ -48,11 +49,10 @@ function cleanUrlParams(u) {
 }
 
 function detectSource(document) {
-  const host = (document.location && document.location.host) || '';
+  const host   = (document.location && document.location.host) || '';
   const ogSite = document.querySelector('meta[property="og:site_name"]')?.content?.toLowerCase() || '';
   const app    = document.querySelector('meta[name="application-name"]')?.content?.toLowerCase() || '';
   const title  = (document.querySelector('title')?.textContent || '').toLowerCase();
-
   const str = [host, ogSite, app, title].join(' | ');
   if (/medium\.com|medium/i.test(str)) return 'medium';
   if (/starcitygames|star city/i.test(str)) return 'starcity';
@@ -69,46 +69,40 @@ function pickArticleNode(document) {
     '#root article',
     '#rendered-content',
     '[role="main"] article',
-    '.content article',
+    '.content article'
   ];
   for (const sel of candidates) {
     const el = document.querySelector(sel);
     if (el && el.textContent.trim().length > 100) return el;
   }
-  // Fallback: heaviest text block
+  // Fallback: largest text block
   let best = null;
-  [...document.querySelectorAll('article, main, #content, .content, .container, div')]
-    .forEach(el => {
-      const len = (el.textContent || '').trim().length;
-      if (!best || len > best.len) best = { el, len };
-    });
+  [...document.querySelectorAll('article, main, #content, .content, .container, div')].forEach(el => {
+    const len = (el.textContent || '').trim().length;
+    if (!best || len > best.len) best = { el, len };
+  });
   return best ? best.el : document.body;
 }
 
 function normalizeInline(document, el) {
-  // b/i → strong/em
   el.querySelectorAll('b').forEach(n => { const s = document.createElement('strong'); s.innerHTML = n.innerHTML; n.replaceWith(s); });
   el.querySelectorAll('i').forEach(n => { const e = document.createElement('em');    e.innerHTML = n.innerHTML; n.replaceWith(e); });
 
-  // images: drop width/height/srcset, clean query junk
   el.querySelectorAll('img').forEach(img => {
     img.removeAttribute('width'); img.removeAttribute('height'); img.removeAttribute('srcset');
     const src = img.getAttribute('src'); if (src) img.setAttribute('src', cleanUrlParams(src));
   });
 
-  // links: strip trackers, open new tab
   el.querySelectorAll('a[href]').forEach(a => {
     a.setAttribute('href', cleanUrlParams(a.getAttribute('href')));
     a.setAttribute('target','_blank'); a.setAttribute('rel','noopener');
   });
 
-  // generic junk
   el.querySelectorAll('script, iframe, noscript, style').forEach(n => n.remove());
 }
 
-/** Remove site-specific cruft but keep core content. */
 function removeCruft(document, rootEl, source) {
-  // Common wrappers/ads/related across sites
+  // Generic junk
   rootEl.querySelectorAll([
     '.related', '.recommendations', '.newsletter', '.newsletter-signup',
     '.ad', '.ads', '.advert', '.advertisement', '[class*="ad-"]',
@@ -117,28 +111,24 @@ function removeCruft(document, rootEl, source) {
     '.promo', '.sticky', '.cookie', '.consent'
   ].join(',')).forEach(n => n.remove());
 
-  // Medium
   if (source === 'medium') {
     rootEl.querySelectorAll([
       'aside',
       'footer',
       '[data-test-id="related"]',
       '[data-test-id="subscribe"]',
-      'header + div' // top social strip sometimes saved
+      'header + div'
     ].join(',')).forEach(n => n.remove());
   }
 
-  // StarCityGames: keep article, decklists; drop sidebars/market cruft
   if (source === 'starcity') {
     rootEl.querySelectorAll([
       '.article-sidebar', '.article-actions', '.article-meta .share',
       '.marketplace-cta', '.scg-shop', '.related-articles',
       '.author-social', '.author-follow'
     ].join(',')).forEach(n => n.remove());
-    // do NOT remove decklists
   }
 
-  // TCGplayer
   if (source === 'tcgplayer') {
     rootEl.querySelectorAll([
       '.card-marketplace', '.marketplace-cta', '.related-articles',
@@ -146,32 +136,26 @@ function removeCruft(document, rootEl, source) {
     ].join(',')).forEach(n => n.remove());
   }
 
-  // Text-based interstitials (keep to text nodes only; don't remove containers)
-  rootEl.querySelectorAll('p, span, div').forEach(el => {
+  // Text-based cruft
+  rootEl.querySelectorAll('p, div, span').forEach(el => {
     const t = (el.textContent || '').trim();
     if (!t) return;
-
-    // Medium/Generic junk
     if (/^follow$/i.test(t)) el.remove();
     if (/^listen$/i.test(t)) el.remove();
     if (/^share$/i.test(t)) el.remove();
     if (/subscribe|stories in your inbox/i.test(t)) el.remove();
     if (/press enter|click to view image/i.test(t)) el.remove();
     if (/highlighted/i.test(t)) el.remove();
-
-    // orphaned counters (numbers or numbers with K/M)
-    if (/^\d+(\.\d+)?[kKmM]?$/.test(t)) el.remove();
+    if (/^\d+(\.\d+)?[kKmM]?$/.test(t)) el.remove(); // orphaned counts like 310K
   });
 }
 
 function rewriteAndCopyAssets(rootEl) {
   const replaced = new Map();
-
   function relink(attr, el) {
     const val = el.getAttribute(attr);
     if (!val || /^https?:\/\//i.test(val) || val.startsWith('data:')) return;
 
-    // Try resolve to actual saved file
     let sourcePath = val;
     const asInputRel = path.join(path.dirname(inputHtmlPath), sourcePath);
     const asFilesRel = path.join(savedAssetsDir, path.basename(sourcePath));
@@ -195,35 +179,33 @@ function rewriteAndCopyAssets(rootEl) {
   rootEl.querySelectorAll('link[rel="stylesheet"][href]').forEach(el => relink('href', el));
 }
 
-/* ---------------- run ---------------- */
-
+/* ------------ run ------------ */
 const raw = read(inputHtmlPath);
 const dom = new JSDOM(raw);
 const { document } = dom.window;
 
-const source     = detectSource(document);
-let   title      = (document.querySelector('title')?.textContent || '').trim() || slug.replace(/-/g, ' ');
+const source = detectSource(document);
+let title = (document.querySelector('title')?.textContent || '').trim();
+if (!title) title = slug.replace(/-/g, ' ');
 
-// Extract → normalize → remove cruft
 let articleNode = pickArticleNode(document).cloneNode(true);
 normalizeInline(document, articleNode);
 removeCruft(document, articleNode, source);
 
-// Safety fallback: if too little remains, re-extract without cruft removal
+// Fallback if we accidentally nuked too much
 const hasUseful =
   (articleNode.textContent || '').trim().length >= 200 ||
   articleNode.querySelectorAll('img, p, h2, h3, h4, blockquote, pre, figure, table, li').length >= 3;
-
 if (!hasUseful) {
   const fresh = pickArticleNode(document).cloneNode(true);
   normalizeInline(document, fresh);
   articleNode = fresh;
 }
 
-// Assets → copy & rewrite paths
+// Copy assets & rewrite paths
 rewriteAndCopyAssets(articleNode);
 
-// Sanitize to safe minimal HTML (but allow lists/tables/decklists)
+// Sanitize
 const cleaned = sanitizeHtml(articleNode.innerHTML, {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat([
     'img','figure','figcaption',
@@ -240,16 +222,15 @@ const cleaned = sanitizeHtml(articleNode.innerHTML, {
   allowedSchemes: ['http','https','data','mailto']
 });
 
-// Inject into your site template
-const template   = read(templatePath);
-const sourceHost = (new URL(document.location?.href || 'https://example.com')).host || 'Original Source';
-const outHtml    = template
+// Template → out
+const template = read(templatePath);
+const outHtml = template
   .replaceAll('{{TITLE}}',  title)
-  .replaceAll('{{SOURCE}}', sourceHost)
+  .replaceAll('{{SOURCE}}', (document.location && document.location.host) || 'Original Source')
   .replace('{{BODY}}',      cleaned);
 
 write(outHtmlPath, outHtml);
 
 console.log('✓ Source detected:', source);
-console.log('✓ Clean HTML written:', path.relative(siteRoot, outHtmlPath));
-console.log('✓ Assets copied to  :', path.relative(siteRoot, outAssetsDir));
+console.log('✓ Wrote:', path.relative(siteRoot, outHtmlPath));
+console.log('✓ Assets →', path.relative(siteRoot, outAssetsDir));
