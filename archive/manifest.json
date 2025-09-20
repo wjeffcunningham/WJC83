@@ -114,6 +114,7 @@
       "school": "",
       "grade": ""
     },
+
     {
       "bucket": "writing",
       "category": "criticism",
@@ -153,42 +154,40 @@
       "external": "",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
     },
-{
-  "bucket": "writing",
-  "category": "magic-writing",
-  "title": "The End of the Magic: The Gathering Pro Tour",
-  "date": "2020-03-18",
-  "tier": 3,
-  "blurb": "TCGplayer column on the curtain call for the Pro Tour era. Local mirror with ads/cruft removed; PDF fallback included.",
-  "path": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-  "path_html": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-  "pdf": "archive/writing/magic writing/2020-03-18-end-of-pro-tour.pdf",
-  "external": "",
-  "thumbnail": "assets/thumbs/tcgplayer.png"
-},
-{
-  "bucket": "writing",
-  "category": "magic-writing",
-  "title": "Lands and Spells",
-  "date": "2019-12-27",
-  "tier": 3,
-  "blurb": "TCGplayer strategy piece introducing the Lands/Spells framework. Local mirror with ads/cruft removed; PDF fallback included.",
-  "path": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
-  "path_html": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
-  "pdf": "archive/writing/magic writing/2019-12-27-lands-and-spells.pdf",
-  "external": "",
-  "thumbnail": "assets/thumbs/lands-spells.jpg"
-},
+
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "The End of the Magic: The Gathering Pro Tour",
+      "date": "2020-03-18",
+      "tier": 3,
+      "blurb": "TCGplayer column on the curtain call for the Pro Tour era. Local mirror with ads/cruft removed.",
+      "path": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
+      "path_html": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
+      "thumbnail": "assets/thumbs/tcgplayer.png"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Lands and Spells",
+      "date": "2019-12-27",
+      "tier": 3,
+      "blurb": "TCGplayer strategy piece introducing the Lands/Spells framework. Local mirror with ads/cruft removed.",
+      "path": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
+      "path_html": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
+      "thumbnail": "assets/thumbs/lands-spells.jpg"
+    },
     {
       "bucket": "writing",
       "category": "magic-writing",
       "title": "Untold Legends of the $1,000,000 Pro Tour",
       "date": "2019-02-01",
-      "tier": 1,
+      "tier": 3,
       "blurb": "HTML • 2019-02-01 • archive/writing/magic writing/untold-legends.html",
       "path": "archive/writing/magic writing/untold-legends.html",
       "thumbnail": "assets/thumbs/untold.jpg"
     },
+
     {
       "bucket": "writing",
       "category": "magic-writing",
@@ -214,13 +213,37 @@
     {
       "bucket": "writing",
       "category": "magic-writing",
-      "title": "Interview with Richard Garfield",
-      "date": "2009-01-01",
-      "tier": 1,
-      "blurb": "HTML • 2009-01-01 • archive/writing/magic writing/richard-garfield.html",
-      "path": "archive/writing/magic writing/richard-garfield.html",
-      "thumbnail": "assets/thumbs/garfield.jpg"
+      "subcategory": "magic-academy",
+      "title": "Magic Academy Archive (2006–2007)",
+      "date": "2007-08-04",
+      "tier": 3,
+      "blurb": "31-part beginner series for WotC. PDF mirrors; newest first.",
+      "path": "archive/writing/magic writing/magic academy/index.html",
+      "thumbnail": "assets/thumbs/magic-academy.png"
     },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "subcategory": "week-in-review",
+      "title": "Week in Review (Sideboard) Archive",
+      "date": "2003-07-09",
+      "tier": 3,
+      "blurb": "Sideboard.com ‘Week in Review’ columns with PDF mirrors and Wayback links.",
+      "path": "archive/writing/magic writing/week-in-review/index.html",
+      "thumbnail": "assets/thumbs/sideboard.png"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "subcategory": "starcitygames",
+      "title": "Star City Games Archive (2004–2018)",
+      "date": "2018-03-01",
+      "tier": 3,
+      "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
+      "path": "archive/writing/magic writing/starcitygames/index.html",
+      "thumbnail": "assets/thumbs/scg.png"
+    },
+
     {
       "bucket": "old-movies",
       "category": "misc",

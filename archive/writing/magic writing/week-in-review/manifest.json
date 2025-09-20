@@ -1,0 +1,82 @@
+{
+  "collection": "Week in Review (Sideboard)",
+  "items": [
+    {
+      "order": 400,
+      "filename": "Giant-Sized Week in Review: June 18-July 1.pdf",
+      "title": "Giant-Sized Week in Review: June 18–July 1",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-07-03",
+      "format": "pdf",
+      "url": "./Giant-Sized Week in Review: June 18-July 1.pdf",
+      "external": "https://web.archive.org/web/20030729214125/http://www.wizards.com/default.asp?x=sideboard/feature/20030703a"
+    },
+    {
+      "order": 395,
+      "filename": "Week in Review: July 2-8.pdf",
+      "title": "Week in Review: July 2–8",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-07-09",
+      "format": "pdf",
+      "url": "./Week in Review: July 2-8.pdf",
+      "external": "https://web.archive.org/web/20030805015050/http://www.wizards.com/default.asp?x=sideboard/wir/20030709"
+    },
+    {
+      "order": 390,
+      "filename": "Week in Review: June 11-17.pdf",
+      "title": "Week in Review: June 11–17",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-06-18",
+      "format": "pdf",
+      "url": "./Week in Review: June 11-17.pdf",
+      "external": "https://web.archive.org/web/20030626034107/http://www.wizards.com/default.asp?x=sideboard/wir/20030618"
+    },
+    {
+      "order": 385,
+      "filename": "Week in Review: June 4-10.pdf",
+      "title": "Week in Review: June 4–10",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-06-11",
+      "format": "pdf",
+      "url": "./Week in Review: June 4-10.pdf",
+      "external": "https://web.archive.org/web/20030813052914/http://www.wizards.com/default.asp?x=sideboard/wir/20030611"
+    },
+    {
+      "order": 380,
+      "filename": "Week in Review: May 27-June 3.pdf",
+      "title": "Week in Review: May 27–June 3",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-06-05",
+      "format": "pdf",
+      "url": "./Week in Review: May 27-June 3.pdf",
+      "external": "https://web.archive.org/web/20030704215035/http://wizards.com/default.asp?x=sideboard/wir/20030605a"
+    },
+    {
+      "order": 370,
+      "filename": "Chewing the Fat: Scourge.pdf",
+      "title": "Chewing the Fat: Scourge",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-06-06",
+      "format": "pdf",
+      "url": "./Chewing the Fat: Scourge.pdf",
+      "external": "https://web.archive.org/web/20030627031254/http://wizards.com/default.asp?x=sideboard/feature/20030606a"
+    },
+    {
+      "order": 360,
+      "filename": "Inside Magic Colony.pdf",
+      "title": "Inside Magic Colony",
+      "author": "Jeff Cunningham",
+      "source": "Sideboard.com",
+      "date": "2003-05-29",
+      "format": "pdf",
+      "url": "./Inside Magic Colony.pdf",
+      "external": "https://web.archive.org/web/20030703160628/http://www.wizards.com/default.asp?x=sideboard/feature/20030529a"
+    }
+  ]
+}

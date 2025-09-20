@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Academy Archive | WJC83</title>
+  <link rel="stylesheet" href="../../../../style.css">
+  <style>
+    body { text-align: left; }
+    .wrap { max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
+    header h1 { margin:.25rem 0 .5rem; }
+    .intro { opacity:.85; margin-bottom:1rem; }
+    .list { border-top: 2px solid var(--ink, #000); margin-top: 1rem; }
+    .item { padding:.65rem 0; border-bottom: 1px dashed rgba(0,0,0,.2); }
+    .item a { color: var(--ink, #000); text-decoration: none; font-weight: bold; }
+    .meta { font-size:.9rem; opacity:.7; }
+    .msg { padding:.5rem .75rem; border:1px solid #ddd; border-radius:6px; margin:.75rem 0; background:#f6fff6; }
+    .err { background:#fff6f6; border-color:#f1c5c5; }
+    /* link pills (uses same look as archive index) */
+    .pills { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.35rem; }
+    .pills a { display:inline-block; padding:.25rem .55rem; border:1px solid rgba(0,0,0,.12); border-radius:999px; font-size:.85rem; text-decoration:none; color:var(--ink); }
+    .pills a:hover { background: rgba(0,0,0,.04); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Magic Academy Archive</h1>
+      <p class="intro">PDF mirrors of Jeff Cunningham’s <em>Magic Academy</em> series (Wizards of the Coast, 2006–2007). Most recent first.</p>
+      <p><a href="../../..">← Back to Archive</a></p>
+    </header>
+
+    <div id="status" class="msg">Loading…</div>
+    <section id="list" class="list"></section>
+  </div>
+
+  <script>
+  (async function () {
+    const status = document.getElementById('status');
+    const container = document.getElementById('list');
+
+    const pillRow = (it) => {
+      const pills = [];
+      if (it.url) pills.push(`<a href="${it.url}" target="_blank" rel="noopener">PDF</a>`);
+      if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+      return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
+    };
+
+    try {
+      const res = await fetch('./manifest.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const items = Array.isArray(data.items) ? data.items.slice() : [];
+      // Sort by explicit 'order' (desc), falling back to date if present
+      items.sort((a,b) => {
+        const ao = Number(b.order||0) - Number(a.order||0);
+        if (ao !== 0) return ao;
+        const da = (b.date||'').localeCompare(a.date||'');
+        if (da !== 0) return da;
+        return (a.title||'').localeCompare(b.title||'');
+      });
+
+      container.innerHTML = items.map(it => `
+        <div class="item">
+          <div><a href="${it.url || it.external || '#'}" target="_blank" rel="noopener">${it.title || it.filename}</a></div>
+          <div class="meta">${[it.date || '', it.source || ''].filter(Boolean).join(' • ')}</div>
+          ${pillRow(it)}
+        </div>
+      `).join('');
+
+      status.textContent = `Loaded ${items.length} items.`;
+    } catch (err) {
+      console.error(err);
+      status.classList.add('err');
+      status.textContent = `Error loading manifest: ${err.message}`;
+    }
+  })();
+  </script>
+</body>
+</html>
