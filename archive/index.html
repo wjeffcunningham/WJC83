@@ -11,8 +11,7 @@
     .ok { background: rgba(0,255,0,.06); }
     .err { background: rgba(255,0,0,.06); }
 
-    details { margin: 1rem 0; }
-    summary { font-weight: 700; cursor: pointer; }
+    /* Keep list & card cosmetics; leave details/summary to .archive rules in style.css */
     h3 { margin:.9rem 0 .35rem; font-size:1.05rem; }
     h4 { margin:.5rem 0 .25rem; font-size:.95rem; opacity:.85 }
     ul { list-style: none; padding-left: 0; margin: .25rem 0 1rem; }
@@ -22,7 +21,7 @@
     .cat-blurb { font-size:.9rem; opacity:.75; margin:.1rem 0 .35rem; }
     .school { font-size:.85rem; opacity:.85; margin-top:.25rem; }
 
-    /* Tier-2 enhanced card (base hover/other styles live in style.css) */
+    /* Tier-2 enhanced card */
     .item.tier-2 { border-color:#e7e7ef; background:#fcfcff; box-shadow:0 2px 10px rgba(0,0,0,.05); }
     .item.tier-2 .row { display:grid; grid-template-columns: 96px 1fr; gap:.85rem; align-items:center; }
     .item.tier-2 .thumb { width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
@@ -38,17 +37,27 @@
   <main class="wrap" id="app">
     <div class="msg ok" id="status">HTML loaded. Waiting for JS…</div>
 
-    <details open data-bucket="writing">
-      <summary>Writing</summary>
-      <div class="bucket-blurb" id="blurb-writing"></div>
-      <div id="bucket-writing"></div>
-    </details>
+    <section class="archive">
+      <details open data-bucket="writing">
+        <summary>
+          <span class="chev" aria-hidden="true"></span>
+          <span class="title">Writing</span>
+          <span class="meta"><span class="count" id="count-writing">—</span></span>
+        </summary>
+        <div class="bucket-blurb" id="blurb-writing"></div>
+        <div id="bucket-writing"></div>
+      </details>
 
-    <details data-bucket="old-movies">
-      <summary>Old Movies</summary>
-      <div class="bucket-blurb" id="blurb-old-movies"></div>
-      <div id="bucket-old-movies"></div>
-    </details>
+      <details data-bucket="old-movies">
+        <summary>
+          <span class="chev" aria-hidden="true"></span>
+          <span class="title">Old Movies</span>
+          <span class="meta"><span class="count" id="count-old-movies">—</span></span>
+        </summary>
+        <div class="bucket-blurb" id="blurb-old-movies"></div>
+        <div id="bucket-old-movies"></div>
+      </details>
+    </section>
   </main>
 
   <script>
@@ -63,11 +72,11 @@
       const statusEl = $('#status');
       const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies') };
       const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'old-movies': $('#blurb-old-movies') };
+      const countEls = { 'writing': $('#count-writing'), 'old-movies': $('#count-old-movies') };
 
       const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
 
       const effectiveTier = (it) => {
-        // Boost these Tier-4 subcats to show as Tier-3 on the front page
         const sub = (it.subcategory || '').toLowerCase();
         const boost = new Set(['dojo','misetings','magic-academy','week-in-review']);
         if (boost.has(sub) && it.tier === 4) return 3;
@@ -135,6 +144,7 @@
       function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
         const target = bucketEls[bucketKey];
         const blurb  = bucketBlurbEl[bucketKey];
+        const counter = countEls[bucketKey];
         if (!target) return;
 
         blurb.textContent = bucketMeta?.blurb || '';
@@ -149,6 +159,7 @@
         }
 
         const frag = document.createDocumentFragment();
+        let bucketCount = 0;
 
         for (const [cat, subMap] of Object.entries(grouped)) {
           const sec = document.createElement('section');
@@ -164,6 +175,7 @@
 
           for (const [sub, arr] of Object.entries(subMap)) {
             arr.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+            bucketCount += arr.length;
             if (sub) {
               const h4 = document.createElement('h4');
               h4.textContent = sub.replace(/-/g, ' ').replace(/\b\w/g, m=>m.toUpperCase());
@@ -179,6 +191,7 @@
 
         target.innerHTML = '';
         target.appendChild(frag);
+        if (counter) counter.textContent = String(bucketCount);
       }
 
       async function loadJSON(url){

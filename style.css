@@ -129,3 +129,109 @@ li.item .title a:hover { text-decoration: underline; }
   background: rgba(0,0,0,.04);
 }
 
+/* ===== Archive Accordion Polish (Phase 2) ===== */
+
+/* Scoped variables for the archive only */
+.archive{
+  --muted-ink: color-mix(in oklab, var(--ink) 70%, white 30%);
+  --accent: #1a7f64;
+  --hair: color-mix(in oklab, var(--ink) 15%, white 85%);
+  --radius: 14px;
+  --shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+/* Base container rhythm */
+.archive { 
+  max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem;
+}
+
+/* Details/summary reset */
+.archive details {
+  border-bottom: 1px dashed var(--hair);
+  padding: .25rem 0 .75rem;
+}
+.archive summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1.25rem 1fr auto;
+  align-items: center;
+  gap: .6rem;
+  padding: .5rem 0;
+  font-weight: 620;
+  color: var(--ink);
+  outline: none;
+}
+.archive summary::-webkit-details-marker { display: none; }
+
+/* Custom chevron */
+.archive .chev {
+  width: .6rem; height: .6rem;
+  border-right: 2px solid var(--muted-ink);
+  border-bottom: 2px solid var(--muted-ink);
+  transform: rotate(-45deg) translateY(-1px);
+  transition: transform .18s ease, border-color .18s ease;
+}
+.archive details[open] .chev {
+  transform: rotate(45deg) translateY(0);
+  border-color: var(--accent);
+}
+
+/* Title & meta */
+.archive .title { line-height: 1.25; }
+.archive .meta { justify-self: end; font-size: .9rem; color: var(--muted-ink); opacity: .9; }
+
+/* Hover/active */
+.archive summary:hover .title { text-decoration: underline; text-decoration-thickness: .08em; }
+.archive summary:active .title { opacity: .85; }
+
+/* Focus-visible */
+.archive summary:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+  border-radius: var(--radius);
+}
+
+/* Panel reveal */
+.archive .panel {
+  margin-left: calc(1.25rem + .6rem);
+  padding: .35rem 0 .25rem;
+  display: grid;
+  gap: .35rem;
+}
+@media (prefers-reduced-motion: no-preference){
+  .archive details[open] .panel { animation: accord .18s ease; }
+  @keyframes accord { from { opacity: 0; translate: 0 -4px; } to { opacity: 1; translate: 0 0; } }
+}
+
+/* Items */
+.archive .item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .5rem;
+  padding: .5rem .6rem;
+  background: color-mix(in oklab, white 92%, var(--accent) 8%);
+  border: 1px solid color-mix(in oklab, var(--accent) 20%, white 80%);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.archive .item a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.archive .tags { place-self: start end; font-size: .8rem; color: var(--muted-ink); opacity: .85; }
+
+/* Optional count badge */
+.archive .count {
+  background: color-mix(in oklab, var(--accent) 12%, white 88%);
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, white 75%);
+  font-size: .75rem; padding: .15rem .45rem; border-radius: 999px;
+}
+
+/* Dark mode tweaks */
+@media (prefers-color-scheme: dark){
+  .archive{
+    --hair: color-mix(in oklab, black 60%, white 40%);
+    --shadow: 0 6px 18px rgba(0,0,0,.25);
+  }
+  .archive .item {
+    background: color-mix(in oklab, black 88%, var(--accent) 12%);
+    border-color: color-mix(in oklab, var(--accent) 40%, black 60%);
+  }
+}
