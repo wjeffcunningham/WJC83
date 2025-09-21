@@ -50,7 +50,7 @@
       "title": "On the Discursive Intellect's Use of Phantasms in Aquinas's Theory of Cognition",
       "date": "2016-01-11",
       "tier": 3,
-      "blurb": "PDF • 2016-01-11 • archive/writing/academic/2016-01-11-aquinas-in-context.pdf",
+      "blurb": "Does Aristotle ",
       "path": "archive/writing/academic/2016-01-11-aquinas-in-context.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Robiglio",
@@ -67,10 +67,10 @@
       "blurb": "PDF • 2015-08-31 • archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
       "path": "archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
-      "professors": "",
+      "professors": "Friedman; Steel",
       "course": "",
       "school": "",
-      "grade": ""
+      "grade": "16"
     },
     {
       "bucket": "writing",
@@ -78,13 +78,13 @@
       "title": "On the Role and Significance of Δύναμις / Ἐνέργεια κατὰ κίνησιν in Aristotle's Sublunar Natural Ontology",
       "date": "2015-08-26",
       "tier": 3,
-      "blurb": "PDF • 2015-08-26 • archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
+      "blurb": "Why does Aristotle, contra the Megarians, insist on the irreducibility of the Δύναμις/Ἐνέργεια κατὰ κίνησιν distinction?",
       "path": "archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
-      "professors": "",
+      "professors": "Techtmeyer",
       "course": "",
-      "school": "",
-      "grade": ""
+      "school": "KU Leuven",
+      "grade": "16"
     },
     {
       "bucket": "writing",
@@ -92,13 +92,13 @@
       "title": "On Phantasia's Tactual Aspect",
       "date": "2015-01-03",
       "tier": 3,
-      "blurb": "PDF • 2015-01-03 • archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
-      "path": "archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
+      "blurb": "How do we record sense memory, according to Aristotle?",
+      "path": "",
       "thumbnail": "assets/thumbs/pdf.png",
-      "professors": "",
+      "professors": "Steel; Friedman",
       "course": "",
-      "school": "",
-      "grade": ""
+      "school": "KU Leuven",
+      "grade": "16"
     },
     {
       "bucket": "writing",
@@ -109,9 +109,9 @@
       "blurb": "PDF • 2013-06-05 • archive/writing/academic/2013-06-05-strauss-UHS.pdf",
       "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
-      "professors": "",
-      "course": "",
-      "school": "",
+      "professors": "Darby",
+      "course": "POLI 3709",
+      "school": "Carleton",
       "grade": ""
     },
 
@@ -121,7 +121,7 @@
       "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
       "date": "2023-05-01",
       "tier": 3,
-      "blurb": "Unpublished draft; on tone, authorship, and manufacturing consent.",
+      "blurb": "In today's cynical world, what even constitutes poor taste?",
       "path": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
       "path_html": "archive/writing/criticism/2023-05-01-big-ick-energy.html",
       "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
@@ -147,7 +147,7 @@
       "title": "Digital Exile: How I Got Banned For Life From AirBnB",
       "date": "2018-07-18",
       "tier": 3,
-      "blurb": "Second most-read Medium piece; mirrored locally.",
+      "blurb": "Second most-read Medium article, ever.",
       "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
       "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
       "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
@@ -172,7 +172,7 @@
       "title": "Lands and Spells",
       "date": "2019-12-27",
       "tier": 3,
-      "blurb": "TCGplayer strategy piece introducing the Lands/Spells framework. Local mirror with ads/cruft removed.",
+      "blurb": "On any given Sunday, all he needed was any reasonable seven. Prelude to the finale. [Under Construction]",
       "path": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
       "path_html": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
       "thumbnail": "assets/thumbs/lands-spells.jpg"
