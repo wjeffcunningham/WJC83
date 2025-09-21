@@ -86,16 +86,16 @@
       "school": "KU Leuven",
       "grade": "16"
     },
-    {
+        {
       "bucket": "writing",
       "category": "academic",
       "title": "On Phantasia's Tactual Aspect",
       "date": "2015-01-03",
       "tier": 3,
       "blurb": "How do we record sense memory, according to Aristotle?",
-      "path": "",
+      "path": "archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
-      "professors": "Steel; Friedman",
+      "professors": "Techtmeyer",
       "course": "",
       "school": "KU Leuven",
       "grade": "16"
