@@ -27,6 +27,14 @@
     .item.tier-2 .thumb { width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
     .item .title a { color: var(--ink, #111); text-decoration: none; font-weight: 600; }
     .item .title a:hover { text-decoration: underline; }
+
+    /* Folder styling */
+    .folder-item .title {
+      display:flex; align-items:center; gap:.35rem;
+      font-style: italic; color: var(--muted-ink, #666);
+    }
+    .folder-item .title a { font-style: italic; color: var(--muted-ink, #666); text-decoration:none; }
+    .folder-item .title a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -91,16 +99,35 @@
         return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
       }
 
+      // === SINGLE canonical item renderer (folder-aware) ===
       function itemLI(it){
         const etier = effectiveTier(it);
         const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
-        const primary = (it.path_html || it.path || it.pdf || '').replace(/^\/*/, '');
-        const href  = primary;
-        const date  = prettyDate(it.date);
-        const isAcademic = (it.category||'') === 'academic';
-        const schoolLine = isAcademic && it.school ? `<div class="school">School: ${it.school}</div>` : '';
-        const pills = linkPills(it, href);
 
+        const primary = (it.path_html || it.path || it.pdf || '').replace(/^\/*/, '');
+        const href  = primary && !it.nolink ? primary : '';
+        const date  = prettyDate(it.date);
+        const metaBits = [date];
+
+        if ((it.category||'') === 'academic' && it.school) metaBits.push(it.school);
+        if (it.type === 'folder') metaBits.push('Folder');
+        if (it.type === 'video')  metaBits.push('Video');
+
+        const metaLine = metaBits.filter(Boolean).join(' • ');
+
+        // Folders
+        if (it.type === 'folder') {
+          return `
+            <li class="item folder-item">
+              <div class="title">
+                📁 ${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}
+              </div>
+              <div class="meta">${metaLine}</div>
+            </li>
+          `;
+        }
+
+        // Tier-2 cards
         if (etier === 2) {
           const thumb = it.thumbnail ? `<img class="thumb" src="/${it.thumbnail}" alt="">` : '<div></div>';
           return `
@@ -109,34 +136,20 @@
                 ${thumb}
                 <div>
                   <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
-                  <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
+                  <div class="meta">${metaLine}</div>
                   ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-                  ${schoolLine}
-                  ${pills}
                 </div>
               </div>
             </li>
           `;
         }
 
-        if (etier === 4) {
-          return `
-            <li class="item">
-              <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
-              <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
-              ${schoolLine}
-              ${pills}
-            </li>
-          `;
-        }
-
+        // Default
         return `
           <li class="item">
             <div class="title">${href ? `<a href="/${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
-            <div class="meta">${[date, it.school || ''].filter(Boolean).join(' • ')}</div>
+            <div class="meta">${metaLine}</div>
             ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-            ${schoolLine}
-            ${pills}
           </li>
         `;
       }

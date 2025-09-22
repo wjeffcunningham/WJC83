@@ -235,3 +235,28 @@ li.item .title a:hover { text-decoration: underline; }
     border-color: color-mix(in oklab, var(--accent) 40%, black 60%);
   }
 }
+
+/* Special styling for folder items */
+.folder-item .title {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  font-style: italic;
+  color: var(--muted-ink, #666);
+}
+
+.folder-item .title a {
+  font-style: italic;
+  color: var(--muted-ink, #666);
+  text-decoration: none;
+}
+
+.folder-item .title a:hover {
+  text-decoration: underline;
+}
+
+/* Remove any lingering Firefox marker bullets more defensively */
+.archive summary::-moz-list-bullet { list-style: none; }
+
+/* Make summary taps feel nicer on mobile */
+.archive summary { -webkit-tap-highlight-color: transparent; }

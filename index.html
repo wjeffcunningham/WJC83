@@ -5,10 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WJC83.CA</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Cards on the landing */
+    .cards {
+      max-width: 1000px;
+      margin: 1.75rem auto 2.5rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      text-align: left;
+    }
+    .card {
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 14px;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+      display: grid;
+      gap: .5rem;
+      transition: transform .06s ease, box-shadow .15s ease;
+    }
+    .card:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.08); }
+    .card h2 { margin: 0; font-size: 1.15rem; letter-spacing: .01em; }
+    .card p { margin: 0; font-size: .95rem; opacity: .9; }
+    .badge {
+      display: inline-block;
+      font-size: .75rem;
+      padding: .15rem .5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.12);
+      color: var(--ink);
+      background: rgba(0,0,0,.04);
+    }
+    .actions { display: flex; gap: .5rem; margin-top: .35rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: .4rem .7rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid rgba(0,0,0,.12);
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .btn.primary { border-color: transparent; background: #111; color: #fff; }
+    .btn:hover { text-decoration: none; background: rgba(0,0,0,.05); }
+    .btn.primary:hover { filter: brightness(.95); }
+
+    /* Keep your simple link row for quick nav if you like */
+    .links { margin-top: 0; }
+  </style>
 </head>
 <body>
   <!-- Header -->
- <header class="site-header">
+  <header class="site-header">
     <h1 class="site-title">WJC83.CA</h1>
     <nav class="hamburger-menu">
       <button id="menu-toggle" aria-label="Menu">&#9776;</button>
@@ -24,13 +74,56 @@
     <img src="assets/hero.jpeg" alt="Hero Image">
   </section>
 
-  <!-- Links -->
-<section class="links">
-  <a href="https://www.ijpauc.net" target="_blank" rel="noopener">IJPAUC?</a>
-  <a href="https://www.vvipmedia.net" target="_blank" rel="noopener">VVIP25</a>
-  <a href="/archive">ARCHIVE</a>
-  <a href="/notes">NOTES</a>
-</section>
+  <!-- Project / Site cards -->
+  <section class="cards">
+    <!-- IJPAUC? -->
+    <article class="card">
+      <h2>IJPAUC? <span class="badge">index reserved</span></h2>
+      <p>Long-form film essay project (Spielberg, Twilight Zone, Amblin). Local index reserved; live site available.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://www.ijpauc.net" target="_blank" rel="noopener">Visit site</a>
+        <!-- Local slug reserved; create /ijpauc/index.html later -->
+        <a class="btn" href="/ijpauc/">Local index</a>
+      </div>
+    </article>
+
+    <!-- VVIP25 -->
+    <article class="card">
+      <h2>VVIP25 <span class="badge">index reserved</span></h2>
+      <p>Music + video project hub. Local index reserved; live site available.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://www.vvipmedia.net" target="_blank" rel="noopener">Visit site</a>
+        <!-- Local slug reserved; create /vvip25/index.html later -->
+        <a class="btn" href="/vvip25/">Local index</a>
+      </div>
+    </article>
+
+    <!-- Archive -->
+    <article class="card">
+      <h2>Archive</h2>
+      <p>Writing, old movies, and project materials. Accordion UI with tiers.</p>
+      <div class="actions">
+        <a class="btn primary" href="/archive/">Open Archive</a>
+      </div>
+    </article>
+
+    <!-- Notes -->
+    <article class="card">
+      <h2>Notes</h2>
+      <p>Short-form updates and scratchpad pages.</p>
+      <div class="actions">
+        <a class="btn" href="/notes/">Open Notes</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- (Optional) keep the simple link row too -->
+  <section class="links">
+    <a href="https://www.ijpauc.net" target="_blank" rel="noopener">IJPAUC?</a>
+    <a href="https://www.vvipmedia.net" target="_blank" rel="noopener">VVIP25</a>
+    <a href="/archive">ARCHIVE</a>
+    <a href="/notes">NOTES</a>
+  </section>
 
   <!-- About -->
   <section id="about" class="about">

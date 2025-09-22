@@ -64,7 +64,7 @@
       "title": "Accounting for the Reflective Shift in Aquinas's Theory of Cognition",
       "date": "2015-08-31",
       "tier": 3,
-      "blurb": "'The intellect can think about more than one thing by way of one thing but not by way of more than one thing' (ST. 85.4)",
+      "blurb": "",
       "path": "archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Friedman; Steel",
@@ -246,13 +246,89 @@
 
     {
       "bucket": "old-movies",
-      "category": "misc",
-      "title": "Production Notes (sample)",
-      "date": "2012-01-01",
-      "tier": 4,
-      "blurb": "PDF • 2012-01-01 • archive/old movies/notes/2012-notes.pdf",
-      "path": "archive/old movies/notes/2012-notes.pdf",
-      "thumbnail": "assets/thumbs/pdf.png"
+      "type": "video",
+      "category": "video",
+      "subcategory": "standalone",
+      "title": "2006 — The Construction Movie",
+      "date": "2006-01-01",
+      "path": "old-movies/2006-the-construction-movie.mov",
+      "thumbnail": "assets/thumbs/construction.jpg",
+      "tier": 2,
+      "blurb": "A campus-era featurette, centerpiece of the early work archive."
+    },
+    {
+      "bucket": "old-movies",
+      "type": "video",
+      "category": "video",
+      "subcategory": "standalone",
+      "title": "2011-02-06 — Strange Dimension",
+      "date": "2011-02-06",
+      "path": "old-movies/2011-02-06-strange-dimension.mov",
+      "tier": 3
+    },
+    {
+      "bucket": "old-movies",
+      "type": "video",
+      "category": "video",
+      "subcategory": "couch-surfing",
+      "title": "2011-10-17 — Couch Surfing e1",
+      "date": "2011-10-17",
+      "path": "old-movies/2011-10-17-couch-surfing-e1.mov",
+      "tier": 3
+    },
+    {
+      "bucket": "old-movies",
+      "type": "video",
+      "category": "video",
+      "subcategory": "couch-surfing",
+      "title": "2011-11-11 — Couch Surfing e2",
+      "date": "2011-11-11",
+      "path": "old-movies/2011-11-11-couch-surfing-e2.mov",
+      "tier": 3
+    },
+    {
+      "bucket": "old-movies",
+      "type": "video",
+      "category": "video",
+      "subcategory": "couch-surfing",
+      "title": "2011-11-11 — Couch Surfing e3",
+      "date": "2011-11-11",
+      "path": "old-movies/2011-11-11-couch-surfing-e3.mov",
+      "tier": 3
+    },
+    {
+      "bucket": "old-movies",
+      "type": "video",
+      "category": "video",
+      "subcategory": "standalone",
+      "title": "2012-01-24 — Nectar",
+      "date": "2012-01-24",
+      "path": "old-movies/2012-01-24-nectar.mov",
+      "tier": 3
+    },
+    {
+      "bucket": "old-movies",
+      "type": "folder",
+      "category": "video",
+      "subcategory": "acting",
+      "title": "acting 🔒",
+      "path": "old-movies/acting/"
+    },
+    {
+      "bucket": "old-movies",
+      "type": "folder",
+      "category": "video",
+      "subcategory": "camcorder",
+      "title": "pt houston '02 camcorder footage 🔒",
+      "path": "old-movies/pt-houston-2002-camcorder-footage/"
+    },
+    {
+      "bucket": "old-movies",
+      "type": "folder",
+      "category": "video",
+      "subcategory": "short-films",
+      "title": "short films (1999–2019) 🔒",
+      "path": "old-movies/short-films-1999-2019/"
     }
   ]
 }
