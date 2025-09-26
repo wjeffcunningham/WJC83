@@ -10,14 +10,16 @@
   <style>
     :root{
       --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
-      --wrap:720px;              /* overall column */
-      --card-w:520px;            /* button width */
+      --wrap:720px;              /* page column */
+      --card-w:520px;            /* desired max card width on desktop */
       --radius:12px; --shadow:0 6px 14px rgba(0,0,0,.08);
+      /* JS sets --hero-w to the hero frame width; cards clamp to it */
+      --hero-w: 9999px;          /* updated after image load/resize */
     }
 
     body{
       margin:0;
-      font:16px/1.5 "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+      font:17px/1.55 "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
       -webkit-font-smoothing:antialiased;
       text-rendering:optimizeLegibility;
       background:var(--paper); color:var(--ink);
@@ -27,28 +29,20 @@
       --ink:#e9e9e9; --paper:#0c0c0c; --muted:rgba(255,255,255,.66);
     }
 
-    /* ===== Header with crisp outlined Helvetica logo ===== */
+    /* ===== Header (simple, larger) ===== */
     header{
       max-width:var(--wrap); margin:.9rem auto .35rem; padding:0 .75rem;
       display:flex; align-items:center; justify-content:space-between; gap:.5rem;
     }
     .logo{
       font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight:800; font-size:1.5rem; letter-spacing:.06em;
-      line-height:1; text-transform:uppercase;
-      color:transparent; -webkit-text-fill-color:transparent;  /* hollow */
-      -webkit-text-stroke:1.4px var(--ink);                    /* crisp outline */
-      text-shadow:none;                                        /* no blur */
-      paint-order:stroke fill;
-    }
-    /* Fallback if text-stroke unsupported: just render solid text */
-    @supports not (-webkit-text-stroke: 1px){
-      .logo{ color:var(--ink); -webkit-text-fill-color:initial; }
+      font-weight:800; font-size:1.35rem; letter-spacing:.04em;
+      line-height:1; text-transform:uppercase; color:var(--ink);
     }
 
     /* Night-only indicator (owl). Hidden in day. */
     .mode-indicator{
-      display:none; /* JS will show at night only */
+      display:none; /* JS shows at night only */
       width:28px; height:28px; border-radius:999px;
       border:1px solid rgba(0,0,0,.14);
       display:grid; place-items:center;
@@ -62,46 +56,58 @@
     .hero-wrap{ max-width:var(--wrap); margin:.35rem auto .9rem; padding:0 .75rem; text-align:center; }
     .hero-frame{
       border:1px solid rgba(0,0,0,.1); border-radius:14px;
-      background:#fff; box-shadow:var(--shadow); display:inline-block;
+      background:#fff; box-shadow:var(--shadow);
+      display:inline-block; /* hugs the image so we can match card width to this */
     }
     body.dark .hero-frame{ background:#111; border-color:rgba(255,255,255,.14) }
     .hero{ display:block; max-width:100%; height:auto; border-radius:12px }
 
     /* ===== STACKED cards ===== */
-    .stack{ max-width:var(--wrap); margin:.5rem auto 1.3rem; padding:0 .75rem; display:grid; grid-template-columns:1fr; gap:.9rem }
+    .stack{
+      max-width:var(--wrap);
+      margin:.5rem auto 1.3rem; padding:0 .75rem;
+      display:grid; grid-template-columns:1fr; gap:.9rem;
+    }
     .card{
-      width:100%; max-width:var(--card-w); margin:0 auto;
+      width:100%;
+      /* never exceed hero width; also cap at desktop max */
+      max-width: min(var(--card-w), var(--hero-w));
+      margin:0 auto;
+
       border:1px solid rgba(0,0,0,.08); border-radius:var(--radius);
-      padding:.8rem; background:#fff; box-shadow:var(--shadow);
-      display:grid; grid-template-columns:100px 1fr; gap:.85rem; align-items:center;
+      padding:.9rem; background:#fff; box-shadow:var(--shadow);
+      display:grid; grid-template-columns:106px 1fr; gap:.95rem; align-items:center;
       text-decoration:none; color:inherit;
     }
     body.dark .card{ background:#121212; border-color:rgba(255,255,255,.08) }
     .thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; background:#ddd }
-    .card h3{ margin:.05rem 0 .12rem; font-size:1.12rem }
-    .card .meta{ font-size:.93rem; opacity:.78 }
+    .card h3{ margin:.05rem 0 .12rem; font-size:1.22rem }
+    .card .meta{ font-size:1rem; opacity:.78 }
 
     /* ===== FOOTER ===== */
     footer{ border-top:1px solid rgba(0,0,0,.08); margin-top:1.3rem }
     body.dark footer{ border-top-color:rgba(255,255,255,.12) }
-    .foot{ max-width:var(--wrap); margin:0 auto; padding:.95rem .75rem; display:flex; flex-direction:column; align-items:center; gap:.75rem }
-    .bio{ max-width:580px; text-align:center; opacity:.88; font-size:.96rem }
+    .foot{
+      max-width:var(--wrap); margin:0 auto; padding:.95rem .75rem;
+      display:flex; flex-direction:column; align-items:center; gap:.75rem;
+    }
+    .bio{ max-width:580px; text-align:center; opacity:.88; font-size:1rem }
     .socials{ display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; justify-content:center }
     .ico{ width:16px; height:16px; border-radius:4px; background:#ccc center/cover no-repeat; display:inline-block }
-    .socials a{ display:inline-flex; align-items:center; gap:.38rem; padding:.34rem .55rem; border-radius:999px; border:1px solid rgba(0,0,0,.12); text-decoration:none; color:inherit; font-size:.9rem }
+    .socials a{ display:inline-flex; align-items:center; gap:.38rem; padding:.34rem .55rem; border-radius:999px; border:1px solid rgba(0,0,0,.12); text-decoration:none; color:inherit; font-size:.92rem }
     body.dark .socials a{ border-color:rgba(255,255,255,.18) }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo" aria-label="WJC83">WJC83</div>
+    <div class="logo">WJC83</div>
     <!-- Owl appears only at night (12–4am) -->
     <div id="modeDot" class="mode-indicator" aria-hidden="true"><span>🦉</span></div>
   </header>
 
   <!-- HERO snug frame -->
   <div class="hero-wrap">
-    <div class="hero-frame">
+    <div class="hero-frame" id="heroFrame">
       <img id="heroImg" class="hero" src="/assets/hero.jpeg" alt="Hero" decoding="async" />
     </div>
   </div>
@@ -161,18 +167,28 @@
       const h = new Date().getHours();
       const isNight = (h >= 0 && h < 4);
       document.body.classList.toggle('dark', isNight);
-      // Owl shows only at night
       const dot = document.getElementById('modeDot');
       if (dot) dot.style.display = isNight ? 'grid' : 'none';
     }
     applyScheduledTheme();
     setInterval(applyScheduledTheme, 60_000);
 
-    /* ========= 2) Hero logic: 50% newest, 50% random ========= */
+    /* ========= 2) Match card width to hero frame ========= */
+    function syncCardWidthToHero(){
+      const frame = document.getElementById('heroFrame');
+      if (!frame) return;
+      const w = Math.round(frame.getBoundingClientRect().width);
+      document.documentElement.style.setProperty('--hero-w', w + 'px');
+    }
+    window.addEventListener('load', syncCardWidthToHero);
+    window.addEventListener('resize', syncCardWidthToHero);
+
+    /* ========= 3) Hero logic: 50% newest, 50% random ========= */
     async function pickHero(){
       const chooseNewest = Math.random() < 0.5;
       const cfg = { owner:'wjeffcunningham', repo:'wjc83', branch:'main' };
       let newest = HERO_CANDIDATES[HERO_CANDIDATES.length - 1];
+
       try{
         const contents = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/assets?ref=${cfg.branch}`).then(r=>r.json());
         const items = Array.isArray(contents) ? contents : [];
@@ -187,9 +203,11 @@
           withDates.sort((a,b)=> new Date(a.date) - new Date(b.date));
           newest = withDates[withDates.length - 1].url;
         }
-      }catch{/* fallback to list order */}
+      }catch{/* ignore; use fallback */}
       const hero = chooseNewest ? newest : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
-      document.getElementById('heroImg').src = hero;
+      const img = document.getElementById('heroImg');
+      img.addEventListener('load', syncCardWidthToHero, { once:true });
+      img.src = hero;
     }
     pickHero();
   </script>
