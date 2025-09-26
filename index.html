@@ -10,11 +10,9 @@
   <style>
     :root{
       --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
-      --wrap:720px;              /* page column */
-      --card-w:520px;            /* desired max card width on desktop */
-      --radius:12px; --shadow:0 6px 14px rgba(0,0,0,.08);
-      /* JS sets --hero-w to the hero frame width; cards clamp to it */
-      --hero-w: 9999px;          /* updated after image load/resize */
+      --wrap:760px;            /* overall column */
+      --radius:18px; --shadow:0 6px 14px rgba(0,0,0,.08);
+      --tile: 152px;           /* app icon size (square) */
     }
 
     body{
@@ -29,10 +27,10 @@
       --ink:#e9e9e9; --paper:#0c0c0c; --muted:rgba(255,255,255,.66);
     }
 
-    /* ===== Header (simple, larger) ===== */
+    /* Header (simple) */
     header{
-      max-width:var(--wrap); margin:.9rem auto .35rem; padding:0 .75rem;
-      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+      max-width:var(--wrap); margin:.9rem auto .35rem; padding:0 1rem;
+      display:flex; align-items:center; justify-content:space-between; gap:.75rem;
     }
     .logo{
       font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -52,46 +50,55 @@
     body.dark .mode-indicator{ border-color:rgba(255,255,255,.18) }
     .mode-indicator span{ transform:translateY(1px) }
 
-    /* ===== HERO snug frame ===== */
-    .hero-wrap{ max-width:var(--wrap); margin:.35rem auto .9rem; padding:0 .75rem; text-align:center; }
+    /* HERO snug frame */
+    .hero-wrap{ max-width:var(--wrap); margin:.4rem auto 1.1rem; padding:0 1rem; text-align:center; }
     .hero-frame{
-      border:1px solid rgba(0,0,0,.1); border-radius:14px;
-      background:#fff; box-shadow:var(--shadow);
-      display:inline-block; /* hugs the image so we can match card width to this */
+      border:1px solid rgba(0,0,0,.1); border-radius:16px;
+      background:#fff; box-shadow:var(--shadow); display:inline-block;
     }
     body.dark .hero-frame{ background:#111; border-color:rgba(255,255,255,.14) }
-    .hero{ display:block; max-width:100%; height:auto; border-radius:12px }
+    .hero{ display:block; max-width:100%; height:auto; border-radius:14px }
 
-    /* ===== STACKED cards ===== */
-    .stack{
-      max-width:var(--wrap);
-      margin:.5rem auto 1.3rem; padding:0 .75rem;
-      display:grid; grid-template-columns:1fr; gap:.9rem;
+    /* APPS grid */
+    .apps{
+      max-width:var(--wrap); margin:0 auto 1.6rem; padding:0 1rem;
+      display:grid; gap:1.2rem;
+      grid-template-columns:1fr; justify-items:center;
     }
-    .card{
-      width:100%;
-      /* never exceed hero width; also cap at desktop max */
-      max-width: min(var(--card-w), var(--hero-w));
-      margin:0 auto;
+    @media (min-width:560px){
+      .apps{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+    }
 
-      border:1px solid rgba(0,0,0,.08); border-radius:var(--radius);
-      padding:.9rem; background:#fff; box-shadow:var(--shadow);
-      display:grid; grid-template-columns:106px 1fr; gap:.95rem; align-items:center;
+    .app{
+      width:100%; max-width:360px;
+      border:1px solid rgba(0,0,0,.08); background:#fff; border-radius:24px;
+      box-shadow:var(--shadow);
       text-decoration:none; color:inherit;
+      padding:1rem 1rem 1.1rem;
+      display:grid; justify-items:center; align-items:start; gap:.75rem;
+      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
     }
-    body.dark .card{ background:#121212; border-color:rgba(255,255,255,.08) }
-    .thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; background:#ddd }
-    .card h3{ margin:.05rem 0 .12rem; font-size:1.22rem }
-    .card .meta{ font-size:1rem; opacity:.78 }
+    .app:focus-visible{ outline:2px solid rgba(0,0,0,.35); outline-offset:2px; }
+    .app:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12); border-color:rgba(0,0,0,.12); }
+    body.dark .app{ background:#121212; border-color:rgba(255,255,255,.1); }
+    body.dark .app:hover{ box-shadow:0 10px 24px rgba(0,0,0,.25); border-color:rgba(255,255,255,.18); }
 
-    /* ===== FOOTER ===== */
-    footer{ border-top:1px solid rgba(0,0,0,.08); margin-top:1.3rem }
+    .app-icon{
+      width:var(--tile); height:var(--tile);
+      border-radius:22%; object-fit:cover; background:#ddd;
+      box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    }
+    .app-name{ font-weight:800; font-size:1.12rem; letter-spacing:.02em; }
+    .app-tag{ font-size:.95rem; opacity:.78; text-align:center; max-width:24ch; }
+
+    /* Footer */
+    footer{ border-top:1px solid rgba(0,0,0,.08); }
     body.dark footer{ border-top-color:rgba(255,255,255,.12) }
     .foot{
-      max-width:var(--wrap); margin:0 auto; padding:.95rem .75rem;
+      max-width:var(--wrap); margin:0 auto; padding:1rem;
       display:flex; flex-direction:column; align-items:center; gap:.75rem;
     }
-    .bio{ max-width:580px; text-align:center; opacity:.88; font-size:1rem }
+    .bio{ max-width:620px; text-align:center; opacity:.88; font-size:1rem }
     .socials{ display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; justify-content:center }
     .ico{ width:16px; height:16px; border-radius:4px; background:#ccc center/cover no-repeat; display:inline-block }
     .socials a{ display:inline-flex; align-items:center; gap:.38rem; padding:.34rem .55rem; border-radius:999px; border:1px solid rgba(0,0,0,.12); text-decoration:none; color:inherit; font-size:.92rem }
@@ -107,28 +114,35 @@
 
   <!-- HERO snug frame -->
   <div class="hero-wrap">
-    <div class="hero-frame" id="heroFrame">
+    <div class="hero-frame">
       <img id="heroImg" class="hero" src="/assets/hero.jpeg" alt="Hero" decoding="async" />
     </div>
   </div>
 
-  <!-- STACKED CARDS (4 only) -->
-  <main class="stack">
-    <a class="card" href="/ijpauc/">
-      <img class="thumb" src="/assets/thumbs/ijpa.png" alt="">
-      <div><h3>IJPAUC? (Main Essay)</h3><div class="meta">Film history, legal/moral inquiry</div></div>
+  <!-- APPS (2×2 when space allows) -->
+  <main class="apps">
+    <a href="/ijpauc/" class="app">
+      <img src="/assets/thumbs/ijpa.png" alt="" class="app-icon">
+      <div class="app-name">IJPAUC?</div>
+      <div class="app-tag">Film history & moral inquiry</div>
     </a>
-    <a class="card" href="/vvip25/">
-      <img class="thumb" src="/assets/thumbs/vvip25.png" alt="">
-      <div><h3>VVIP25</h3><div class="meta">Music & video project</div></div>
+
+    <a href="/vvip25/" class="app">
+      <img src="/assets/thumbs/vvip25.png" alt="" class="app-icon">
+      <div class="app-name">VVIP25</div>
+      <div class="app-tag">Music & video project</div>
     </a>
-    <a class="card" href="/notes/">
-      <img class="thumb" src="/assets/thumbs/notes.png" alt="">
-      <div><h3>NOTES</h3><div class="meta">Plain-text dropbox; newest first</div></div>
+
+    <a href="/notes/" class="app">
+      <img src="/assets/thumbs/notes.png" alt="" class="app-icon">
+      <div class="app-name">NOTES</div>
+      <div class="app-tag">Plain-text dropbox</div>
     </a>
-    <a class="card" href="/archive/">
-      <img class="thumb" src="/assets/thumbs/archive.png" alt="">
-      <div><h3>Archive</h3><div class="meta">Magic writing, criticism, academic essays, technical writing, etc.</div></div>
+
+    <a href="/archive/" class="app">
+      <img src="/assets/thumbs/archive.png" alt="" class="app-icon">
+      <div class="app-name">Archive</div>
+      <div class="app-tag">Essays, criticism, technical writing</div>
     </a>
   </main>
 
@@ -173,17 +187,7 @@
     applyScheduledTheme();
     setInterval(applyScheduledTheme, 60_000);
 
-    /* ========= 2) Match card width to hero frame ========= */
-    function syncCardWidthToHero(){
-      const frame = document.getElementById('heroFrame');
-      if (!frame) return;
-      const w = Math.round(frame.getBoundingClientRect().width);
-      document.documentElement.style.setProperty('--hero-w', w + 'px');
-    }
-    window.addEventListener('load', syncCardWidthToHero);
-    window.addEventListener('resize', syncCardWidthToHero);
-
-    /* ========= 3) Hero logic: 50% newest, 50% random ========= */
+    /* ========= 2) Hero logic: 50% newest, 50% random ========= */
     async function pickHero(){
       const chooseNewest = Math.random() < 0.5;
       const cfg = { owner:'wjeffcunningham', repo:'wjc83', branch:'main' };
@@ -205,9 +209,7 @@
         }
       }catch{/* ignore; use fallback */}
       const hero = chooseNewest ? newest : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
-      const img = document.getElementById('heroImg');
-      img.addEventListener('load', syncCardWidthToHero, { once:true });
-      img.src = hero;
+      document.getElementById('heroImg').src = hero;
     }
     pickHero();
   </script>
