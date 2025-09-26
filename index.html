@@ -11,64 +11,92 @@
     :root{
       --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
       --wrap:720px;              /* overall column */
-      --card-w:520px;            /* button width (a bit larger) */
+      --card-w:520px;            /* button width */
       --radius:12px; --shadow:0 6px 14px rgba(0,0,0,.08);
     }
-    body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;background:var(--paper);color:var(--ink)}
-    body.dark{background:#0c0c0c;color:#e9e9e9;--ink:#e9e9e9;--paper:#0c0c0c;--muted:rgba(255,255,255,.66)}
 
-    /* Header */
-    header{max-width:var(--wrap);margin:.75rem auto .25rem;padding:0 .75rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-    .brand{font-weight:800;letter-spacing:.06em;font-size:1rem;opacity:.9}
+    body{
+      margin:0;
+      font:16px/1.5 "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      background:var(--paper); color:var(--ink);
+    }
+    body.dark{
+      background:#0c0c0c; color:#e9e9e9;
+      --ink:#e9e9e9; --paper:#0c0c0c; --muted:rgba(255,255,255,.66);
+    }
 
-    /* Day/Night indicator (not a toggle, just status) */
+    /* ===== Header with crisp outlined Helvetica logo ===== */
+    header{
+      max-width:var(--wrap); margin:.9rem auto .35rem; padding:0 .75rem;
+      display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    }
+    .logo{
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight:800; font-size:1.5rem; letter-spacing:.06em;
+      line-height:1; text-transform:uppercase;
+      color:transparent; -webkit-text-fill-color:transparent;  /* hollow */
+      -webkit-text-stroke:1.4px var(--ink);                    /* crisp outline */
+      text-shadow:none;                                        /* no blur */
+      paint-order:stroke fill;
+    }
+    /* Fallback if text-stroke unsupported: just render solid text */
+    @supports not (-webkit-text-stroke: 1px){
+      .logo{ color:var(--ink); -webkit-text-fill-color:initial; }
+    }
+
+    /* Night-only indicator (owl). Hidden in day. */
     .mode-indicator{
-      width:28px;height:28px;border-radius:999px;
-      border:1px solid rgba(0,0,0,.14); display:grid; place-items:center;
-      background:#fff; box-shadow:var(--shadow); font-size:16px; line-height:1;
+      display:none; /* JS will show at night only */
+      width:28px; height:28px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.14);
+      display:grid; place-items:center;
+      background:#111; box-shadow:var(--shadow);
+      font-size:16px; line-height:1;
     }
-    body.dark .mode-indicator{background:#111;border-color:rgba(255,255,255,.18)}
-    .mode-indicator span{display:block; transform:translateY(1px)}
-    .mode-indicator[aria-label="Night"]{ /* optional tint */
-      background:radial-gradient(ellipse at 60% 35%, rgba(255,255,255,.06), transparent 60%), #0f0f0f;
+    body.dark .mode-indicator{ border-color:rgba(255,255,255,.18) }
+    .mode-indicator span{ transform:translateY(1px) }
+
+    /* ===== HERO snug frame ===== */
+    .hero-wrap{ max-width:var(--wrap); margin:.35rem auto .9rem; padding:0 .75rem; text-align:center; }
+    .hero-frame{
+      border:1px solid rgba(0,0,0,.1); border-radius:14px;
+      background:#fff; box-shadow:var(--shadow); display:inline-block;
     }
+    body.dark .hero-frame{ background:#111; border-color:rgba(255,255,255,.14) }
+    .hero{ display:block; max-width:100%; height:auto; border-radius:12px }
 
-    /* HERO snug frame */
-    .hero-wrap{max-width:var(--wrap);margin:.35rem auto .85rem;padding:0 .75rem;text-align:center}
-    .hero-frame{border:1px solid rgba(0,0,0,.1);border-radius:14px;background:#fff;box-shadow:var(--shadow);display:inline-block}
-    body.dark .hero-frame{background:#111;border-color:rgba(255,255,255,.14)}
-    .hero{display:block;max-width:100%;height:auto;border-radius:12px}
-
-    /* STACKED cards */
-    .stack{max-width:var(--wrap);margin:.4rem auto 1.2rem;padding:0 .75rem;display:grid;grid-template-columns:1fr;gap:.8rem}
+    /* ===== STACKED cards ===== */
+    .stack{ max-width:var(--wrap); margin:.5rem auto 1.3rem; padding:0 .75rem; display:grid; grid-template-columns:1fr; gap:.9rem }
     .card{
-      width:100%;max-width:var(--card-w);margin:0 auto;
-      border:1px solid rgba(0,0,0,.08);border-radius:var(--radius);
-      padding:.75rem;background:#fff;box-shadow:var(--shadow);
-      display:grid;grid-template-columns:96px 1fr;gap:.8rem;align-items:center;
-      text-decoration:none;color:inherit;
+      width:100%; max-width:var(--card-w); margin:0 auto;
+      border:1px solid rgba(0,0,0,.08); border-radius:var(--radius);
+      padding:.8rem; background:#fff; box-shadow:var(--shadow);
+      display:grid; grid-template-columns:100px 1fr; gap:.85rem; align-items:center;
+      text-decoration:none; color:inherit;
     }
-    body.dark .card{background:#121212;border-color:rgba(255,255,255,.08)}
-    .thumb{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#ddd}
-    .card h3{margin:.05rem 0 .12rem;font-size:1.06rem}
-    .card .meta{font-size:.9rem;opacity:.75}
+    body.dark .card{ background:#121212; border-color:rgba(255,255,255,.08) }
+    .thumb{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; background:#ddd }
+    .card h3{ margin:.05rem 0 .12rem; font-size:1.12rem }
+    .card .meta{ font-size:.93rem; opacity:.78 }
 
-    /* FOOTER centered */
-    footer{border-top:1px solid rgba(0,0,0,.08);margin-top:1.2rem}
-    body.dark footer{border-top-color:rgba(255,255,255,.12)}
-    .foot{max-width:var(--wrap);margin:0 auto;padding:.85rem .75rem;display:flex;flex-direction:column;align-items:center;gap:.7rem}
-    .bio{max-width:560px;text-align:center;opacity:.85;font-size:.92rem}
-    .socials{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;justify-content:center}
-    .ico{width:16px;height:16px;border-radius:4px;background:#ccc center/cover no-repeat;display:inline-block}
-    .socials a{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .5rem;border-radius:999px;border:1px solid rgba(0,0,0,.12);text-decoration:none;color:inherit;font-size:.88rem}
-    body.dark .socials a{border-color:rgba(255,255,255,.18)}
+    /* ===== FOOTER ===== */
+    footer{ border-top:1px solid rgba(0,0,0,.08); margin-top:1.3rem }
+    body.dark footer{ border-top-color:rgba(255,255,255,.12) }
+    .foot{ max-width:var(--wrap); margin:0 auto; padding:.95rem .75rem; display:flex; flex-direction:column; align-items:center; gap:.75rem }
+    .bio{ max-width:580px; text-align:center; opacity:.88; font-size:.96rem }
+    .socials{ display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; justify-content:center }
+    .ico{ width:16px; height:16px; border-radius:4px; background:#ccc center/cover no-repeat; display:inline-block }
+    .socials a{ display:inline-flex; align-items:center; gap:.38rem; padding:.34rem .55rem; border-radius:999px; border:1px solid rgba(0,0,0,.12); text-decoration:none; color:inherit; font-size:.9rem }
+    body.dark .socials a{ border-color:rgba(255,255,255,.18) }
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">WJC83</div>
-    <!-- day/night indicator -->
-    <div id="modeDot" class="mode-indicator" aria-label="Day" title="Theme follows local time (dark 12–4am)"><span>☀️</span></div>
+    <div class="logo" aria-label="WJC83">WJC83</div>
+    <!-- Owl appears only at night (12–4am) -->
+    <div id="modeDot" class="mode-indicator" aria-hidden="true"><span>🦉</span></div>
   </header>
 
   <!-- HERO snug frame -->
@@ -78,27 +106,20 @@
     </div>
   </div>
 
-  <!-- STACKED CARDS (only 4) -->
+  <!-- STACKED CARDS (4 only) -->
   <main class="stack">
-    <!-- IJPAUC? -->
     <a class="card" href="/ijpauc/">
       <img class="thumb" src="/assets/thumbs/ijpa.png" alt="">
       <div><h3>IJPAUC? (Main Essay)</h3><div class="meta">Film history, legal/moral inquiry</div></div>
     </a>
-
-    <!-- VVIP25 -->
     <a class="card" href="/vvip25/">
       <img class="thumb" src="/assets/thumbs/vvip25.png" alt="">
       <div><h3>VVIP25</h3><div class="meta">Music & video project</div></div>
     </a>
-
-    <!-- NOTES -->
     <a class="card" href="/notes/">
       <img class="thumb" src="/assets/thumbs/notes.png" alt="">
       <div><h3>NOTES</h3><div class="meta">Plain-text dropbox; newest first</div></div>
     </a>
-
-    <!-- ARCHIVE -->
     <a class="card" href="/archive/">
       <img class="thumb" src="/assets/thumbs/archive.png" alt="">
       <div><h3>Archive</h3><div class="meta">Magic writing, criticism, academic essays, technical writing, etc.</div></div>
@@ -133,22 +154,16 @@
 
   <script>
     /* ========= 0) Hero candidates ========= */
-    const HERO_CANDIDATES = [
-      '/assets/hero.jpeg',
-      '/assets/hero1.jpg'
-    ];
+    const HERO_CANDIDATES = ['/assets/hero.jpeg','/assets/hero1.jpg'];
 
-    /* ========= 1) Time-based theme + indicator ========= */
+    /* ========= 1) Time-based theme + NIGHT-ONLY indicator ========= */
     function applyScheduledTheme(){
       const h = new Date().getHours();
       const isNight = (h >= 0 && h < 4);
       document.body.classList.toggle('dark', isNight);
+      // Owl shows only at night
       const dot = document.getElementById('modeDot');
-      if (dot){
-        dot.setAttribute('aria-label', isNight ? 'Night' : 'Day');
-        dot.title = isNight ? 'Night mode (12–4am)' : 'Day mode';
-        dot.querySelector('span').textContent = isNight ? '🦉' : '☀️';
-      }
+      if (dot) dot.style.display = isNight ? 'grid' : 'none';
     }
     applyScheduledTheme();
     setInterval(applyScheduledTheme, 60_000);
@@ -158,7 +173,6 @@
       const chooseNewest = Math.random() < 0.5;
       const cfg = { owner:'wjeffcunningham', repo:'wjc83', branch:'main' };
       let newest = HERO_CANDIDATES[HERO_CANDIDATES.length - 1];
-
       try{
         const contents = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/assets?ref=${cfg.branch}`).then(r=>r.json());
         const items = Array.isArray(contents) ? contents : [];
@@ -173,8 +187,7 @@
           withDates.sort((a,b)=> new Date(a.date) - new Date(b.date));
           newest = withDates[withDates.length - 1].url;
         }
-      }catch{/* ignore; use fallback */}
-
+      }catch{/* fallback to list order */}
       const hero = chooseNewest ? newest : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
       document.getElementById('heroImg').src = hero;
     }
