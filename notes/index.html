@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NOTES | WJC83</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    :root { --ink:#0a0a0a; --muted:rgba(0,0,0,.6); --pill:#f3f3f3; --pillb:#e5e5e5; }
+    body.dark :root { --ink:#e9e9e9; --muted:rgba(255,255,255,.66); --pill:#141414; --pillb:#222; }
+    body { margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif; color:var(--ink) }
+    .wrap { max-width:900px; margin:1.25rem auto 3rem; padding:0 1rem }
+    h1 { margin:.25rem 0 .25rem; line-height:1 }
+    .intro { opacity:.8; margin-bottom:.75rem }
+
+    .tagsbar { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin:.6rem 0 1rem }
+    .pill { display:inline-flex; align-items:center; gap:.35rem; padding:.3rem .6rem; border-radius:999px; background:var(--pill); border:1px solid var(--pillb); cursor:pointer; font-size:.9rem; color:inherit; text-decoration:none }
+    .pill[aria-pressed="true"]{ background:#2a66ff11; border-color:#2a66ff66 }
+    .pill .count{ opacity:.66; font-size:.85em }
+
+    .list { border-top:2px solid var(--ink); margin-top:1rem }
+    .item { padding:.65rem 0; border-bottom:1px dashed rgba(0,0,0,.2); display:flex; justify-content:space-between; gap:.75rem }
+    body.dark .item { border-bottom-color:rgba(255,255,255,.2) }
+    .item a { text-decoration:none; color:inherit; font-weight:600 }
+    .meta { font-size:.9rem; opacity:.7; white-space:nowrap }
+    .empty{ opacity:.75; padding:1rem 0 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>NOTES</h1>
+    <div class="intro">
+      Add <code>.txt</code>, <code>.md</code>, or <code>.html</code> files under <code>/notes</code>. Use hashtags like <code>#draft</code> or <code>#reading</code> anywhere in the file to enable filtering.
+    </div>
+
+    <nav id="tagsbar" class="tagsbar" aria-label="Note tags"></nav>
+    <div id="list" class="list" role="list"></div>
+  </div>
+
+  <script>
+    /* ===== Repo config (public GitHub listing in prod) ===== */
+    const CONFIG = { owner: 'wjeffcunningham', repo: 'wjc83', branch: 'main' };
+    const ACCEPT = /\.(txt|md|html?)$/i;
+    const GH_CONTENTS = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/notes?ref=${CONFIG.branch}`;
+    const RAW_BASE    = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/`;
+
+    let allNotes = [];
+    let activeTag = new URLSearchParams(location.search).get('tag') || '';
+
+    const fmtBytes = n => !n ? '' : (n < 1024 ? n+' B' : (n/1024 < 10 ? (n/1024).toFixed(1)+' KB' : Math.round(n/1024)+' KB'));
+    const fmtDate  = iso => iso ? new Date(iso).toLocaleString(undefined,{year:'numeric',month:'short',day:'numeric'}) : '';
+    const parseHashtags = txt => {
+      const tags = new Set();
+      if (!txt) return tags;
+      const rx = /(^|\s)#([A-Za-z0-9_\-]+)/g; let m;
+      while ((m = rx.exec(txt))) tags.add(m[2].toLowerCase());
+      return tags;
+    };
+
+    async function tryGithub(){
+      try{
+        const r = await fetch(GH_CONTENTS, {cache:'no-store'});
+        if(!r.ok) return null;
+        const data = await r.json();
+        const files = data.filter(x => x.type==='file' && ACCEPT.test(x.name));
+        const withDates = await Promise.all(files.map(async f=>{
+          try{
+            const cu = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/commits?path=${encodeURIComponent('notes/'+f.name)}&per_page=1`;
+            const c  = await fetch(cu).then(r=>r.json());
+            const date = c?.[0]?.commit?.committer?.date || c?.[0]?.commit?.author?.date || '';
+            return { name:f.name, path:'notes/'+f.name, size:f.size||0, date };
+          }catch{ return { name:f.name, path:'notes/'+f.name, size:f.size||0, date:'' }; }
+        }));
+        withDates.sort((a,b)=> new Date(b.date||0)-new Date(a.date||0));
+        return withDates;
+      }catch{ return null; }
+    }
+
+    async function tryLocalManifest(){
+      try{
+        const r = await fetch('/notes/manifest.json', {cache:'no-store'});
+        if(!r.ok) return null;
+        const arr = await r.json();
+        return arr.filter(x=>ACCEPT.test(x.name)).map(x=>({ name:x.name, path:'notes/'+x.name, size:x.size||0, date:x.date||'' }));
+      }catch{ return null; }
+    }
+
+    // Local dev convenience: parse the Python directory listing HTML to get filenames.
+    async function tryDirectoryListing(){
+      try{
+        const r = await fetch('/notes/', {cache:'no-store'});
+        if(!r.ok) return null;
+        const html = await r.text();
+        const doc = new DOMParser().parseFromString(html,'text/html');
+        const links = [...doc.querySelectorAll('a')];
+        const files = links
+          .map(a => decodeURIComponent(a.getAttribute('href')||''))
+          .filter(h => h && !h.startsWith('.') && ACCEPT.test(h))
+          .map(name => ({ name, path:'notes/'+name, size:0, date:'' }));
+        return files.length ? files : null;
+      }catch{ return null; }
+    }
+
+    async function hydrateTags(list){
+      const out = [];
+      for (let i=0;i<list.length;i++){
+        const f = list[i];
+        try{
+          const url = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+                      ? '/' + f.path
+                      : RAW_BASE + f.path;
+          const txt = await fetch(url, {cache:'no-store'}).then(r=>r.text());
+          out[i] = { ...f, tags: parseHashtags(txt) };
+        }catch{
+          out[i] = { ...f, tags: new Set() };
+        }
+      }
+      return out;
+    }
+
+    function renderTags(notes){
+      const bar = document.getElementById('tagsbar');
+      const counts = new Map();
+      notes.forEach(n => n.tags.forEach(t => counts.set(t,(counts.get(t)||0)+1)));
+      const tags = Array.from(counts.keys()).sort((a,b)=>a.localeCompare(b));
+
+      bar.innerHTML = '';
+      const mk = (label, tag, count, pressed) => {
+        const a = document.createElement('a');
+        a.href = tag ? `?tag=${encodeURIComponent(tag)}` : '?';
+        a.className = 'pill';
+        a.setAttribute('role','button');
+        a.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+        a.textContent = label;
+        if (typeof count==='number'){
+          const c = document.createElement('span'); c.className='count'; c.textContent = `(${count})`; a.appendChild(c);
+        }
+        a.addEventListener('click', e=>{
+          e.preventDefault();
+          activeTag = tag || '';
+          const url = new URL(location.href);
+          if(activeTag) url.searchParams.set('tag', activeTag); else url.searchParams.delete('tag');
+          history.replaceState(null,'',url);
+          renderList(allNotes);
+          renderTags(allNotes);
+        });
+        return a;
+      };
+      bar.appendChild(mk('All','',notes.length,!activeTag));
+      tags.forEach(t => bar.appendChild(mk('#'+t,t,counts.get(t),activeTag===t)));
+    }
+
+    function renderList(notes){
+      const root = document.getElementById('list');
+      const list = activeTag ? notes.filter(n => n.tags.has(activeTag)) : notes;
+      if(!list.length){
+        root.innerHTML = `<div class="item"><div class="empty">No notes found${activeTag?` for tag #${activeTag}`:''}.</div></div>`;
+        return;
+      }
+      root.innerHTML = '';
+      for (const f of list){
+        const meta = [fmtDate(f.date), fmtBytes(f.size)].filter(Boolean).join(' · ');
+        const el = document.createElement('div'); el.className='item'; el.role='listitem';
+        el.innerHTML = `<a href="/${f.path}">${f.name}</a><span class="meta">${meta}</span>`;
+        root.appendChild(el);
+      }
+    }
+
+    (async () => {
+      // midnight–4am dark mode sync like the home page
+      function applyScheduledTheme(){ const h=(new Date()).getHours(); document.body.classList.toggle('dark', h>=0&&h<4); }
+      applyScheduledTheme(); setInterval(applyScheduledTheme, 60000);
+
+      let list = await tryGithub();
+      if(!list) list = await tryDirectoryListing(); // helpful for localhost
+      if(!list) list = await tryLocalManifest();
+      if(!list) list = [];
+
+      allNotes = await hydrateTags(list);
+      renderTags(allNotes);
+      renderList(allNotes);
+    })();
+  </script>
+</body>
+</html>

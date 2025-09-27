@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WJC83.CA</title>
-  <link rel="icon" href="/assets/favicon.jpeg">
+  <link rel="icon" href="/assets/favicon.ico">
   <link rel="preload" as="image" href="/assets/hero.jpeg">
   <link rel="stylesheet" href="/style.css">
   <style>
@@ -152,7 +152,6 @@
         <strong>Author Bio:</strong> W. Jeff Cunningham is a Vancouver-based writer whose work spans Magic: The Gathering journalism, long-form essays, academic research, and creative projects from the mid to late twentieth century.
       </div>
       <nav class="socials">
-        <!-- put icons at /assets/social/{instagram|threads|youtube|ijpauc|vvipmedia}.png -->
         <a href="https://www.instagram.com/wjeffcunningham" rel="me" target="_blank">
           <span class="ico" style="background-image:url('/assets/social/instagram.png');"></span> Instagram
         </a>
@@ -173,8 +172,8 @@
   </footer>
 
   <script>
-    /* ========= 0) Hero candidates ========= */
-    const HERO_CANDIDATES = ['/assets/hero.jpeg','/assets/hero1.jpg'];
+    /* ========= 0) Hero candidates (match filenames) ========= */
+    const HERO_CANDIDATES = ['/assets/hero.jpeg','/assets/hero1.jpeg']; // <- .jpeg
 
     /* ========= 1) Time-based theme + NIGHT-ONLY indicator ========= */
     function applyScheduledTheme(){
@@ -187,8 +186,15 @@
     applyScheduledTheme();
     setInterval(applyScheduledTheme, 60_000);
 
-    /* ========= 2) Hero logic: 50% newest, 50% random ========= */
+    /* ========= 2) Hero logic: 50% newest, 50% random + fallback ========= */
     async function pickHero(){
+      const fallback = '/assets/hero.jpeg';
+      const img = document.getElementById('heroImg');
+      const setHero = (url) => {
+        img.onerror = () => { img.onerror = null; img.src = fallback; };
+        img.src = url;
+      };
+
       const chooseNewest = Math.random() < 0.5;
       const cfg = { owner:'wjeffcunningham', repo:'wjc83', branch:'main' };
       let newest = HERO_CANDIDATES[HERO_CANDIDATES.length - 1];
@@ -207,9 +213,13 @@
           withDates.sort((a,b)=> new Date(a.date) - new Date(b.date));
           newest = withDates[withDates.length - 1].url;
         }
-      }catch{/* ignore; use fallback */}
-      const hero = chooseNewest ? newest : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
-      document.getElementById('heroImg').src = hero;
+      }catch{/* ignore; keep default */}
+
+      const hero = chooseNewest
+        ? newest
+        : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
+
+      setHero(hero);
     }
     pickHero();
   </script>
