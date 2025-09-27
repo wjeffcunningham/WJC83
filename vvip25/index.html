@@ -6,15 +6,32 @@
   <title>VVIP25 | WJC83.CA</title>
   <link rel="stylesheet" href="../style.css">
   <style>
-    .wrap { max-width: 860px; margin: 2rem auto; padding: 0 1rem; text-align: left; }
-    .hero img { max-width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
-    .desc { margin: 1rem 0; font-size: 1rem; line-height: 1.5; }
-    .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 1.5rem 0; }
+    /* Page wrap */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+    /* Header/title – remove big default gaps */
+    .site-header { text-align: center; }
+    .site-title { margin: 12px 0 14px; line-height: 1; }
+
+    /* Hero (simple frame) */
+    .hero { margin: 0 auto 18px; }
+    .hero img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.1);
+      margin: 0 auto;
+    }
+
+    /* Description + links */
+    .desc { margin: 12px 0 18px; font-size: 1rem; line-height: 1.5; }
+    .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 10px 0 20px; }
     .links a { text-decoration:none; font-weight:600; }
 
     /* Feed */
-    .section { margin: 2.5rem 0; }
-    .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; }
+    .section { margin: 28px 0; }
+    .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; text-align:center; }
     .grid { display:grid; gap:1rem; }
     @media(min-width:640px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
     .item { display:grid; grid-template-columns:140px 1fr; gap:.75rem;
@@ -39,6 +56,7 @@
     <section class="hero">
       <img src="../assets/vvip25-hero.jpg" alt="VVIP25 hero image">
     </section>
+    <caption><i>Art by SF Cook</i></caption>
 
     <div class="desc">
       <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2024–present), releasing experimental tracks, performance footage, and video essays. This space will host playable audio, mirrors, and exclusive uploads.</p>
@@ -64,15 +82,15 @@
 
   <script>
     /* ======= CONFIG ======= */
-    const API_KEY = "AIzaSyCs8RPKePLkWZ5qG5Pw8Ufl9L94bu_E0A4";
-    const CHANNEL_ID = "UCRQMQeiTlrzyA-eONIXDq1g"; // your channel
-    const MAX_FETCH = 50;  // how many to pull (you can raise this)
+    const CHANNEL_ID = "UCRQMQeiTlrzyA-eONIXDq1g";
+    const MAX_FETCH = 50;
     const SHORTS_MAX_SECONDS = 60;
+    const EXCLUDE_IDS = [];
 
-    /* Optional: manually exclude some videos by ID */
-    const EXCLUDE_IDS = [
-      // "abcd1234xyz",  // add any videoId here to hide it
-    ];
+    // Use Worker on prod; on localhost call your prod Worker domain
+    const API_BASE = (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
+      ? 'https://wjc83.ca/api/yt'
+      : '/api/yt';
 
     /* ======= HELPERS ======= */
     const YT_THUMB = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
@@ -80,11 +98,16 @@
     const fmtDate  = iso => new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
 
     function iso8601ToSeconds(iso){
-      // e.g. PT1H2M3S, PT6M27S, PT59S
-      const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      const m = iso?.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
       if(!m) return 0;
-      const h = parseInt(m[1]||"0",10), min=parseInt(m[2]||"0",10), s=parseInt(m[3]||"0",10);
+      const h = +m[1]||0, min = +m[2]||0, s = +m[3]||0;
       return h*3600 + min*60 + s;
+    }
+
+    async function fetchJSON(url){
+      const res = await fetch(url);
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
     }
 
     function render(list, mount){
@@ -112,27 +135,22 @@
       mount.replaceChildren(frag);
     }
 
-    /* ======= YOUTUBE API PULL ======= */
+    /* ======= YOUTUBE API VIA WORKER ======= */
     async function getUploadsPlaylistId(){
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`;
-      const res = await fetch(url);
-      const data = await res.json();
+      const data = await fetchJSON(`${API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}`);
       return data?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
     }
 
     async function getAllPlaylistItems(playlistId, maxCount=MAX_FETCH){
       let items = [], pageToken = '';
       while(items.length < maxCount){
-        const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems');
-        url.search = new URLSearchParams({
+        const params = new URLSearchParams({
           part: 'snippet,contentDetails',
           playlistId,
-          maxResults: '50',
-          key: API_KEY,
-          pageToken
+          maxResults: '50'
         });
-        const res = await fetch(url);
-        const data = await res.json();
+        if(pageToken) params.set('pageToken', pageToken);
+        const data = await fetchJSON(`${API_BASE}/playlistItems?${params.toString()}`);
         const chunk = (data.items || []).map(it => ({
           videoId: it.contentDetails?.videoId,
           publishedAt: it.contentDetails?.videoPublishedAt,
@@ -148,31 +166,21 @@
     }
 
     async function hydrateWithDetails(videos){
-      // Fetch durations & stats in batches of 50
       const out = [];
       for(let i=0; i<videos.length; i+=50){
-        const batch = videos.slice(i, i+50);
-        const ids = batch.map(v => v.videoId).join(',');
-        const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics&id=${ids}&key=${API_KEY}`;
-        const res = await fetch(url);
-        const data = await res.json();
+        const slice = videos.slice(i, i+50);
+        const ids = slice.map(v => v.videoId).join(',');
+        const data = await fetchJSON(`${API_BASE}/videos?part=contentDetails,statistics&id=${ids}`);
         const map = new Map((data.items||[]).map(x => [x.id, x]));
-        batch.forEach(v=>{
+        slice.forEach(v=>{
           const d = map.get(v.videoId);
           if(d){
             const dur = d.contentDetails?.duration || 'PT0S';
             const secs = iso8601ToSeconds(dur);
             v.seconds = secs;
-            v.durationLabel = dur
-              .replace('PT','')
-              .replace('H',':')
-              .replace('M',':')
-              .replace('S','')
-              .replace(/(^:)|(:$)/g,'')
-              // normalize mm:ss
-              .split(':')
-              .map((t,i,arr)=> (i>0 && t.length===1 && arr.length>1 ? '0'+t : t))
-              .join(':');
+            v.durationLabel = dur.replace('PT','').replace('H',':').replace('M',':').replace('S','')
+              .replace(/(^:)|(:$)/g,'').split(':')
+              .map((t,i,arr)=> (i>0 && t.length===1 && arr.length>1 ? '0'+t : t)).join(':');
             v.views = Number(d.statistics?.viewCount||0);
             v.likes = Number(d.statistics?.likeCount||0);
           }
@@ -187,30 +195,16 @@
         const uploadsId = await getUploadsPlaylistId();
         if(!uploadsId) return;
 
-        // Pull public uploads
         let items = await getAllPlaylistItems(uploadsId, MAX_FETCH);
-
-        // Exclude any by ID if desired
         items = items.filter(v => v.videoId && !EXCLUDE_IDS.includes(v.videoId));
-
-        // Add duration & stats
         items = await hydrateWithDetails(items);
-
-        // Sort newest -> oldest
         items.sort((a,b)=> new Date(b.publishedAt) - new Date(a.publishedAt));
 
-        // Split Videos vs Shorts
         const shorts = items.filter(v => v.seconds > 0 && v.seconds <= SHORTS_MAX_SECONDS);
-        const longs  = items.filter(v => !shorts.includes(v)); // everything else
+        const longs  = items.filter(v => !shorts.includes(v));
 
-        if(longs.length){
-          document.getElementById('videosSec').hidden = false;
-          render(longs, document.getElementById('videosGrid'));
-        }
-        if(shorts.length){
-          document.getElementById('shortsSec').hidden = false;
-          render(shorts, document.getElementById('shortsGrid'));
-        }
+        if(longs.length){ document.getElementById('videosSec').hidden = false; render(longs, document.getElementById('videosGrid')); }
+        if(shorts.length){ document.getElementById('shortsSec').hidden = false; render(shorts, document.getElementById('shortsGrid')); }
       }catch(err){
         console.error('YouTube feed error:', err);
       }
