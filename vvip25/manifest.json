@@ -1,0 +1,226 @@
+{
+  "videos": [
+    {
+      "title": "VVIP free zone",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-07-30",
+      "duration": "5:56",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 238,
+      "likes": 0,
+      "tags": ["techhouse","vancouvercore","brianeno"]
+    },
+    {
+      "title": "VVIP pinky",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-07-28",
+      "duration": "8:51",
+      "status": "Premiered",
+      "visibility": "Public",
+      "views": 64,
+      "likes": 0,
+      "tags": ["techhouse","vancouvercore","celebrationoflight"]
+    },
+    {
+      "title": "VVIP lit rail",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-07-19",
+      "duration": "8:29",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 177,
+      "likes": 3,
+      "tags": ["dnb","vancouvercore","freepalestine"]
+    },
+    {
+      "title": "VVIP dusky",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-07-17",
+      "duration": "7:57",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 41,
+      "likes": 0,
+      "tags": ["techhouse","vancouvercore","basinskibeat"]
+    },
+    {
+      "title": "VVIP ocean park",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-07-06",
+      "duration": "8:08",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 58,
+      "likes": 2,
+      "tags": ["techhouse","vancouvercore"]
+    },
+    {
+      "title": "VVIP lately",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-05-27",
+      "duration": "4:23",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 109,
+      "likes": 2,
+      "tags": ["techhouse","shoegaze","vancouvercore","freepalestine"]
+    },
+    {
+      "title": "VVIP mbpx",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-04-26",
+      "duration": "6:56",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 152,
+      "likes": 5,
+      "tags": ["vancouvercore","techhouse"]
+    },
+    {
+      "title": "VVIP goofy spoon",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-04-14",
+      "duration": "7:40",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 52,
+      "likes": 3,
+      "tags": ["techhouse"]
+    },
+    {
+      "title": "VVIP Analog TV",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-04-06",
+      "duration": "6:58",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 109,
+      "likes": 1,
+      "tags": []
+    },
+    {
+      "title": "VVIP Purple Morning",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-01-23",
+      "duration": "7:14",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 172,
+      "likes": 2,
+      "tags": []
+    },
+    {
+      "title": "VVIP The Ship Yard {Full EP}",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-01-23",
+      "duration": "19:48",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 193,
+      "likes": 8,
+      "tags": []
+    },
+    {
+      "title": "VVIP24 Arcade Water {Full Album}",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-01-15",
+      "duration": "1:31:12",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 43,
+      "likes": 1,
+      "tags": []
+    },
+    {
+      "title": "VVIP24 Annus Mirabilis",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-01-15",
+      "duration": "7:43",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 35,
+      "likes": 1,
+      "tags": ["aristotle","metaphysics","lambda"]
+    }
+  ],
+  "shorts": [
+    {
+      "title": "VVIP Mars in Venus {trailer}",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-09-06",
+      "duration": "0:25",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 205,
+      "likes": 1,
+      "tags": ["vancouver","ambientmusic","dancemusic","fall","hopeful"]
+    },
+    {
+      "title": "VVIP Thu Aug 14 (\"Lately\")",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-08-14",
+      "duration": "0:40",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 221,
+      "likes": 1,
+      "tags": ["vancouvercore","ambientmusic","lofimusic"]
+    },
+    {
+      "title": "VVIP Fri Aug 8 (\"Pensive\")",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-08-09",
+      "duration": "0:52",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 130,
+      "likes": 0,
+      "tags": []
+    },
+    {
+      "title": "VVIP Thu Aug 7 (\"Kits\")",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-08-08",
+      "duration": "1:00",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 237,
+      "likes": 0,
+      "tags": ["vancouver","kits","dancemusic"]
+    },
+    {
+      "title": "VVIP Wed Aug 6 (\"A Light Breeze\")",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-08-07",
+      "duration": "0:59",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 192,
+      "likes": 0,
+      "tags": ["vancouver","ambientmusic","lofimusicchill"]
+    },
+    {
+      "title": "free spot",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-08-03",
+      "duration": "0:24",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 750,
+      "likes": 1,
+      "tags": ["vancouver","lofimusic","kits"]
+    },
+    {
+      "title": "IJPAUC? {trailer}",
+      "youtubeId": "REPLACE_WITH_ID",
+      "date": "2025-06-30",
+      "duration": "1:30",
+      "status": "Published",
+      "visibility": "Public",
+      "views": 97,
+      "likes": 2,
+      "tags": ["media","essay"]
+    }
+  ]
+}

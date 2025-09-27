@@ -9,7 +9,25 @@
     .wrap { max-width: 860px; margin: 2rem auto; padding: 0 1rem; text-align: left; }
     .hero img { max-width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
     .desc { margin: 1rem 0; font-size: 1rem; line-height: 1.5; }
-    .links { gap: 1rem; justify-content: flex-start; }
+    .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 1.5rem 0; }
+    .links a { text-decoration:none; font-weight:600; }
+
+    /* Feed */
+    .section { margin: 2.5rem 0; }
+    .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; }
+    .grid { display:grid; gap:1rem; }
+    @media(min-width:640px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
+    .item { display:grid; grid-template-columns:140px 1fr; gap:.75rem;
+            border:1px solid rgba(0,0,0,.08); border-radius:12px;
+            background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.06); padding:.6rem; text-decoration:none; color:inherit; }
+    body.dark .item { background:#121212; border-color:rgba(255,255,255,.12); }
+    .thumb { width:100%; aspect-ratio:16/9; border-radius:8px; object-fit:cover; background:#ddd; }
+    .title { font-weight:700; margin:.1rem 0 .2rem; }
+    .meta { font-size:.88rem; opacity:.75; }
+    .stats { margin-top:.3rem; font-size:.85rem; opacity:.75; }
+    .tags { margin-top:.3rem; display:flex; flex-wrap:wrap; gap:.3rem; }
+    .tag { font-size:.75rem; border:1px solid rgba(0,0,0,.1); padding:.1rem .4rem; border-radius:999px; opacity:.85; }
+    body.dark .tag { border-color:rgba(255,255,255,.2); }
   </style>
 </head>
 <body>
@@ -23,7 +41,7 @@
     </section>
 
     <div class="desc">
-      <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2025-present), releasing experimental tracks, performance footage, and video essays. This space will host playable audio, mirrors, and exclusive uploads.</p>
+      <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2024–present), releasing experimental tracks, performance footage, and video essays. This space will host playable audio, mirrors, and exclusive uploads.</p>
     </div>
 
     <section class="links">
@@ -31,6 +49,172 @@
       <a href="https://www.vvipmedia.net" target="_blank" rel="noopener">Visit Site</a>
       <a href="https://www.youtube.com/@VVVVIIPP25" target="_blank" rel="noopener">YouTube Channel</a>
     </section>
+
+    <!-- Releases feed -->
+    <section id="videosSec" class="section" hidden>
+      <h2>Videos</h2>
+      <div id="videosGrid" class="grid"></div>
+    </section>
+
+    <section id="shortsSec" class="section" hidden>
+      <h2>Shorts</h2>
+      <div id="shortsGrid" class="grid"></div>
+    </section>
   </main>
+
+  <script>
+    /* ======= CONFIG ======= */
+    const API_KEY = "AIzaSyCs8RPKePLkWZ5qG5Pw8Ufl9L94bu_E0A4";
+    const CHANNEL_ID = "UCRQMQeiTlrzyA-eONIXDq1g"; // your channel
+    const MAX_FETCH = 50;  // how many to pull (you can raise this)
+    const SHORTS_MAX_SECONDS = 60;
+
+    /* Optional: manually exclude some videos by ID */
+    const EXCLUDE_IDS = [
+      // "abcd1234xyz",  // add any videoId here to hide it
+    ];
+
+    /* ======= HELPERS ======= */
+    const YT_THUMB = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    const YT_URL   = id => `https://www.youtube.com/watch?v=${id}`;
+    const fmtDate  = iso => new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+
+    function iso8601ToSeconds(iso){
+      // e.g. PT1H2M3S, PT6M27S, PT59S
+      const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      if(!m) return 0;
+      const h = parseInt(m[1]||"0",10), min=parseInt(m[2]||"0",10), s=parseInt(m[3]||"0",10);
+      return h*3600 + min*60 + s;
+    }
+
+    function render(list, mount){
+      const frag = document.createDocumentFragment();
+      list.forEach(v=>{
+        const a = document.createElement('a');
+        a.className = 'item';
+        a.href = YT_URL(v.videoId);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = `
+          <img class="thumb" src="${v.thumb}" alt="">
+          <div>
+            <div class="title">${v.title}</div>
+            <div class="meta">${fmtDate(v.publishedAt)} · ${v.durationLabel || ''}</div>
+            ${v.tags?.length ? `<div class="tags">${v.tags.slice(0,6).map(t=>`<span class="tag">#${t}</span>`).join('')}</div>` : ''}
+            ${v.views || v.likes ? `<div class="stats">
+              ${v.views ? v.views.toLocaleString() + ' views' : ''}
+              ${v.likes ? (v.views ? ' · ' : '') + v.likes.toLocaleString() + ' likes' : ''}
+            </div>` : ''}
+          </div>
+        `;
+        frag.appendChild(a);
+      });
+      mount.replaceChildren(frag);
+    }
+
+    /* ======= YOUTUBE API PULL ======= */
+    async function getUploadsPlaylistId(){
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
+    }
+
+    async function getAllPlaylistItems(playlistId, maxCount=MAX_FETCH){
+      let items = [], pageToken = '';
+      while(items.length < maxCount){
+        const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems');
+        url.search = new URLSearchParams({
+          part: 'snippet,contentDetails',
+          playlistId,
+          maxResults: '50',
+          key: API_KEY,
+          pageToken
+        });
+        const res = await fetch(url);
+        const data = await res.json();
+        const chunk = (data.items || []).map(it => ({
+          videoId: it.contentDetails?.videoId,
+          publishedAt: it.contentDetails?.videoPublishedAt,
+          title: it.snippet?.title || '',
+          tags: it.snippet?.tags || [],
+          thumb: it.snippet?.thumbnails?.medium?.url || (it.contentDetails?.videoId ? YT_THUMB(it.contentDetails.videoId) : '')
+        }));
+        items = items.concat(chunk);
+        if(!data.nextPageToken || items.length >= maxCount) break;
+        pageToken = data.nextPageToken;
+      }
+      return items.slice(0, maxCount);
+    }
+
+    async function hydrateWithDetails(videos){
+      // Fetch durations & stats in batches of 50
+      const out = [];
+      for(let i=0; i<videos.length; i+=50){
+        const batch = videos.slice(i, i+50);
+        const ids = batch.map(v => v.videoId).join(',');
+        const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails,statistics&id=${ids}&key=${API_KEY}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const map = new Map((data.items||[]).map(x => [x.id, x]));
+        batch.forEach(v=>{
+          const d = map.get(v.videoId);
+          if(d){
+            const dur = d.contentDetails?.duration || 'PT0S';
+            const secs = iso8601ToSeconds(dur);
+            v.seconds = secs;
+            v.durationLabel = dur
+              .replace('PT','')
+              .replace('H',':')
+              .replace('M',':')
+              .replace('S','')
+              .replace(/(^:)|(:$)/g,'')
+              // normalize mm:ss
+              .split(':')
+              .map((t,i,arr)=> (i>0 && t.length===1 && arr.length>1 ? '0'+t : t))
+              .join(':');
+            v.views = Number(d.statistics?.viewCount||0);
+            v.likes = Number(d.statistics?.likeCount||0);
+          }
+          out.push(v);
+        });
+      }
+      return out;
+    }
+
+    (async function init(){
+      try{
+        const uploadsId = await getUploadsPlaylistId();
+        if(!uploadsId) return;
+
+        // Pull public uploads
+        let items = await getAllPlaylistItems(uploadsId, MAX_FETCH);
+
+        // Exclude any by ID if desired
+        items = items.filter(v => v.videoId && !EXCLUDE_IDS.includes(v.videoId));
+
+        // Add duration & stats
+        items = await hydrateWithDetails(items);
+
+        // Sort newest -> oldest
+        items.sort((a,b)=> new Date(b.publishedAt) - new Date(a.publishedAt));
+
+        // Split Videos vs Shorts
+        const shorts = items.filter(v => v.seconds > 0 && v.seconds <= SHORTS_MAX_SECONDS);
+        const longs  = items.filter(v => !shorts.includes(v)); // everything else
+
+        if(longs.length){
+          document.getElementById('videosSec').hidden = false;
+          render(longs, document.getElementById('videosGrid'));
+        }
+        if(shorts.length){
+          document.getElementById('shortsSec').hidden = false;
+          render(shorts, document.getElementById('shortsGrid'));
+        }
+      }catch(err){
+        console.error('YouTube feed error:', err);
+      }
+    })();
+  </script>
 </body>
 </html>
