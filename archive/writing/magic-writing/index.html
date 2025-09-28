@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magic Writing Archive | WJC83</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <style>
+    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem;text-align:left}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin:.25rem 0 1rem}
+    .topbar a{font-size:.95rem;opacity:.85;text-decoration:none;color:var(--ink,#111)}
+    .topbar a:hover{text-decoration:underline}
+    ul{list-style:none;padding-left:0;margin:.75rem 0 2rem}
+    li.item{display:block;margin:.6rem 0;padding:.7rem .85rem;border:1px solid #eee;border-radius:.75rem;background:#fff}
+    .meta{font-size:.9rem;opacity:.75}
+    .item .title a{color:var(--ink,#111);text-decoration:none;font-weight:600}
+    .item .title a:hover{text-decoration:underline}
+    .item.tier-2{border-color:#e7e7ef;background:#fcfcff;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    .item.tier-2 .row{display:grid;grid-template-columns:96px 1fr;gap:.85rem;align-items:center}
+    .item.tier-2 .thumb{width:96px;height:72px;object-fit:cover;border-radius:.5rem;border:1px solid rgba(0,0,0,.08)}
+    .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
+    .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .6rem;text-decoration:none;color:var(--ink,#111)}
+    .pills a:hover{text-decoration:underline}
+    .filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0 1rem}
+    .chip{padding:.25rem .6rem;border:1px solid rgba(0,0,0,.15);border-radius:999px;font-size:.85rem;cursor:pointer;background:#fff}
+    .chip.active{background:#111;color:#fff;border-color:#111}
+    .count{opacity:.7;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header class="site-header"><h1 class="site-title">Magic Writing — Full Archive</h1></header>
+
+  <main class="wrap" id="app">
+    <div class="topbar">
+      <a href="/archive/">← Back to Archive</a>
+      <div class="count" id="status">Loading…</div>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <ul id="list"></ul>
+  </main>
+
+  <script>
+    const ROOT_MANIFEST='../../manifest.json';
+    const $=(s,c=document)=>c.querySelector(s);
+    const prettyDate=d=> (typeof d==='string'&&/^\d{4}-\d{2}-\d{2}/.test(d))?d.slice(0,10):'';
+    const byNewest=(a,b)=>(b.date||'').localeCompare(a.date||'');
+
+    // Prefer external URL as primary for magic-writing; show local/pdf as pills
+    function primaryHref(it){
+      if(it.external) return it.external;
+      const local=(it.path_html||it.path||it.pdf||'').replace(/^\/*/,'');
+      return local?('/'+local):'';
+    }
+    function linkPills(it, hrefPrimary){
+      const pills=[];
+      if(it.external && hrefPrimary===it.external){
+        if(it.path_html) pills.push(`<a href="/${it.path_html.replace(/^\/*/,'')}" target="_blank" rel="noopener">Local</a>`);
+        if(it.pdf) pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
+      }else{
+        if(it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+        if(it.pdf) pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
+      }
+      return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
+    }
+
+    function itemLI(it){
+      const href=primaryHref(it);
+      const title=it.title||it.path_html||it.path||it.pdf||'Untitled';
+      const meta=[prettyDate(it.date)].filter(Boolean).join(' • ');
+
+      if((it.tier||99)===2){
+        const thumb=it.thumbnail?`<img class="thumb" src="/${it.thumbnail.replace(/^\/*/,'')}" alt="">`:'<div></div>';
+        return `<li class="item tier-2"><div class="row">${thumb}<div>
+          <div class="title">${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}</div>
+          <div class="meta">${meta}</div>
+          ${it.blurb?`<div>${it.blurb}</div>`:''}
+          ${linkPills(it, href)}
+        </div></div></li>`;
+      }
+      return `<li class="item">
+        <div class="title">${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}</div>
+        <div class="meta">${meta}</div>
+        ${it.blurb?`<div>${it.blurb}</div>`:''}
+        ${linkPills(it, href)}
+      </li>`;
+    }
+
+    function buildFilters(items){
+      const el=$('#filters'); const subs=new Set();
+      for(const it of items){ const s=(it.subcategory||'').trim(); if(s) subs.add(s); }
+      const arr=[...subs].sort((a,b)=>a.localeCompare(b));
+      if(!arr.length){ el.innerHTML=''; return; }
+      el.innerHTML=['<button class="chip active" data-sub="">All</button>']
+        .concat(arr.map(s=>`<button class="chip" data-sub="${s}">${s.replace(/-/g,' ')}</button>`)).join('');
+      el.addEventListener('click',e=>{
+        const btn=e.target.closest('.chip'); if(!btn) return;
+        for(const b of el.querySelectorAll('.chip')) b.classList.remove('active');
+        btn.classList.add('active');
+        renderList(window.__MAGIC_ITEMS__, btn.dataset.sub||'');
+      });
+    }
+
+    function renderList(items, sub){
+      const list=$('#list'); const status=$('#status');
+      const arr=items.filter(it=>!sub||(it.subcategory||'')===sub).sort(byNewest);
+      list.innerHTML=arr.map(itemLI).join('');
+      status.textContent=`${arr.length} item${arr.length===1?'':'s'}`;
+    }
+
+    async function loadJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }
+
+    (async ()=>{
+      const status=$('#status');
+      try{
+        const root=await loadJSON(ROOT_MANIFEST);
+        const items=(root.items||[]).filter(it=> (it.bucket==='writing') && ((it.category||'').toLowerCase()==='magic-writing'));
+        window.__MAGIC_ITEMS__=items.slice();   // sub-archive shows ALL magic-writing
+        buildFilters(items);
+        renderList(items,'');
+      }catch(e){
+        status.textContent=`Error: ${e.message}`;
+      }
+    })();
+  </script>
+</body>
+</html>
