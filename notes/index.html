@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Notes | WJC83</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .wrap { max-width: 900px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
+    .note-card { border:1px solid #eee; border-radius:.75rem; padding:1rem; margin:1rem 0; background:#fff; }
+    .note-card .note-title { margin:.2rem 0 .6rem; font-size:1.25rem; line-height:1.2; }
+    .note-meta { font-size:.9rem; opacity:.7; margin-bottom:.5rem; }
+    .note-card img { max-width:100%; height:auto; border-radius:.35rem; display:block; margin:.5rem 0; }
+    .empty-state { opacity:.7; font-style:italic; margin-top:2rem; }
+  </style>
+</head>
+<body>
+  <header class="site-header"><h1 class="site-title">Notes</h1></header>
+  <main class="wrap" id="app">
+    <div id="status">Loading…</div>
+    <div id="list"></div>
+  </main>
+
+  <script>
+    const INDEX_URL = './notes_index.json';
+
+    const $ = (s,c=document)=>c.querySelector(s);
+    const statusEl = $('#status');
+    const listEl = $('#list');
+
+    const fmtDate = iso => {
+      const m = (iso||'').match(/^(\d{4}-\d{2}-\d{2})/);
+      return m ? m[1] : '';
+    };
+
+    async function loadJSON(url){
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return res.json();
+    }
+
+    async function loadHTML(url){
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      return res.text();
+    }
+
+    async function render(){
+      try{
+        const idx = await loadJSON(INDEX_URL);
+        const items = (idx.items||[]).slice()
+          .sort((a,b)=>(b.modified||'').localeCompare(a.modified||''));
+
+        if (!items.length) {
+          statusEl.textContent = '';
+          listEl.innerHTML = '<div class="empty-state">No notes yet.</div>';
+          return;
+        }
+
+        for(const it of items){
+          const html = await loadHTML(`./${it.slug}.html`);
+          const card = document.createElement('article');
+          card.className = 'note-card';
+
+          // Insert the exported <article> as-is
+          card.innerHTML = `
+            <div class="note-meta">${fmtDate(it.modified)}</div>
+            ${html}
+          `;
+
+          // Add accessibility label for title
+          const art = card.querySelector('article.note');
+          const titleEl = art?.querySelector('.note-title');
+          if (titleEl) {
+            titleEl.setAttribute('aria-label', titleEl.textContent.trim());
+          }
+
+          listEl.appendChild(card);
+        }
+
+        statusEl.textContent = `${items.length} note${items.length>1?'s':''}`;
+      } catch(e){
+        console.error(e);
+        statusEl.textContent = `Error loading notes: ${e.message}`;
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', render);
+    } else {
+      render();
+    }
+  </script>
+</body>
+</html>
