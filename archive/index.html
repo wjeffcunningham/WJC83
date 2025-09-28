@@ -12,29 +12,34 @@
     .err { background: rgba(255,0,0,.06); }
 
     h3 { margin:.9rem 0 .35rem; font-size:1.05rem; }
+    h4 { margin:.5rem 0 .25rem; font-size:.95rem; opacity:.85 }
     ul { list-style: none; padding-left: 0; margin: .25rem 0 1rem; }
-    li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; }
+    li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; }
     .meta { font-size:.9rem; opacity:.7; }
+    .bucket-blurb { font-size:.95rem; opacity:.85; margin:.25rem 0 .5rem; }
+    .cat-blurb { font-size:.9rem; opacity:.75; margin:.1rem 0 .35rem; }
+    .school { font-size:.85rem; opacity:.85; margin-top:.25rem; }
 
+    .view-archive { margin:.4rem 0 1.2rem; }
+    .view-archive a { font-size:.92rem; text-decoration:none; color:var(--ink,#111); opacity:.85 }
+    .view-archive a:hover { text-decoration:underline; }
+
+    /* Tier-2 enhanced card */
     .item.tier-2 { border-color:#e7e7ef; background:#fcfcff; box-shadow:0 2px 10px rgba(0,0,0,.05); }
     .item.tier-2 .row { display:grid; grid-template-columns: 96px 1fr; gap:.85rem; align-items:center; }
     .item.tier-2 .thumb { width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
-
     .item .title a { color: var(--ink, #111); text-decoration: none; font-weight: 600; }
     .item .title a:hover { text-decoration: underline; }
 
-    .pills { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.4rem; }
-    .pills a { font-size:.85rem; border:1px solid rgba(0,0,0,.12); border-radius:999px; padding:.15rem .55rem; text-decoration:none; color:var(--ink,#111); }
-    .pills a:hover { text-decoration: underline; }
+    /* Folder styling (if any appear) */
+    .folder-item .title { display:flex; align-items:center; gap:.35rem; font-style: italic; color: var(--muted-ink, #666); }
+    .folder-item .title a { font-style: italic; color: var(--muted-ink, #666); text-decoration:none; }
+    .folder-item .title a:hover { text-decoration: underline; }
 
-    .cat-head { display:flex; justify-content:space-between; align-items:flex-end; gap:.75rem; }
-    .cat-head .actions a { font-size:.9rem; text-decoration:none; color: var(--ink,#111); opacity:.85; }
-    .cat-head .actions a:hover { text-decoration: underline; }
-
-    .locked { opacity:.55; }
-    .locked .actions a { pointer-events:none; text-decoration:none; opacity:.6; }
-
-    .group-head { margin-top:1.25rem; font-size:1.05rem; font-weight:600; }
+    /* Pills */
+    .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+    .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
+    .pills a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
@@ -52,6 +57,7 @@
           <span class="title">Writing</span>
           <span class="meta"><span class="count" id="count-writing">—</span></span>
         </summary>
+        <div class="bucket-blurb" id="blurb-writing"></div>
         <div id="bucket-writing"></div>
       </details>
 
@@ -61,15 +67,8 @@
           <span class="title">Old Movies</span>
           <span class="meta"><span class="count" id="count-old-movies">—</span></span>
         </summary>
+        <div class="bucket-blurb" id="blurb-old-movies"></div>
         <div id="bucket-old-movies"></div>
-      </details>
-
-      <details data-bucket="media">
-        <summary>
-          <span class="chev" aria-hidden="true"></span>
-          <span class="title">Film & Performance</span>
-        </summary>
-        <div id="bucket-media"></div>
       </details>
     </section>
   </main>
@@ -81,129 +80,203 @@
       window.__ARCHIVE_APP_RAN__ = true;
 
       const ROOT_MANIFEST = './manifest.json';
-      const MAX_PER_CATEGORY = 3;
-
-      const CATEGORY_CONFIG = {
-        writing: [
-          { key:'academic',  label:'Academic Writing',  archiveHref:'/archive/writing/academic/' },
-          { key:'criticism', label:'Criticism',         archiveHref:'/archive/writing/criticism/' },
-          { key:'magic',     label:'Magic Writing',     archiveHref:'/archive/writing/magic-writing/' },
-          { key:'technical', label:'Technical Writing', archiveHref:'/archive/writing/technical/', locked:true }
-        ],
-        media: [
-          { key:'acting',     label:'Acting Reel',   archiveHref:'/archive/acting/' },
-          { key:'short-films',label:'Short Films',   archiveHref:'/archive/short-films/' }
-        ]
-      };
-
       const $ = (s, c=document)=>c.querySelector(s);
+
       const statusEl = $('#status');
-      const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies'), 'media': $('#bucket-media') };
+      const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies') };
+      const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'old-movies': $('#blurb-old-movies') };
       const countEls = { 'writing': $('#count-writing'), 'old-movies': $('#count-old-movies') };
 
-      function byNewest(a,b){ return (b.date||'').localeCompare(a.date||''); }
-      const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) ? d : '';
+      const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
 
-      function primaryHref(it){
-        const local=(it.path_html||it.path||it.pdf||'').replace(/^\/*/,'');
-        if (it.category==='magic' && it.external) return it.external;
-        return local ? '/'+local : '';
-      }
+      // Prefer external as primary for magic-writing; local/pdf as pills.
+      function linkPills(it, hrefPrimary) {
+        const pills = [];
+        const cat = (it.category||'').toLowerCase();
 
-      function linkPills(it, hrefPrimary){
-        const pills=[];
-        if (it.category==='magic'){
-          if (hrefPrimary && it.external && hrefPrimary===it.external){
-            if (it.path_html) pills.push(`<a href="/${it.path_html}" target="_blank">Local</a>`);
-            if (it.pdf) pills.push(`<a href="/${it.pdf}" target="_blank">PDF</a>`);
+        if (cat === 'magic-writing') {
+          if (hrefPrimary && it.external && hrefPrimary === it.external) {
+            if (it.path_html) pills.push(`<a href="/${it.path_html.replace(/^\/*/,'')}" target="_blank" rel="noopener">Local</a>`);
+            if (it.pdf)       pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
           } else {
-            if (it.external) pills.push(`<a href="${it.external}" target="_blank">External</a>`);
-            if (it.pdf) pills.push(`<a href="/${it.pdf}" target="_blank">PDF</a>`);
+            if (it.external)  pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+            if (it.pdf)       pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
           }
         } else {
-          if (it.pdf) pills.push(`<a href="/${it.pdf}" target="_blank">PDF</a>`);
-          if (it.external) pills.push(`<a href="${it.external}" target="_blank">External</a>`);
+          // Default: show PDF + External in that order
+          if (it.pdf)      pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
+          if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
         }
-        return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
+        return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
       }
 
+      function primaryHref(it){
+        const cat = (it.category||'').toLowerCase();
+        const local=(it.path_html||it.path||it.pdf||'').replace(/^\/*/,'');
+        if (cat === 'magic-writing' && it.external) return it.external;
+        return local ? '/'+local : (it.external||'');
+      }
+
+      // === SINGLE canonical item renderer (folder-aware) ===
       function itemLI(it){
-        const href=primaryHref(it);
-        const title=it.title||'Untitled';
-        const meta=[prettyDate(it.date)].filter(Boolean).join(' • ');
-        if ((it.tier||99)===2){
-          const thumb=it.thumbnail?`<img class="thumb" src="/${it.thumbnail}" alt="">`:'<div></div>';
-          return `<li class="item tier-2"><div class="row">${thumb}<div>
-            <div class="title">${href?`<a href="${href}" target="_blank">${title}</a>`:title}</div>
-            <div class="meta">${meta}</div>${it.blurb?`<div>${it.blurb}</div>`:''}${linkPills(it, href)}
-          </div></div></li>`;
+        const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
+        const href  = primaryHref(it);
+        const date  = prettyDate(it.date);
+        const metaBits = [date];
+
+        if ((it.category||'') === 'academic' && it.school) metaBits.push(it.school);
+        if (it.type === 'folder') metaBits.push('Folder');
+        if (it.type === 'video')  metaBits.push('Video');
+
+        const metaLine = metaBits.filter(Boolean).join(' • ');
+
+        if (it.type === 'folder') {
+          return `
+            <li class="item folder-item">
+              <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+              <div class="meta">${metaLine}</div>
+            </li>
+          `;
         }
-        return `<li class="item"><div class="title">${href?`<a href="${href}" target="_blank">${title}</a>`:title}</div>
-          <div class="meta">${meta}</div>${it.blurb?`<div>${it.blurb}</div>`:''}${linkPills(it, href)}</li>`;
-      }
 
-      function renderCategorySection(label, arr, archiveHref, opts={}){
-        const sec=document.createElement('section');
-        if(opts.locked) sec.classList.add('locked');
-        sec.innerHTML=`<div class="cat-head"><h3>${opts.locked?'🔒 ':''}${label}</h3>
-          <div class="actions">${archiveHref?`<a href="${archiveHref}">View full archive →</a>`:''}</div></div>
-          <ul>${arr.slice(0,MAX_PER_CATEGORY).map(itemLI).join('')}</ul>`;
-        return sec;
-      }
-
-      function renderBucketWriting(items){
-        const target=bucketEls['writing'];
-        const sorted=items.slice().sort(byNewest);
-        const byCat=new Map();
-        for(const it of sorted){
-          const k=(it.category||'misc').toLowerCase();
-          if(!byCat.has(k)) byCat.set(k,[]);
-          byCat.get(k).push(it);
+        if ((it.tier||99) === 2) {
+          const thumb = it.thumbnail ? `<img class="thumb" src="/${it.thumbnail.replace(/^\/*/,'')}" alt="">` : '<div></div>';
+          return `
+            <li class="item tier-2">
+              <div class="row">
+                ${thumb}
+                <div>
+                  <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+                  <div class="meta">${metaLine}</div>
+                  ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+                  ${linkPills(it, href)}
+                </div>
+              </div>
+            </li>
+          `;
         }
-        const frag=document.createDocumentFragment();
-        for(const cfg of CATEGORY_CONFIG.writing){
-          let arr=byCat.get(cfg.key)||[];
-          if(cfg.key==='magic') arr=arr.filter(it=>(it.tier||99)===2).sort(byNewest);
-          const sec=renderCategorySection(cfg.label, arr, cfg.archiveHref,{locked:!!cfg.locked});
-          frag.appendChild(sec);
+
+        return `
+          <li class="item">
+            <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+            <div class="meta">${metaLine}</div>
+            ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+            ${linkPills(it, href)}
+          </li>
+        `;
+      }
+
+      // Map category -> sub-archive href
+      const CATEGORY_ARCHIVES = {
+        'academic': '/archive/writing/academic/',
+        'criticism': '/archive/writing/criticism/',
+        'magic-writing': '/archive/writing/magic-writing/',
+        'technical': '/archive/writing/technical/' // (locked, if/when added)
+      };
+
+      function renderCategorySection(catKey, items, categoriesMap){
+        // Sort newest first
+        items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+        // Special rule on main page: show ONLY tier-2 for magic-writing
+        if (catKey === 'magic-writing') {
+          items = items.filter(it => (it.tier||99) === 2);
         }
-        target.innerHTML=''; target.appendChild(frag);
-        if(countEls['writing']) countEls['writing'].textContent=String(sorted.length);
+
+        const sec = document.createElement('section');
+
+        const h3 = document.createElement('h3');
+        h3.textContent = catKey.replace(/-/g,' ').replace(/\b\w/g, m=>m.toUpperCase());
+        sec.appendChild(h3);
+
+        const cblurb = document.createElement('div');
+        cblurb.className = 'cat-blurb';
+        const catText = categoriesMap?.[catKey];
+        if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
+
+        // Limit to 3 items on the main page
+        const MAX = 3;
+        const shown = items.slice(0, MAX);
+        const ul = document.createElement('ul');
+        ul.innerHTML = shown.map(itemLI).join('');
+        sec.appendChild(ul);
+
+        // "Full archive" link
+        const more = document.createElement('div');
+        more.className = 'view-archive';
+        const href = CATEGORY_ARCHIVES[catKey] || '';
+        if (href) more.innerHTML = `<a href="${href}">View full ${h3.textContent} archive →</a>`;
+        sec.appendChild(more);
+
+        return { section: sec, count: items.length };
       }
 
-      function renderBucketGeneric(bucketKey, items){
-        const target=bucketEls[bucketKey]; if(!target) return;
-        const sorted=items.slice().sort(byNewest);
-        target.innerHTML='<ul>'+sorted.map(itemLI).join('')+'</ul>';
-        if(countEls[bucketKey]) countEls[bucketKey].textContent=String(sorted.length);
-      }
+      function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
+        const target = bucketEls[bucketKey];
+        const blurb  = bucketBlurbEl[bucketKey];
+        const counter = countEls[bucketKey];
+        if (!target) return;
 
-      function renderBucketMedia(items){
-        const target=bucketEls['media']; if(!target) return;
-        const byCat=new Map();
-        for(const it of items){ const k=(it.category||'misc').toLowerCase(); if(!byCat.has(k)) byCat.set(k,[]); byCat.get(k).push(it); }
-        const frag=document.createDocumentFragment();
-        for(const cfg of CATEGORY_CONFIG.media){
-          const arr=byCat.get(cfg.key)||[];
-          frag.appendChild(renderCategorySection(cfg.label, arr, cfg.archiveHref));
+        blurb.textContent = bucketMeta?.blurb || '';
+
+        // Group by category, then render each category block
+        const grouped = {};
+        for (const it of items) {
+          const cat = (it.category || 'misc').toLowerCase();
+          (grouped[cat] ||= []);
+          grouped[cat].push(it);
         }
-        target.innerHTML=''; target.appendChild(frag);
+
+        const frag = document.createDocumentFragment();
+        let bucketCount = 0;
+
+        for (const [cat, arr] of Object.entries(grouped)) {
+          const { section, count } = renderCategorySection(cat, arr, categoriesMap);
+          bucketCount += count;
+          frag.appendChild(section);
+        }
+
+        target.innerHTML = '';
+        target.appendChild(frag);
+        if (counter) counter.textContent = String(bucketCount);
       }
 
-      async function loadJSON(url){const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.json();}
+      async function loadJSON(url){
+        const res = await fetch(url, {cache:'no-store'});
+        if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+        return res.json();
+      }
+
       async function render(){
-        try{
-          const root=await loadJSON(ROOT_MANIFEST);
-          const items=root.items||[];
-          const byBucket={};
-          for(const it of items){const b=it.bucket||'misc'; (byBucket[b] ||= []).push(it);}
-          renderBucketWriting(byBucket['writing']||[]);
-          renderBucketGeneric('old-movies', byBucket['old-movies']||[]);
-          renderBucketMedia(items.filter(it=>['acting','short-films'].includes((it.category||'').toLowerCase())));
-          statusEl.textContent=`Archive loaded (${items.length} items).`;
-        }catch(e){statusEl.textContent=`Error: ${e.message}`; statusEl.classList.add('err');}
+        try {
+          const root = await loadJSON(ROOT_MANIFEST);
+          const bucketsMeta = root.buckets || {};
+          const categories  = root.categories || {};
+          const items       = Array.isArray(root.items) ? root.items.slice() : [];
+
+          const byBucket = {};
+          for (const it of items) {
+            const b = it.bucket || 'misc';
+            (byBucket[b] ||= []).push(it);
+          }
+
+          renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
+          renderBucket('old-movies', bucketsMeta['old-movies'], byBucket['old-movies'] || [], categories);
+
+          statusEl.textContent = `Archive loaded (${items.length} items).`;
+          statusEl.classList.add('ok'); statusEl.classList.remove('err');
+        } catch (e) {
+          console.error(e);
+          statusEl.textContent = `Error loading archive: ${e.message}`;
+          statusEl.classList.add('err'); statusEl.classList.remove('ok');
+        }
       }
-      document.readyState==='loading'?document.addEventListener('DOMContentLoaded',render):render();
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', render);
+      } else {
+        render();
+      }
     }
   </script>
 </body>
