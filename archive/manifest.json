@@ -86,7 +86,7 @@
       "school": "KU Leuven",
       "grade": "16"
     },
-        {
+    {
       "bucket": "writing",
       "category": "academic",
       "title": "On Phantasia's Tactual Aspect",
@@ -105,7 +105,7 @@
       "category": "academic",
       "title": "Strauss's Interpretation of Xenophon's <i>Hiero</i> and its Implications for the Organization of the UHS",
       "date": "2013-06-05",
-"blurb": "Unpacking Strauss's critique of the Universal Homogeneous State \"perhaps... fated to come.\"",
+      "blurb": "Unpacking Strauss's critique of the Universal Homogeneous State \"perhaps... fated to come.\"",
       "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Darby",
@@ -113,7 +113,6 @@
       "school": "Carleton",
       "grade": ""
     },
-
     {
       "bucket": "writing",
       "category": "criticism",
@@ -140,26 +139,25 @@
       "external": "",
       "thumbnail": "assets/thumbs/colossal-cave.jpg"
     },
-{
-  "bucket": "writing",
-  "category": "criticism",
-  "title": "Digital Exile: How I Got Banned For Life From AirBnB",
-  "date": "2018-07-18",
-  "tier": 3,
-  "blurb": "On big tech and draconian justice. **Second most-read Medium.com article, ever.**",
-  "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
-  "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
-  "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
-  "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
-  "thumbnail": "assets/thumbs/digital-exile.jpg"
-},
-
+    {
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Digital Exile: How I Got Banned For Life From AirBnB",
+      "date": "2018-07-18",
+      "tier": 3,
+      "blurb": "On big tech and draconian justice. **Second most-read Medium.com article, ever.**",
+      "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
+      "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
+      "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
+      "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
+      "thumbnail": "assets/thumbs/digital-exile.jpg"
+    },
     {
       "bucket": "writing",
       "category": "magic-writing",
       "title": "The End of the Magic: The Gathering Pro Tour",
       "date": "2020-03-18",
-      "tier": 3,
+      "tier": 2,
       "blurb": "TCGplayer column on the curtain call for the Pro Tour era. Local mirror with ads/cruft removed.",
       "path": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.pdf",
       "path_html": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
@@ -170,11 +168,108 @@
       "category": "magic-writing",
       "title": "Lands and Spells",
       "date": "2019-12-27",
-      "tier": 3,
+      "tier": 2,
       "blurb": "**GP Vancouver 2019 — Modern Masters Limited (3rd Place)**.",
       "path": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
       "path_html": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
       "thumbnail": "assets/thumbs/lands-spells.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 1 🔒",
+      "date": "",
+      "tier": 2,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 1.",
+      "path": "archive/writing/magic writing/untold-legends/part-1.html",
+      "path_html": "archive/writing/magic writing/untold-legends/part-1.html",
+      "pdf": "archive/writing/magic writing/untold-legends/part-1.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 2 🔒",
+      "date": "",
+      "tier": 2,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 2.",
+      "path": "archive/writing/magic writing/untold-legends/part-2.html",
+      "path_html": "archive/writing/magic writing/untold-legends/part-2.html",
+      "pdf": "archive/writing/magic writing/untold-legends/part-2.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 3 🔒",
+      "date": "",
+      "tier": 2,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 3.",
+      "path": "archive/writing/magic writing/untold-legends/part-3.html",
+      "path_html": "archive/writing/magic writing/untold-legends/part-3.html",
+      "pdf": "archive/writing/magic writing/untold-legends/part-3.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 4 🔒",
+      "date": "",
+      "tier": 2,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 4.",
+      "path": "archive/writing/magic writing/untold-legends/part-4.html",
+      "path_html": "archive/writing/magic writing/untold-legends/part-4.html",
+      "pdf": "archive/writing/magic writing/untold-legends/part-4.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Get Big or Die Trying — The 2006 Magic Invitational (Part 1)",
+      "date": "2006-01-01",
+      "tier": 2,
+      "blurb": "Origins and stakes of the 2006 Invitational — Part 1.",
+      "path": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-1.html",
+      "path_html": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-1.html",
+      "pdf": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-1.pdf",
+      "thumbnail": "assets/thumbs/invitational-2006.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Get Big or Die Trying — The 2006 Magic Invitational (Part 2)",
+      "date": "2006-01-02",
+      "tier": 2,
+      "blurb": "Rounds, rivalries, and format dynamics — Part 2.",
+      "path": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-2.html",
+      "path_html": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-2.html",
+      "pdf": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-2.pdf",
+      "thumbnail": "assets/thumbs/invitational-2006.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Get Big or Die Trying — The 2006 Magic Invitational (Part 3)",
+      "date": "2006-01-03",
+      "tier": 2,
+      "blurb": "Final shape of the event — Part 3.",
+      "path": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-3.html",
+      "path_html": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-3.html",
+      "pdf": "archive/writing/magic writing/invitational-2006/get-big-or-die-trying-part-3.pdf",
+      "thumbnail": "assets/thumbs/invitational-2006.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Interview with Richard Garfield",
+      "date": "",
+      "tier": 2,
+      "featured": true,
+      "blurb": "Long-form conversation with Magic’s creator.",
+      "path": "archive/writing/magic writing/interviews/richard-garfield.html",
+      "path_html": "archive/writing/magic writing/interviews/richard-garfield.html",
+      "pdf": "archive/writing/magic writing/interviews/richard-garfield.pdf",
+      "thumbnail": "assets/thumbs/garfield.jpg"
     },
     {
       "bucket": "writing",
@@ -186,7 +281,6 @@
       "path": "archive/writing/magic writing/untold-legends.html",
       "thumbnail": "assets/thumbs/untold.jpg"
     },
-
     {
       "bucket": "writing",
       "category": "magic-writing",
@@ -242,7 +336,6 @@
       "path": "archive/writing/magic writing/starcitygames/index.html",
       "thumbnail": "assets/thumbs/scg.png"
     },
-
     {
       "bucket": "old-movies",
       "type": "video",

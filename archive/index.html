@@ -14,7 +14,7 @@
     h3 { margin:.9rem 0 .35rem; font-size:1.05rem; }
     h4 { margin:.5rem 0 .25rem; font-size:.95rem; opacity:.85 }
     ul { list-style: none; padding-left: 0; margin: .25rem 0 1rem; }
-    li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; }
+    li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; position:relative; }
     .meta { font-size:.9rem; opacity:.7; }
     .bucket-blurb { font-size:.95rem; opacity:.85; margin:.25rem 0 .5rem; }
     .cat-blurb { font-size:.9rem; opacity:.75; margin:.1rem 0 .35rem; }
@@ -31,7 +31,18 @@
     .item .title a { color: var(--ink, #111); text-decoration: none; font-weight: 600; }
     .item .title a:hover { text-decoration: underline; }
 
-    /* Folder styling (if any appear) */
+    /* Featured variant */
+    .item.featured { border-color:#cfd6ff; box-shadow:0 4px 18px rgba(40,60,240,.08); }
+    .item.tier-2.featured { background:linear-gradient(180deg,#fcfcff 0%, #f8f9ff 100%); }
+    .item.featured::after{
+      content:"★ Featured";
+      position:absolute; top:-9px; right:10px;
+      font-size:.72rem; line-height:1;
+      padding:.2rem .5rem; border-radius:999px;
+      color:#233; background:#e8edff; border:1px solid #cfd6ff;
+    }
+
+    /* Folder styling */
     .folder-item .title { display:flex; align-items:center; gap:.35rem; font-style: italic; color: var(--muted-ink, #666); }
     .folder-item .title a { font-style: italic; color: var(--muted-ink, #666); text-decoration:none; }
     .folder-item .title a:hover { text-decoration: underline; }
@@ -40,6 +51,9 @@
     .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
     .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
     .pills a:hover{text-decoration:underline}
+
+    /* Series part badge */
+    .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
   </style>
 </head>
 <body>
@@ -89,7 +103,11 @@
 
       const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
 
-      // Prefer external as primary for magic-writing; local/pdf as pills.
+      function partBadge(it){
+        const p = Number(it.part||'');
+        return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+      }
+
       function linkPills(it, hrefPrimary) {
         const pills = [];
         const cat = (it.category||'').toLowerCase();
@@ -103,7 +121,6 @@
             if (it.pdf)       pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
           }
         } else {
-          // Default: show PDF + External in that order
           if (it.pdf)      pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
           if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
         }
@@ -117,7 +134,7 @@
         return local ? '/'+local : (it.external||'');
       }
 
-      // === SINGLE canonical item renderer (folder-aware) ===
+      // === SINGLE canonical item renderer (folder-aware + featured + series) ===
       function itemLI(it){
         const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
         const href  = primaryHref(it);
@@ -129,11 +146,13 @@
         if (it.type === 'video')  metaBits.push('Video');
 
         const metaLine = metaBits.filter(Boolean).join(' • ');
+        const baseTierClass = (it.tier||99) === 2 ? 'item tier-2' : 'item';
+        const featuredClass = it.featured ? ' featured' : '';
 
         if (it.type === 'folder') {
           return `
-            <li class="item folder-item">
-              <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+            <li class="item folder-item${featuredClass}">
+              <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
               <div class="meta">${metaLine}</div>
             </li>
           `;
@@ -142,11 +161,11 @@
         if ((it.tier||99) === 2) {
           const thumb = it.thumbnail ? `<img class="thumb" src="/${it.thumbnail.replace(/^\/*/,'')}" alt="">` : '<div></div>';
           return `
-            <li class="item tier-2">
+            <li class="${baseTierClass}${featuredClass}">
               <div class="row">
                 ${thumb}
                 <div>
-                  <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+                  <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
                   <div class="meta">${metaLine}</div>
                   ${it.blurb ? `<div>${it.blurb}</div>` : ''}
                   ${linkPills(it, href)}
@@ -157,8 +176,8 @@
         }
 
         return `
-          <li class="item">
-            <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}</div>
+          <li class="${baseTierClass}${featuredClass}">
+            <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
             <div class="meta">${metaLine}</div>
             ${it.blurb ? `<div>${it.blurb}</div>` : ''}
             ${linkPills(it, href)}
@@ -166,16 +185,14 @@
         `;
       }
 
-      // Map category -> sub-archive href
       const CATEGORY_ARCHIVES = {
         'academic': '/archive/writing/academic/',
         'criticism': '/archive/writing/criticism/',
         'magic-writing': '/archive/writing/magic-writing/',
-        'technical': '/archive/writing/technical/' // (locked, if/when added)
+        'technical': '/archive/writing/technical/'
       };
 
       function renderCategorySection(catKey, items, categoriesMap){
-        // Sort newest first
         items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
 
         // Special rule on main page: show ONLY tier-2 for magic-writing
@@ -194,14 +211,12 @@
         const catText = categoriesMap?.[catKey];
         if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
 
-        // Limit to 3 items on the main page
         const MAX = 3;
         const shown = items.slice(0, MAX);
         const ul = document.createElement('ul');
         ul.innerHTML = shown.map(itemLI).join('');
         sec.appendChild(ul);
 
-        // "Full archive" link
         const more = document.createElement('div');
         more.className = 'view-archive';
         const href = CATEGORY_ARCHIVES[catKey] || '';
@@ -219,7 +234,6 @@
 
         blurb.textContent = bucketMeta?.blurb || '';
 
-        // Group by category, then render each category block
         const grouped = {};
         for (const it of items) {
           const cat = (it.category || 'misc').toLowerCase();
