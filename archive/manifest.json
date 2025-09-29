@@ -105,8 +105,7 @@
       "category": "academic",
       "title": "Strauss's Interpretation of Xenophon's <i>Hiero</i> and its Implications for the Organization of the UHS",
       "date": "2013-06-05",
-      "tier": 3,
-      "blurb": "Unpacking Strauss's critique of the Universal Homogeneous State 'perhaps... fated to come.'",
+"blurb": "Unpacking Strauss's critique of the Universal Homogeneous State \"perhaps... fated to come.\"",
       "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Darby",
@@ -141,19 +140,19 @@
       "external": "",
       "thumbnail": "assets/thumbs/colossal-cave.jpg"
     },
-    {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Digital Exile: How I Got Banned For Life From AirBnB",
-      "date": "2018-07-18",
-      "tier": 3,
-      "blurb": "On big tech and draconian justice. **Second most-read Medium.com article ever.**",
-      "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
-      "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
-      "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
-      "external": "",
-      "thumbnail": "assets/thumbs/digital-exile.jpg"
-    },
+{
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Digital Exile: How I Got Banned For Life From AirBnB",
+  "date": "2018-07-18",
+  "tier": 3,
+  "blurb": "On big tech and draconian justice. **Second most-read Medium.com article, ever.**",
+  "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
+  "path_html": "archive/writing/criticism/2018-07-18-digital-exile.html",
+  "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
+  "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
+  "thumbnail": "assets/thumbs/digital-exile.jpg"
+},
 
     {
       "bucket": "writing",

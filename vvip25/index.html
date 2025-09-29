@@ -5,47 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VVIP25 | WJC83.CA</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    /* Page wrap */
-    .wrap { max-width: 860px; margin: 0 auto; padding: 0 1rem 2rem; }
+ <style>
+  /* Page wrap */
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 1rem 2rem; }
 
-    /* Header/title – remove big default gaps */
-    .site-header { text-align: center; }
-    .site-title { margin: 12px 0 14px; line-height: 1; }
+  /* Header/title – remove big default gaps */
+  .site-header { text-align: center; }
+  .site-title { margin: 12px 0 14px; line-height: 1; }
 
-    /* Hero (simple frame) */
-    .hero { margin: 0 auto 18px; }
-    .hero img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.1);
-      margin: 0 auto;
-    }
+  /* ===== HERO (framed image + caption) ===== */
+  .hero-figure{
+    display: block;
+    max-width: 100%;
+    margin: 0 auto 18px;
+    text-align: center;
+  }
+  .hero-frame{
+    /* SHRINK-WRAP like the main page */
+    display: inline-block;
+    /* no width:100% here */
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,.10);
+    overflow: hidden;             /* clip corners cleanly */
+  }
+  body.dark .hero-frame{
+    background: #121212;
+    border-color: rgba(255,255,255,.16);
+  }
+  .hero-img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    /* Optional: keep tall images from dominating */
+    max-height: 60vh;
+    object-fit: contain;
+  }
+  .hero-figure figcaption{
+    margin-top: .55rem;
+    font-size: .95rem;
+    opacity: .8;
+  }
 
-    /* Description + links */
-    .desc { margin: 12px 0 18px; font-size: 1rem; line-height: 1.5; }
-    .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 10px 0 20px; }
-    .links a { text-decoration:none; font-weight:600; }
+  /* Description + links */
+  .desc { margin: 12px 0 18px; font-size: 1rem; line-height: 1.5; }
+  .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 10px 0 20px; }
+  .links a { text-decoration:none; font-weight:600; }
 
-    /* Feed */
-    .section { margin: 28px 0; }
-    .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; text-align:center; }
-    .grid { display:grid; gap:1rem; }
-    @media(min-width:640px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
-    .item { display:grid; grid-template-columns:140px 1fr; gap:.75rem;
-            border:1px solid rgba(0,0,0,.08); border-radius:12px;
-            background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.06); padding:.6rem; text-decoration:none; color:inherit; }
-    body.dark .item { background:#121212; border-color:rgba(255,255,255,.12); }
-    .thumb { width:100%; aspect-ratio:16/9; border-radius:8px; object-fit:cover; background:#ddd; }
-    .title { font-weight:700; margin:.1rem 0 .2rem; }
-    .meta { font-size:.88rem; opacity:.75; }
-    .stats { margin-top:.3rem; font-size:.85rem; opacity:.75; }
-    .tags { margin-top:.3rem; display:flex; flex-wrap:wrap; gap:.3rem; }
-    .tag { font-size:.75rem; border:1px solid rgba(0,0,0,.1); padding:.1rem .4rem; border-radius:999px; opacity:.85; }
-    body.dark .tag { border-color:rgba(255,255,255,.2); }
-  </style>
+  /* Feed */
+  .section { margin: 28px 0; }
+  .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; text-align:center; }
+  .grid { display:grid; gap:1rem; }
+  @media(min-width:640px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
+  .item { display:grid; grid-template-columns:140px 1fr; gap:.75rem;
+          border:1px solid rgba(0,0,0,.08); border-radius:12px;
+          background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.06); padding:.6rem; text-decoration:none; color:inherit; }
+  body.dark .item { background:#121212; border-color:rgba(255,255,255,.12); }
+  .thumb { width:100%; aspect-ratio:16/9; border-radius:8px; object-fit:cover; background:#ddd; }
+  .title { font-weight:700; margin:.1rem 0 .2rem; }
+  .meta { font-size:.88rem; opacity:.75; }
+  .stats { margin-top:.3rem; font-size:.85rem; opacity:.75; }
+  .tags { margin-top:.3rem; display:flex; flex-wrap:wrap; gap:.3rem; }
+  .tag { font-size:.75rem; border:1px solid rgba(0,0,0,.1); padding:.1rem .4rem; border-radius:999px; opacity:.85; }
+  body.dark .tag { border-color:rgba(255,255,255,.2); }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -53,13 +77,15 @@
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <img src="../assets/vvip25-hero.jpg" alt="VVIP25 hero image">
-    </section>
-    <caption><i>Art by SF Cook</i></caption>
+    <figure class="hero-figure">
+      <div class="hero-frame">
+        <img class="hero-img" src="../assets/vvip25-hero.jpg" alt="VVIP25 hero image">
+      </div>
+      <figcaption><i>Art by SF Cook</i></figcaption>
+    </figure>
 
     <div class="desc">
-      <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2024–present), releasing experimental tracks, performance footage, and video essays. This space will host playable audio, mirrors, and exclusive uploads.</p>
+      <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2024–present).</p>
     </div>
 
     <section class="links">
