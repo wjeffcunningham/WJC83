@@ -1,203 +1,249 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Magic Writing Archive | WJC83</title>
-  <link rel="stylesheet" href="../../../style.css">
-  <style>
-    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem;text-align:left}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin:.25rem 0 1rem}
-    .topbar a{font-size:.95rem;opacity:.85;text-decoration:none;color:var(--ink,#111)}
-    .topbar a:hover{text-decoration:underline}
-    ul{list-style:none;padding-left:0;margin:.75rem 0 2rem}
-    li.item{display:block;margin:.6rem 0;padding:.7rem .85rem;border:1px solid #eee;border-radius:.75rem;background:#fff; position:relative;}
-    .meta{font-size:.9rem;opacity:.75}
-    .item .title a{color:var(--ink,#111);text-decoration:none;font-weight:600}
-    .item .title a:hover{text-decoration:underline}
-    .item.tier-2{border-color:#e7e7ef;background:#fcfcff;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-    .item.tier-2 .row{display:grid;grid-template-columns:96px 1fr;gap:.85rem;align-items:center}
-    .item.tier-2 .thumb{width:96px;height:72px;object-fit:cover;border-radius:.5rem;border:1px solid rgba(0,0,0,.08)}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Magic: The Gathering — Archive | WJC83.CA</title>
+<link rel="stylesheet" href="/style.css" />
+<meta name="theme-color" content="#0b0b0c" />
+<meta property="og:title" content="Magic: The Gathering — Archive" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="WJC83" />
+<meta property="og:url" content="https://wjc83.ca/archive/writing/magic-writing/" />
 
-    /* Featured */
-    .item.featured { border-color:#cfd6ff; box-shadow:0 4px 18px rgba(40,60,240,.08); }
-    .item.tier-2.featured { background:linear-gradient(180deg,#fcfcff 0%, #f8f9ff 100%); }
-    .item.featured::after{
-      content:"★ Featured";
-      position:absolute; top:-9px; right:10px;
-      font-size:.72rem; line-height:1;
-      padding:.2rem .5rem; border-radius:999px;
-      color:#233; background:#e8edff; border:1px solid #cfd6ff;
-    }
+<style>
+/* ===== Page frame ===== */
+.wrap { max-width: 900px; margin: 1.25rem auto 3rem; padding: 0 1rem; text-align: left; }
+h1.site-title { margin: 12px 0 16px; line-height: 1; }
 
-    /* Series UI */
-    .series-header{
-      margin:1.25rem 0 .5rem;
-      font-size:.95rem;
-      font-weight:600;
-      color:var(--ink,#111);
-      display:flex;align-items:center;gap:.5rem;
-    }
-    .series-badge{
-      font-size:.75rem;border:1px solid rgba(0,0,0,.12);
-      border-radius:999px;padding:.15rem .55rem;opacity:.85;
-      background:#fff;
-    }
-    .part-pill{
-      display:inline-flex;align-items:center;gap:.35rem;
-      font-size:.78rem;border:1px solid rgba(0,0,0,.14);
-      border-radius:999px;padding:.12rem .5rem;margin-top:.35rem;
-      background:#fff;opacity:.85;
-    }
-    .lock{font-size:.85rem;opacity:.7}
+/* ===== Dojo-ish “gem” rail + section headers ===== */
+.section {
+  position: relative;
+  padding-left: 20px; /* room for the rail */
+  margin: 1.4rem 0 1.75rem;
+}
+.section::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0.4rem;
+  bottom: 0.6rem;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.06));
+  border-radius: 2px;
+}
+.section h2 {
+  position: relative;
+  margin: 0 0 .6rem;
+  font-size: 1.15rem;
+  letter-spacing: .03em;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+/* Little “gem” to the left of each section title */
+.section h2::before{
+  content:"";
+  width: 10px; height: 10px;
+  transform: rotate(45deg);
+  background: radial-gradient(circle at 30% 30%, #cfe6ff, #78a8ff 60%, #3d66cc 90%);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 8px rgba(61,102,204,.35);
+  border-radius: 2px;
+  display:inline-block;
+}
 
-    .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.45rem}
-    .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .6rem;text-decoration:none;color:var(--ink,#111)}
-    .pills a:hover{text-decoration:underline}
-    .filters{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0 1rem}
-    .chip{padding:.25rem .6rem;border:1px solid rgba(0,0,0,.15);border-radius:999px;font-size:.85rem;cursor:pointer;background:#fff}
-    .chip.active{background:#111;color:#fff;border-color:#111}
-    .count{opacity:.7;font-size:.9rem}
-  </style>
+/* ===== Lists / cards ===== */
+ul{ list-style:none; padding:0; margin:.4rem 0 .25rem; }
+li.item { display:block; margin:.6rem 0; padding:.65rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; position:relative; }
+.item .title a{ color:var(--ink,#111); text-decoration:none; font-weight:600; }
+.item .title a:hover{ text-decoration:underline; }
+.meta{ font-size:.9rem; opacity:.75; }
+.blurb{ margin:.25rem 0 .1rem; }
+
+.item.tier-2{ border-color:#e7e7ef; background:#fcfcff; box-shadow:0 2px 10px rgba(0,0,0,.05); }
+.item.tier-2 .row{ display:grid; grid-template-columns:96px 1fr; gap:.85rem; align-items:center; }
+.item.tier-2 .thumb{ width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
+
+/* Pills */
+.pills{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.38rem }
+.pills a{ font-size:.85rem; border:1px solid rgba(0,0,0,.12); border-radius:999px; padding:.15rem .55rem;
+          text-decoration:none; color:var(--ink,#111) }
+.pills a:hover{ background:rgba(0,0,0,.04) }
+
+/* Part/lock badge */
+.part-pill{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem;
+  border:1px solid rgba(0,0,0,.14); border-radius:999px; padding:.1rem .45rem; margin-left:.4rem; background:#fff; opacity:.85 }
+
+/* Subtle featured tag (for future use) */
+.item.featured{ border-color:#cfd6ff; box-shadow:0 4px 18px rgba(40,60,240,.08); }
+.item.tier-2.featured{ background:linear-gradient(180deg,#fcfcff 0%, #f8f9ff 100%); }
+.item.featured::after{
+  content:"★ Featured";
+  position:absolute; top:-9px; right:10px;
+  font-size:.72rem; line-height:1;
+  padding:.2rem .5rem; border-radius:999px;
+  color:#233; background:#e8edff; border:1px solid #cfd6ff;
+}
+
+/* Small helper bits */
+.status{ padding:.55rem .75rem; border:1px solid rgba(0,0,0,.12); border-radius:8px; margin:.5rem 0; background:rgba(0,0,0,.03); font-size:.95rem; }
+.small{ font-size:.9rem; opacity:.75; }
+</style>
 </head>
 <body>
-  <header class="site-header"><h1 class="site-title">Magic Writing — Full Archive</h1></header>
+  <header class="site-header">
+    <h1 class="site-title">Magic: The Gathering — Archive</h1>
+  </header>
 
   <main class="wrap" id="app">
-    <div class="topbar">
-      <a href="/archive/">← Back to Archive</a>
-      <div class="count" id="status">Loading…</div>
-    </div>
+    <div class="status" id="status">Loading…</div>
 
-    <div class="filters" id="filters"></div>
-    <div id="list"></div>
+    <section class="section" id="featuredSec">
+      <h2>Featured</h2>
+      <ul id="featuredList"></ul>
+    </section>
+
+    <section class="section" id="seriesSec">
+      <h2>Series</h2>
+      <ul id="seriesList"></ul>
+      <div class="small">Locked parts show a 🔒 badge.</div>
+    </section>
+
+    <section class="section" id="columnsSec">
+      <h2>Columns</h2>
+      <ul id="columnsList"></ul>
+    </section>
+
+    <section class="section" id="archivesSec">
+      <h2>Archives & Collections</h2>
+      <ul id="archivesList"></ul>
+    </section>
   </main>
 
-  <script>
-    const ROOT_MANIFEST='../../manifest.json';
-    const $=(s,c=document)=>c.querySelector(s);
-    const prettyDate=d=> (typeof d==='string'&&/^\d{4}-\d{2}-\d{2}/.test(d))?d.slice(0,10):'';
-    const byNewest=(a,b)=>(b.date||'').localeCompare(a.date||'');
+<script>
+(function(){
+  const MANIFEST_URL = "../../manifest.json"; // relative to this index.html
 
-    function primaryHref(it){
-      if(it.external) return it.external;
-      const local=(it.path_html||it.path||it.pdf||'').replace(/^\/*/,'');
-      return local?('/'+local):'';
-    }
-    function linkPills(it, hrefPrimary){
-      const pills=[];
-      if(it.external && hrefPrimary===it.external){
-        if(it.path_html) pills.push(`<a href="/${it.path_html.replace(/^\/*/,'')}" target="_blank" rel="noopener">Local</a>`);
-        if(it.pdf) pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
-      }else{
-        if(it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-        if(it.pdf) pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
-      }
-      return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
-    }
+  const $ = (s,c=document)=>c.querySelector(s);
+  const status = $("#status");
+  const listEls = {
+    featured: $("#featuredList"),
+    series:   $("#seriesList"),
+    columns:  $("#columnsList"),
+    archives: $("#archivesList")
+  };
 
-    function partBadge(it){
-      const p = Number(it.part||'');
-      const lock = it.locked ? ' <span class="lock">🔒</span>' : '';
-      return isFinite(p) && p>0 ? `<span class="part-pill">Part ${p}${lock}</span>` : (it.locked?`<span class="part-pill"><span class="lock">🔒</span></span>`:'');
-    }
+  const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
 
-    function itemLI(it){
-      const href=primaryHref(it);
-      const title=it.title||it.path_html||it.path||it.pdf||'Untitled';
-      const meta=[prettyDate(it.date)].filter(Boolean).join(' • ');
-      const baseTierClass = (it.tier||99)===2 ? 'item tier-2' : 'item';
-      const featuredClass = it.featured ? ' featured' : '';
+  function partBadge(it){
+    const p = Number(it.part||"");
+    return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+  }
 
-      if((it.tier||99)===2){
-        const thumb=it.thumbnail?`<img class="thumb" src="/${it.thumbnail.replace(/^\/*/,'')}" alt="">`:'<div></div>';
-        return `<li class="${baseTierClass}${featuredClass}"><div class="row">${thumb}<div>
-          <div class="title">${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}</div>
-          <div class="meta">${meta}</div>
-          ${partBadge(it)}
-          ${it.blurb?`<div>${it.blurb}</div>`:''}
-          ${linkPills(it, href)}
-        </div></div></li>`;
-      }
-      return `<li class="${baseTierClass}${featuredClass}">
-        <div class="title">${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}</div>
-        <div class="meta">${meta}</div>
-        ${partBadge(it)}
-        ${it.blurb?`<div>${it.blurb}</div>`:''}
-        ${linkPills(it, href)}
-      </li>`;
-    }
+  function pills(it, primaryHref){
+    const out = [];
+    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
+    if (local) out.push(`<a href="/${local}" target="_blank" rel="noopener">Local</a>`);
+    if (it.pdf) out.push(`<a href="/${String(it.pdf).replace(/^\/+/,'')}" target="_blank" rel="noopener">PDF</a>`);
+    if (it.external) out.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+    return out.length ? `<div class="pills">${out.join('')}</div>` : '';
+  }
 
-    function buildFilters(items){
-      const el=$('#filters'); const subs=new Set();
-      for(const it of items){ const s=(it.subcategory||'').trim(); if(s) subs.add(s); }
-      const arr=[...subs].sort((a,b)=>a.localeCompare(b));
-      if(!arr.length){ el.innerHTML=''; return; }
-      el.innerHTML=['<button class="chip active" data-sub="">All</button>']
-        .concat(arr.map(s=>`<button class="chip" data-sub="${s}">${s.replace(/-/g,' ')}</button>`)).join('');
-      el.addEventListener('click',e=>{
-        const btn=e.target.closest('.chip'); if(!btn) return;
-        for(const b of el.querySelectorAll('.chip')) b.classList.remove('active');
-        btn.classList.add('active');
-        renderList(window.__MAGIC_ITEMS__, btn.dataset.sub||'');
-      });
+  function primaryHref(it){
+    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
+    // For magic-writing we normally prefer external if present for “Columns”,
+    // but Local-first feels better for archival reading — keep Local primary.
+    return local ? '/'+local : (it.external||'');
+  }
+
+  function itemHTML(it){
+    const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
+    const href  = primaryHref(it);
+    const date  = prettyDate(it.date);
+    const metaBits = [date].filter(Boolean);
+    const meta = metaBits.join(' • ');
+    const classes = ['item'];
+    if ((it.tier||99)===2) classes.push('tier-2');
+    if (it.featured) classes.push('featured');
+
+    // Tier-2 card with optional thumb
+    if ((it.tier||99)===2){
+      const thumb = it.thumbnail ? `<img class="thumb" src="/${String(it.thumbnail).replace(/^\/+/,'')}" alt="">` : '<div></div>';
+      return `
+        <li class="${classes.join(' ')}">
+          <div class="row">
+            ${thumb}
+            <div>
+              <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+              ${meta ? `<div class="meta">${meta}</div>` : ''}
+              ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
+              ${pills(it, href)}
+            </div>
+          </div>
+        </li>
+      `;
     }
 
-    // Group by contiguous series (keeps your overall date sort)
-    function groupBySeries(arr){
-      const out=[];
-      let i=0;
-      while(i<arr.length){
-        const cur=arr[i];
-        const s=(cur.series||'').trim();
-        if(!s){ out.push({type:'item', item:cur}); i++; continue; }
-        // collect contiguous with same series
-        const block=[cur];
-        let j=i+1;
-        while(j<arr.length && (arr[j].series||'').trim()===s) { block.push(arr[j]); j++; }
-        out.push({type:'series', name:s, items:block});
-        i=j;
-      }
-      return out;
+    // Simple row
+    return `
+      <li class="${classes.join(' ')}">
+        <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+        ${meta ? `<div class="meta">${meta}</div>` : ''}
+        ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
+        ${pills(it, href)}
+      </li>
+    `;
+  }
+
+  function isArchiveFolder(it){
+    return it.type === 'folder' || /archive|index\.html$/i.test(String(it.path||it.path_html||''));
+  }
+
+  function categorize(items){
+    const featured = items.filter(it => !!it.featured);
+    const series   = items.filter(it => /untold-legends|invitational-2006/i.test(String(it.path||it.path_html||'')));
+    const columns  = items.filter(it => !isArchiveFolder(it) && !featured.includes(it) && !series.includes(it));
+    const archives = items.filter(isArchiveFolder);
+
+    // Sort by date desc when available
+    const byDateDesc = (a,b)=> String(b.date||'').localeCompare(String(a.date||''));
+    featured.sort(byDateDesc); series.sort(byDateDesc); columns.sort(byDateDesc);
+    // archives alphabetical by title
+    archives.sort((a,b)=> String(a.title||'').localeCompare(String(b.title||'')));
+
+    return {featured, series, columns, archives};
+  }
+
+  async function loadJSON(url){
+    const res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    return res.json();
+  }
+
+  async function init(){
+    try{
+      const root = await loadJSON(MANIFEST_URL);
+      const items = (root.items||[]).filter(it => (it.category||'').toLowerCase()==='magic-writing');
+      const { featured, series, columns, archives } = categorize(items);
+
+      listEls.featured.innerHTML = featured.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
+      listEls.series.innerHTML   = series.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
+      listEls.columns.innerHTML  = columns.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
+      listEls.archives.innerHTML = archives.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
+
+      status.textContent = `Loaded ${items.length} Magic items.`;
+    }catch(err){
+      console.error(err);
+      status.textContent = `Error: ${err.message}`;
     }
+  }
 
-    function renderList(items, sub){
-      const list=$('#list'); const status=$('#status');
-      const filtered=items.filter(it=>!sub||(it.subcategory||'')===sub).sort(byNewest);
-      const grouped=groupBySeries(filtered);
-
-      const html = grouped.map(g=>{
-        if(g.type==='item'){
-          return `<ul>${itemLI(g.item)}</ul>`;
-        }else{
-          const head = `
-            <div class="series-header">
-              <span>${g.name}</span>
-              <span class="series-badge">${g.items.length} part${g.items.length>1?'s':''}</span>
-            </div>`;
-          const ul = `<ul>${g.items.map(itemLI).join('')}</ul>`;
-          return head+ul;
-        }
-      }).join('');
-
-      list.innerHTML=html;
-      status.textContent=`${filtered.length} item${filtered.length===1?'':'s'}`;
-    }
-
-    async function loadJSON(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }
-
-    (async ()=>{
-      const status=$('#status');
-      try{
-        const root=await loadJSON(ROOT_MANIFEST);
-        const items=(root.items||[]).filter(it=> (it.bucket==='writing') && ((it.category||'').toLowerCase()==='magic-writing'));
-        window.__MAGIC_ITEMS__=items.slice();   // sub-archive shows ALL magic-writing
-        buildFilters(items);
-        renderList(items,'');
-      }catch(e){
-        status.textContent=`Error: ${e.message}`;
-      }
-    })();
-  </script>
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 </body>
 </html>

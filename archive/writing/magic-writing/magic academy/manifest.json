@@ -1,43 +1,203 @@
 {
   "collection": "Magic Academy",
   "items": [
-    { "order": 310, "filename": "Lessons Learned.pdf", "title": "Lessons Learned", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Lessons Learned.pdf" },
-
-    { "order": 309, "filename": "Aggro, Combo, and Control.pdf", "title": "Aggro, Combo, and Control", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Aggro, Combo, and Control.pdf" },
-    { "order": 308, "filename": "Tactical Protocol_ Your Opponent's Turn.pdf", "title": "Tactical Protocol: Your Opponent's Turn", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Tactical Protocol_ Your Opponent's Turn.pdf" },
-    { "order": 307, "filename": "Tactical Protocol_ Your Own Turn.pdf", "title": "Tactical Protocol: Your Own Turn", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Tactical Protocol_ Your Own Turn.pdf" },
-    { "order": 306, "filename": "Tactical Protocol_ Introduction to Information & Resources.pdf", "title": "Tactical Protocol: Introduction to Information & Resources", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Tactical Protocol_ Introduction to Information & Resources.pdf" },
-
-    { "order": 305, "filename": "Playing Against Control.pdf", "title": "Playing Against Control", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Playing Against Control.pdf" },
-    { "order": 304, "filename": "Getting Better at Sealed.pdf", "title": "Getting Better at Sealed", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Getting Better at Sealed.pdf" },
-    { "order": 303, "filename": "Sealed Deck Walkthrough.pdf", "title": "Sealed Deck Walkthrough", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Sealed Deck Walkthrough.pdf" },
-    { "order": 302, "filename": "Strategies and Techniques for Booster Draft.pdf", "title": "Strategies and Techniques for Booster Draft", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Strategies and Techniques for Booster Draft.pdf" },
-
-    { "order": 301, "filename": "Mana Base Walkthrough.pdf", "title": "Mana Base Walkthrough", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Mana Base Walkthrough.pdf" },
-    { "order": 300, "filename": "Introduction to Mana base.pdf", "title": "Introduction to Mana Base, Part 1", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Mana base.pdf" },
-    { "order": 299, "filename": "Seven Steps to a Better Mana Base.pdf", "title": "Seven Steps to a Better Mana Base", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Seven Steps to a Better Mana Base.pdf" },
-    { "order": 298, "filename": "Managing Mana Screw.pdf", "title": "Managing Mana Screw", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Managing Mana Screw.pdf" },
-
-    { "order": 297, "filename": "Introduction to Inevitability.pdf", "title": "Introduction to Inevitability", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Inevitability.pdf" },
-    { "order": 296, "filename": "Introduction to Innovation.pdf", "title": "Introduction to Innovation", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Innovation.pdf" },
-    { "order": 295, "filename": "Introduction to Bluffing.pdf", "title": "Introduction to Bluffing", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Bluffing.pdf" },
-    { "order": 294, "filename": "Introducing Sideboards.pdf", "title": "Introducing Sideboards", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introducing Sideboards.pdf" },
-
-    { "order": 293, "filename": "What is the Metagame_.pdf", "title": "What Is the Metagame?", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./What is the Metagame_.pdf" },
-    { "order": 292, "filename": "Card Evaluation.pdf", "title": "Card Evaluation", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Card Evaluation.pdf" },
-    { "order": 291, "filename": "Ten Beginner Mistakes.pdf", "title": "Ten Beginner Mistakes", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Ten Beginner Mistakes.pdf" },
-    { "order": 290, "filename": "What Are The Formats_.pdf", "title": "What Are the Formats?", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./What Are The Formats_.pdf" },
-
-    { "order": 289, "filename": "Your First Sealed Deck.pdf", "title": "Your First Sealed Deck", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Your First Sealed Deck.pdf" },
-    { "order": 288, "filename": "Introduction to Mana Base, Part 2.pdf", "title": "Introduction to Mana Base, Part 2", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Mana Base, Part 2.pdf" },
-    { "order": 287, "filename": "Your First Tournament.pdf", "title": "Your First Tournament", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Your First Tournament.pdf" },
-
-    { "order": 303.5, "filename": "Playing the Game.pdf", "title": "Playing the Game", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Playing the Game.pdf" },
-    { "order": 303.4, "filename": "Playing Against Combo.pdf", "title": "Playing Against Combo", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Playing Against Combo.pdf" },
-    { "order": 303.3, "filename": "Playing Against Aggro.pdf", "title": "Playing Against Aggro", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Playing Against Aggro.pdf" },
-    { "order": 299.5, "filename": "Metagame Workshop.pdf", "title": "Metagame Workshop", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Metagame Workshop.pdf" },
-    { "order": 294.5, "filename": "Introduction to Efficiency.pdf", "title": "Introduction to Efficiency", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Efficiency.pdf" },
-    { "order": 294.4, "filename": "Introduction to Combat.pdf", "title": "Introduction to Combat", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./Introduction to Combat.pdf" },
-    { "order": 291.5, "filename": "In-Game Protocol.pdf", "title": "In-Game Protocol", "author": "Jeff Cunningham", "source": "WotC (Magic Academy)", "date": "", "format": "pdf", "url": "./In-Game Protocol.pdf" }
+    {
+      "slug": "agresivo-combo-y-control",
+      "title": "Agresivo, Combo y Control",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/agresivo-combo-y-control/"
+    },
+    {
+      "slug": "card-evaluation",
+      "title": "Card Evaluation",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/card-evaluation/"
+    },
+    {
+      "slug": "getting-better-at-sealed",
+      "title": "Getting Better at Sealed",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/getting-better-at-sealed/"
+    },
+    {
+      "slug": "god-of-magic-an-interview-with-richard-garfield-star-city-games",
+      "title": "God Of Magic: An Interview With Richard Garfield - Star City Games",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/god-of-magic-an-interview-with-richard-garfield-star-city-games/"
+    },
+    {
+      "slug": "in-game-protocol",
+      "title": "In-Game Protocol",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/in-game-protocol/"
+    },
+    {
+      "slug": "introducing-sideboards",
+      "title": "Introducing Sideboards",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introducing-sideboards/"
+    },
+    {
+      "slug": "introduction-to-bluffing",
+      "title": "Introduction to Bluffing",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-bluffing/"
+    },
+    {
+      "slug": "introduction-to-combat",
+      "title": "Introduction to Combat",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-combat/"
+    },
+    {
+      "slug": "introduction-to-efficiency",
+      "title": "Introduction to Efficiency",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-efficiency/"
+    },
+    {
+      "slug": "introduction-to-inevitability",
+      "title": "Introduction to Inevitability",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-inevitability/"
+    },
+    {
+      "slug": "introduction-to-innovation",
+      "title": "Introduction to Innovation",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-innovation/"
+    },
+    {
+      "slug": "introduction-to-mana-base-part-2",
+      "title": "Introduction to Mana Base, Part 2",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-mana-base-part-2/"
+    },
+    {
+      "slug": "introduction-to-mana-base",
+      "title": "Introduction to Mana base",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/introduction-to-mana-base/"
+    },
+    {
+      "slug": "lessons-learned",
+      "title": "Lessons Learned",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/lessons-learned/"
+    },
+    {
+      "slug": "mana-base-walkthrough",
+      "title": "Mana Base Walkthrough",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/mana-base-walkthrough/"
+    },
+    {
+      "slug": "managing-mana-screw",
+      "title": "Managing Mana Screw",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/managing-mana-screw/"
+    },
+    {
+      "slug": "metagame-workshop",
+      "title": "Metagame Workshop",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/metagame-workshop/"
+    },
+    {
+      "slug": "playing-against-aggro",
+      "title": "Playing Against Aggro",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/playing-against-aggro/"
+    },
+    {
+      "slug": "playing-against-combo",
+      "title": "Playing Against Combo",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/playing-against-combo/"
+    },
+    {
+      "slug": "playing-against-control",
+      "title": "Playing Against Control",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/playing-against-control/"
+    },
+    {
+      "slug": "playing-the-game",
+      "title": "Playing the Game",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/playing-the-game/"
+    },
+    {
+      "slug": "sealed-deck-walkthrough",
+      "title": "Sealed Deck Walkthrough",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/sealed-deck-walkthrough/"
+    },
+    {
+      "slug": "seven-steps-to-a-better-mana-base",
+      "title": "Seven Steps to a Better Mana Base",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/seven-steps-to-a-better-mana-base/"
+    },
+    {
+      "slug": "strategies-and-techniques-for-booster-draft",
+      "title": "Strategies and Techniques for Booster Draft",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/strategies-and-techniques-for-booster-draft/"
+    },
+    {
+      "slug": "tactical-protocol-introduction-to-information-resources",
+      "title": "Tactical Protocol: Introduction to Information & Resources",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/tactical-protocol-introduction-to-information-resources/"
+    },
+    {
+      "slug": "tactical-protocol-your-opponents-turn",
+      "title": "Tactical Protocol: Your Opponent's Turn",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/tactical-protocol-your-opponents-turn/"
+    },
+    {
+      "slug": "tactical-protocol-your-own-turn",
+      "title": "Tactical Protocol: Your Own Turn",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/tactical-protocol-your-own-turn/"
+    },
+    {
+      "slug": "ten-beginner-mistakes",
+      "title": "Ten Beginner Mistakes",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/ten-beginner-mistakes/"
+    },
+    {
+      "slug": "what-are-the-formats",
+      "title": "What Are The Formats?",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/what-are-the-formats/"
+    },
+    {
+      "slug": "what-is-the-metagame",
+      "title": "What is the Metagame?",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/what-is-the-metagame/"
+    },
+    {
+      "slug": "your-first-sealed-deck",
+      "title": "Your First Sealed Deck",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/your-first-sealed-deck/"
+    },
+    {
+      "slug": "your-first-tournament",
+      "title": "Your First Tournament",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/your-first-tournament/"
+    },
+    {
+      "slug": "magic-academy-archive-wjc83",
+      "title": "Magic Academy Archive | WJC83",
+      "source": "WotC (Magic Academy)",
+      "html": "./articles/magic-academy-archive-wjc83/"
+    }
   ]
 }
