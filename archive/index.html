@@ -12,7 +12,6 @@
     .err { background: rgba(255,0,0,.06); }
 
     h3 { margin:.9rem 0 .35rem; font-size:1.05rem; }
-    h4 { margin:.5rem 0 .25rem; font-size:.95rem; opacity:.85 }
     ul { list-style: none; padding-left: 0; margin: .25rem 0 1rem; }
     li.item { display:block; margin:.6rem 0; padding:.6rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; position:relative; }
     .meta { font-size:.9rem; opacity:.7; }
@@ -24,35 +23,20 @@
     .view-archive a { font-size:.92rem; text-decoration:none; color:var(--ink,#111); opacity:.85 }
     .view-archive a:hover { text-decoration:underline; }
 
-    /* Tier-2 enhanced card */
     .item.tier-2 { border-color:#e7e7ef; background:#fcfcff; box-shadow:0 2px 10px rgba(0,0,0,.05); }
     .item.tier-2 .row { display:grid; grid-template-columns: 96px 1fr; gap:.85rem; align-items:center; }
     .item.tier-2 .thumb { width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
     .item .title a { color: var(--ink, #111); text-decoration: none; font-weight: 600; }
     .item .title a:hover { text-decoration: underline; }
 
-    /* Featured variant */
-    .item.featured { border-color:#cfd6ff; box-shadow:0 4px 18px rgba(40,60,240,.08); }
-    .item.tier-2.featured { background:linear-gradient(180deg,#fcfcff 0%, #f8f9ff 100%); }
-    .item.featured::after{
-      content:"★ Featured";
-      position:absolute; top:-9px; right:10px;
-      font-size:.72rem; line-height:1;
-      padding:.2rem .5rem; border-radius:999px;
-      color:#233; background:#e8edff; border:1px solid #cfd6ff;
-    }
-
-    /* Folder styling */
     .folder-item .title { display:flex; align-items:center; gap:.35rem; font-style: italic; color: var(--muted-ink, #666); }
     .folder-item .title a { font-style: italic; color: var(--muted-ink, #666); text-decoration:none; }
     .folder-item .title a:hover { text-decoration: underline; }
 
-    /* Pills */
     .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
     .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
     .pills a:hover{text-decoration:underline}
 
-    /* Series part badge */
     .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
   </style>
 </head>
@@ -67,7 +51,6 @@
     <section class="archive">
       <details open data-bucket="writing">
         <summary>
-          <span class="chev" aria-hidden="true"></span>
           <span class="title">Writing</span>
           <span class="meta"><span class="count" id="count-writing">—</span></span>
         </summary>
@@ -77,7 +60,6 @@
 
       <details data-bucket="old-movies">
         <summary>
-          <span class="chev" aria-hidden="true"></span>
           <span class="title">Old Movies</span>
           <span class="meta"><span class="count" id="count-old-movies">—</span></span>
         </summary>
@@ -93,15 +75,22 @@
     } else {
       window.__ARCHIVE_APP_RAN__ = true;
 
-      const ROOT_MANIFEST = './manifest.json';
-      const $ = (s, c=document)=>c.querySelector(s);
+      // Page is /archive/index.html → manifest at site root:
+      const ROOT_MANIFEST = 'manifest.json?v=6'; // cache-bust and correct path
 
+      const $ = (s, c=document)=>c.querySelector(s);
       const statusEl = $('#status');
       const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies') };
       const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'old-movies': $('#blurb-old-movies') };
       const countEls = { 'writing': $('#count-writing'), 'old-movies': $('#count-old-movies') };
 
       const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
+
+      // Only hide Tier 4 on the MAIN archive
+      const visibleOnMain = it => Number(it.tier ?? 3) < 4;
+
+      const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
+      const toHref = s => !s ? "" : (isAbs(s) ? s : (s.startsWith("/") ? s : "/"+s));
 
       function partBadge(it){
         const p = Number(it.part||'');
@@ -110,31 +99,22 @@
 
       function linkPills(it, hrefPrimary) {
         const pills = [];
-        const cat = (it.category||'').toLowerCase();
+        const local = it.path_html || it.path || it.pdf || "";
 
-        if (cat === 'magic-writing') {
-          if (hrefPrimary && it.external && hrefPrimary === it.external) {
-            if (it.path_html) pills.push(`<a href="/${it.path_html.replace(/^\/*/,'')}" target="_blank" rel="noopener">Local</a>`);
-            if (it.pdf)       pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
-          } else {
-            if (it.external)  pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-            if (it.pdf)       pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
-          }
-        } else {
-          if (it.pdf)      pills.push(`<a href="/${it.pdf.replace(/^\/*/,'')}" target="_blank" rel="noopener">PDF</a>`);
-          if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-        }
+        if (local) pills.push(`<a href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`);
+        if (it.pdf) pills.push(`<a href="${toHref(it.pdf)}" target="_blank" rel="noopener">PDF</a>`);
+        if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+
         return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
       }
 
       function primaryHref(it){
-        const cat = (it.category||'').toLowerCase();
-        const local=(it.path_html||it.path||it.pdf||'').replace(/^\/*/,'');
-        if (cat === 'magic-writing' && it.external) return it.external;
-        return local ? '/'+local : (it.external||'');
+        const candidate = it.path_html || it.path || it.pdf || "";
+        if (isAbs(candidate)) return candidate;
+        if (it.external && !candidate) return it.external;
+        return toHref(candidate) || it.external || "";
       }
 
-      // === SINGLE canonical item renderer (folder-aware + featured + series) ===
       function itemLI(it){
         const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
         const href  = primaryHref(it);
@@ -159,7 +139,7 @@
         }
 
         if ((it.tier||99) === 2) {
-          const thumb = it.thumbnail ? `<img class="thumb" src="/${it.thumbnail.replace(/^\/*/,'')}" alt="">` : '<div></div>';
+          const thumb = it.thumbnail ? `<img class="thumb" src="${toHref(it.thumbnail)}" alt="">` : '<div></div>';
           return `
             <li class="${baseTierClass}${featuredClass}">
               <div class="row">
@@ -193,12 +173,8 @@
       };
 
       function renderCategorySection(catKey, items, categoriesMap){
+        items = items.filter(visibleOnMain);
         items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-
-        // Special rule on main page: show ONLY tier-2 for magic-writing
-        if (catKey === 'magic-writing') {
-          items = items.filter(it => (it.tier||99) === 2);
-        }
 
         const sec = document.createElement('section');
 
@@ -246,8 +222,10 @@
 
         for (const [cat, arr] of Object.entries(grouped)) {
           const { section, count } = renderCategorySection(cat, arr, categoriesMap);
-          bucketCount += count;
-          frag.appendChild(section);
+          if (count > 0) {
+            bucketCount += count;
+            frag.appendChild(section);
+          }
         }
 
         target.innerHTML = '';

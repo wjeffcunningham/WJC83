@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Magic: The Gathering — Archive | WJC83.CA</title>
+<link rel="stylesheet" href="/style.css" />
+<meta name="theme-color" content="#0b0b0c" />
+<meta property="og:title" content="Magic: The Gathering — Archive" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="WJC83" />
+<meta property="og:url" content="https://wjc83.ca/archive/writing/magic-writing/" />
+<style>
+  .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
+  h1.site-title{margin:12px 0 16px;line-height:1}
+  .status{padding:.55rem .75rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0;background:rgba(0,0,0,.03);font-size:.95rem}
+  ul{list-style:none;margin:0;padding:0}
+  li.item{display:block;margin:.6rem 0;padding:.65rem .75rem;border:1px solid #eee;border-radius:.75rem;background:#fff}
+  .title a{font-weight:600;color:var(--ink,#111);text-decoration:none}
+  .title a:hover{text-decoration:underline}
+  .meta{font-size:.9rem;opacity:.75}
+  .blurb{margin:.25rem 0 .1rem}
+  .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.38rem}
+  .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
+  .pills a:hover{background:rgba(0,0,0,.04)}
+  .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
+</style>
+</head>
+<body>
+  <header class="site-header"><h1 class="site-title">Magic: The Gathering — Archive</h1></header>
+  <main class="wrap" id="app">
+    <div class="status" id="status">Loading…</div>
+    <ul id="list"></ul>
+  </main>
+
+<script>
+(async function(){
+  // This page lives at /archive/writing/magic-writing/
+  // So manifest is two levels up:
+  const MANIFEST_URL = "../../manifest.json";
+
+  const $ = (s,c=document)=>c.querySelector(s);
+  const status = $("#status");
+  const listEl = $("#list");
+
+  const prettyDate = d => {
+    if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0,10);
+    if (typeof d === 'string' && /^\d{4}-\d{2}/.test(d)) return d.slice(0,7);
+    if (typeof d === 'string' && /^\d{4}/.test(d)) return d.slice(0,4);
+    return '';
+  };
+
+  function partBadge(it){
+    const p = Number(it.part||"");
+    return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+  }
+
+  function primaryHref(it){
+    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
+    return local ? '/'+local : (it.external||'');
+  }
+
+  function pills(it){
+    const out = [];
+    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
+    if (local) out.push(`<a href="/${local}" target="_blank" rel="noopener">Local</a>`);
+    if (it.pdf) out.push(`<a href="/${String(it.pdf).replace(/^\/+/,'')}" target="_blank" rel="noopener">PDF</a>`);
+    if (it.external) out.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+    return out.length ? `<div class="pills">${out.join('')}</div>` : '';
+  }
+
+  function itemHTML(it){
+    const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
+    const href  = primaryHref(it);
+    const date  = prettyDate(it.date);
+    const meta  = date ? `<div class="meta">${date}</div>` : '';
+    return `
+      <li class="item">
+        <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+        ${meta}
+        ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
+        ${pills(it)}
+      </li>
+    `;
+  }
+
+  async function loadJSON(url){
+    const res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    return res.json();
+  }
+
+  function byDateDesc(a,b){
+    const da = String(a.date||'');
+    const db = String(b.date||'');
+    if (!da && !db) return String(a.title||'').localeCompare(String(b.title||''));
+    if (!da) return 1;
+    if (!db) return -1;
+    return db.localeCompare(da);
+  }
+
+  try{
+    const manifest = await loadJSON(MANIFEST_URL);
+
+    // SHOW ALL tiers here; just filter by category
+    const items = (manifest.items||[])
+      .filter(it => (it.category || '').toLowerCase() === 'magic-writing')
+      .sort(byDateDesc);
+
+    listEl.innerHTML = items.map(itemHTML).join('') || '<li class="item"><div class="meta">— No items —</div></li>';
+    status.textContent = `Loaded ${items.length} Magic items.`;
+  }catch(err){
+    console.error(err);
+    status.textContent = `Error: ${err.message}`;
+  }
+})();
+</script>
+</body>
+</html>

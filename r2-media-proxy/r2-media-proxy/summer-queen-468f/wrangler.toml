@@ -1,7 +1,0 @@
-name = "r2-media-proxy"
-main = "src/index.ts"
-compatibility_date = "2025-10-02"
-
-[[r2_buckets]]
-binding = "R2"        # 👈 matches your binding name in dashboard
-bucket_name = "wjc83" # 👈 your actual R2 bucket name
