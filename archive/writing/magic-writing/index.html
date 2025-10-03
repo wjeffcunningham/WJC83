@@ -10,137 +10,55 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="WJC83" />
 <meta property="og:url" content="https://wjc83.ca/archive/writing/magic-writing/" />
-
 <style>
-/* ===== Page frame ===== */
-.wrap { max-width: 900px; margin: 1.25rem auto 3rem; padding: 0 1rem; text-align: left; }
-h1.site-title { margin: 12px 0 16px; line-height: 1; }
-
-/* ===== Dojo-ish “gem” rail + section headers ===== */
-.section {
-  position: relative;
-  padding-left: 20px; /* room for the rail */
-  margin: 1.4rem 0 1.75rem;
-}
-.section::before {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 0.4rem;
-  bottom: 0.6rem;
-  width: 2px;
-  background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.06));
-  border-radius: 2px;
-}
-.section h2 {
-  position: relative;
-  margin: 0 0 .6rem;
-  font-size: 1.15rem;
-  letter-spacing: .03em;
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-}
-/* Little “gem” to the left of each section title */
-.section h2::before{
-  content:"";
-  width: 10px; height: 10px;
-  transform: rotate(45deg);
-  background: radial-gradient(circle at 30% 30%, #cfe6ff, #78a8ff 60%, #3d66cc 90%);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 8px rgba(61,102,204,.35);
-  border-radius: 2px;
-  display:inline-block;
-}
-
-/* ===== Lists / cards ===== */
-ul{ list-style:none; padding:0; margin:.4rem 0 .25rem; }
-li.item { display:block; margin:.6rem 0; padding:.65rem .75rem; border:1px solid #eee; border-radius:.75rem; background:#fff; position:relative; }
-.item .title a{ color:var(--ink,#111); text-decoration:none; font-weight:600; }
-.item .title a:hover{ text-decoration:underline; }
-.meta{ font-size:.9rem; opacity:.75; }
-.blurb{ margin:.25rem 0 .1rem; }
-
-.item.tier-2{ border-color:#e7e7ef; background:#fcfcff; box-shadow:0 2px 10px rgba(0,0,0,.05); }
-.item.tier-2 .row{ display:grid; grid-template-columns:96px 1fr; gap:.85rem; align-items:center; }
-.item.tier-2 .thumb{ width:96px; height:72px; object-fit:cover; border-radius:.5rem; border:1px solid rgba(0,0,0,.08); }
-
-/* Pills */
-.pills{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.38rem }
-.pills a{ font-size:.85rem; border:1px solid rgba(0,0,0,.12); border-radius:999px; padding:.15rem .55rem;
-          text-decoration:none; color:var(--ink,#111) }
-.pills a:hover{ background:rgba(0,0,0,.04) }
-
-/* Part/lock badge */
-.part-pill{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem;
-  border:1px solid rgba(0,0,0,.14); border-radius:999px; padding:.1rem .45rem; margin-left:.4rem; background:#fff; opacity:.85 }
-
-/* Subtle featured tag (for future use) */
-.item.featured{ border-color:#cfd6ff; box-shadow:0 4px 18px rgba(40,60,240,.08); }
-.item.tier-2.featured{ background:linear-gradient(180deg,#fcfcff 0%, #f8f9ff 100%); }
-.item.featured::after{
-  content:"★ Featured";
-  position:absolute; top:-9px; right:10px;
-  font-size:.72rem; line-height:1;
-  padding:.2rem .5rem; border-radius:999px;
-  color:#233; background:#e8edff; border:1px solid #cfd6ff;
-}
-
-/* Small helper bits */
-.status{ padding:.55rem .75rem; border:1px solid rgba(0,0,0,.12); border-radius:8px; margin:.5rem 0; background:rgba(0,0,0,.03); font-size:.95rem; }
-.small{ font-size:.9rem; opacity:.75; }
+  .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
+  h1.site-title{margin:12px 0 16px;line-height:1}
+  .status{padding:.55rem .75rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0;background:rgba(0,0,0,.03);font-size:.95rem}
+  ul{list-style:none;margin:0;padding:0}
+  li.item{display:block;margin:.6rem 0;padding:.65rem .75rem;border:1px solid #eee;border-radius:.75rem;background:#fff}
+  .title a{font-weight:600;color:var(--ink,#111);text-decoration:none}
+  .title a:hover{text-decoration:underline}
+  .meta{font-size:.9rem;opacity:.75}
+  .blurb{margin:.25rem 0 .1rem}
+  .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.38rem}
+  .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
+  .pills a:hover{background:rgba(0,0,0,.04)}
+  .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
 </style>
 </head>
 <body>
-  <header class="site-header">
-    <h1 class="site-title">Magic: The Gathering — Archive</h1>
-  </header>
-
+  <header class="site-header"><h1 class="site-title">Magic: The Gathering — Archive</h1></header>
   <main class="wrap" id="app">
     <div class="status" id="status">Loading…</div>
-
-    <section class="section" id="featuredSec">
-      <h2>Featured</h2>
-      <ul id="featuredList"></ul>
-    </section>
-
-    <section class="section" id="seriesSec">
-      <h2>Series</h2>
-      <ul id="seriesList"></ul>
-      <div class="small">Locked parts show a 🔒 badge.</div>
-    </section>
-
-    <section class="section" id="columnsSec">
-      <h2>Columns</h2>
-      <ul id="columnsList"></ul>
-    </section>
-
-    <section class="section" id="archivesSec">
-      <h2>Archives & Collections</h2>
-      <ul id="archivesList"></ul>
-    </section>
+    <ul id="list"></ul>
   </main>
 
 <script>
 (function(){
-  const MANIFEST_URL = "../../manifest.json"; // relative to this index.html
+  const MANIFEST_URL = "../../manifest.json"; // relative path
 
   const $ = (s,c=document)=>c.querySelector(s);
   const status = $("#status");
-  const listEls = {
-    featured: $("#featuredList"),
-    series:   $("#seriesList"),
-    columns:  $("#columnsList"),
-    archives: $("#archivesList")
-  };
+  const listEl = $("#list");
 
-  const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
+  const prettyDate = d => {
+    if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0,10);
+    if (typeof d === 'string' && /^\d{4}-\d{2}/.test(d)) return d.slice(0,7);
+    if (typeof d === 'string' && /^\d{4}/.test(d)) return d.slice(0,4);
+    return '';
+  };
 
   function partBadge(it){
     const p = Number(it.part||"");
     return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
   }
 
-  function pills(it, primaryHref){
+  function primaryHref(it){
+    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
+    return local ? '/'+local : (it.external||'');
+  }
+
+  function pills(it){
     const out = [];
     const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
     if (local) out.push(`<a href="/${local}" target="_blank" rel="noopener">Local</a>`);
@@ -149,100 +67,52 @@ li.item { display:block; margin:.6rem 0; padding:.65rem .75rem; border:1px solid
     return out.length ? `<div class="pills">${out.join('')}</div>` : '';
   }
 
-  function primaryHref(it){
-    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
-    // For magic-writing we normally prefer external if present for “Columns”,
-    // but Local-first feels better for archival reading — keep Local primary.
-    return local ? '/'+local : (it.external||'');
-  }
-
   function itemHTML(it){
     const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
     const href  = primaryHref(it);
     const date  = prettyDate(it.date);
-    const metaBits = [date].filter(Boolean);
-    const meta = metaBits.join(' • ');
-    const classes = ['item'];
-    if ((it.tier||99)===2) classes.push('tier-2');
-    if (it.featured) classes.push('featured');
-
-    // Tier-2 card with optional thumb
-    if ((it.tier||99)===2){
-      const thumb = it.thumbnail ? `<img class="thumb" src="/${String(it.thumbnail).replace(/^\/+/,'')}" alt="">` : '<div></div>';
-      return `
-        <li class="${classes.join(' ')}">
-          <div class="row">
-            ${thumb}
-            <div>
-              <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-              ${meta ? `<div class="meta">${meta}</div>` : ''}
-              ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
-              ${pills(it, href)}
-            </div>
-          </div>
-        </li>
-      `;
-    }
-
-    // Simple row
+    const meta  = date ? `<div class="meta">${date}</div>` : '';
     return `
-      <li class="${classes.join(' ')}">
+      <li class="item">
         <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-        ${meta ? `<div class="meta">${meta}</div>` : ''}
+        ${meta}
         ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
-        ${pills(it, href)}
+        ${pills(it)}
       </li>
     `;
   }
 
-  function isArchiveFolder(it){
-    return it.type === 'folder' || /archive|index\.html$/i.test(String(it.path||it.path_html||''));
-  }
-
-  function categorize(items){
-    const featured = items.filter(it => !!it.featured);
-    const series   = items.filter(it => /untold-legends|invitational-2006/i.test(String(it.path||it.path_html||'')));
-    const columns  = items.filter(it => !isArchiveFolder(it) && !featured.includes(it) && !series.includes(it));
-    const archives = items.filter(isArchiveFolder);
-
-    // Sort by date desc when available
-    const byDateDesc = (a,b)=> String(b.date||'').localeCompare(String(a.date||''));
-    featured.sort(byDateDesc); series.sort(byDateDesc); columns.sort(byDateDesc);
-    // archives alphabetical by title
-    archives.sort((a,b)=> String(a.title||'').localeCompare(String(b.title||'')));
-
-    return {featured, series, columns, archives};
-  }
-
   async function loadJSON(url){
     const res = await fetch(url, {cache:'no-store'});
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    if (!res.ok) throw new Error(\`HTTP \${res.status} for \${url}\`);
     return res.json();
+  }
+
+  function byDateDesc(a,b){
+    // Missing dates sort last
+    const da = String(a.date||'');
+    const db = String(b.date||'');
+    if (!da && !db) return String(a.title||'').localeCompare(String(b.title||''));
+    if (!da) return 1;
+    if (!db) return -1;
+    return db.localeCompare(da);
   }
 
   async function init(){
     try{
-      const root = await loadJSON(MANIFEST_URL);
-      const items = (root.items||[]).filter(it => (it.category||'').toLowerCase()==='magic-writing');
-      const { featured, series, columns, archives } = categorize(items);
-
-      listEls.featured.innerHTML = featured.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
-      listEls.series.innerHTML   = series.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
-      listEls.columns.innerHTML  = columns.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
-      listEls.archives.innerHTML = archives.map(itemHTML).join('') || '<li class="item"><div class="meta">— None yet —</div></li>';
-
-      status.textContent = `Loaded ${items.length} Magic items.`;
+      const manifest = await loadJSON(MANIFEST_URL);
+      const items = (manifest.items||[]).filter(it => (it.category||'').toLowerCase() === 'magic-writing');
+      items.sort(byDateDesc);
+      listEl.innerHTML = items.map(itemHTML).join('') || '<li class="item"><div class="meta">— No items —</div></li>';
+      status.textContent = \`Loaded \${items.length} Magic items.\`;
     }catch(err){
       console.error(err);
-      status.textContent = `Error: ${err.message}`;
+      status.textContent = \`Error: \${err.message}\`;
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 </body>

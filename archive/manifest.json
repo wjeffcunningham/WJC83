@@ -68,7 +68,6 @@
       "path": "archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Friedman; Steel",
-      "course": "",
       "school": "KU Leuven",
       "grade": "16"
     },
@@ -82,7 +81,6 @@
       "path": "archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Techtmeyer",
-      "course": "",
       "school": "KU Leuven",
       "grade": "16"
     },
@@ -96,7 +94,6 @@
       "path": "archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Techtmeyer",
-      "course": "",
       "school": "KU Leuven",
       "grade": "16"
     },
@@ -106,7 +103,7 @@
       "title": "Strauss's Interpretation of Xenophon's <i>Hiero</i> and its Implications for the Organization of the UHS",
       "date": "2013-06-05",
       "tier": 3,
-      "blurb": "Unpacking Strauss's critique of the Universal Homogeneous State \"perhaps... fated to come.\"",
+      "blurb": "Unpacking Strauss's critique of the 'Universal Homogeneous State' \"perhaps... fated to come.\"",
       "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
       "thumbnail": "assets/thumbs/pdf.png",
       "professors": "Darby",
@@ -124,7 +121,6 @@
       "path": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
       "path_html": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
       "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
-      "external": "",
       "thumbnail": "assets/thumbs/curse.jpg"
     },
     {
@@ -135,9 +131,7 @@
       "tier": 3,
       "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
       "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-      "path_html": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
       "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-      "external": "",
       "thumbnail": "assets/thumbs/colossal-cave.jpg"
     },
     {
@@ -153,142 +147,24 @@
       "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
     },
-        {
+    {
       "bucket": "writing",
       "category": "criticism",
       "title": "Extinction: Amazon and the End of the American Entrepreneur [Editor]",
-      "date": "2002-02-11",
-      "tier": 3,
+      "date": "2020-02-11",
+      "tier": 4,
       "blurb": "Macro Trends in Digital Marketing",
       "path": "archive/writing/criticism/2020-02-11-extinction.pdf",
-      "path_html": "",
       "pdf": "archive/writing/criticism/2020-02-11-extinction.pdf",
       "external": "https://jacksoncunningham.medium.com/extinction-amazon-and-the-end-of-the-american-entrepreneur-8c2645f38976",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
-    },
-{
-  "bucket": "writing",
-  "category": "magic-writing",
-  "title": "God of Magic — An Interview With Richard Garfield",
-  "date": "2017-03-13",
-  "tier": 2,
-  "blurb": "StarCityGames feature: long-form conversation with Magic’s creator.",
-  "path": "archive/writing/magic-writing/starcitygames/interviews/index.html",
-  "path_html": "archive/writing/magic-writing/starcitygames/interviews/index.html",
-  "pdf": "archive/writing/magic-writing/starcitygames/interviews/God Of Magic: An Interview With Richard Garfield - Star City Games.pdf",
-  "external": "https://articles.starcitygames.com/articles/god-of-magic-an-interview-with-richard-garfield/",
-  "thumbnail": "assets/thumbs/garfield.jpg"
-},
-
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "The End of the Magic: The Gathering Pro Tour",
-      "date": "2020-03-18",
-      "tier": 3,
-      "blurb": "TCGplayer column on the curtain call for the Pro Tour era. Local mirror with ads/cruft removed.",
-      "path": "archive/writing/magic-writing/tcgplayer/2020-03-18-end-of-pro-tour/index.pdf",
-      "path_html": "archive/writing/magic-writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-      "external": "https://www.tcgplayer.com/content/article/The-End-of-the-Magic-The-Gathering-Pro-Tour/ca36d9c5-0a18-48a8-9f08-cc80e2889314/",
-      "thumbnail": "assets/thumbs/tcgplayer.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Lands and Spells",
-      "date": "2019-12-27",
-      "tier": 3,
-      "blurb": "GP Vancouver 2019 — Modern Masters Limited (3rd Place).",
-      "path": "archive/writing/magic-writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
-      "path_html": "archive/writing/magic-writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
-      "thumbnail": "assets/thumbs/lands-spells.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends — Part 1 🔒",
-      "date": "",
-      "tier": 3,
-      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 1.",
-      "path": "archive/writing/magic-writing/untold-legends/part-1.html",
-      "path_html": "archive/writing/magic-writing/untold-legends/part-1.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-1.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends — Part 2 🔒",
-      "date": "",
-      "tier": 3,
-      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 2.",
-      "path": "archive/writing/magic-writing/untold-legends/part-2.html",
-      "path_html": "archive/writing/magic-writing/untold-legends/part-2.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-2.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends — Part 3 🔒",
-      "date": "",
-      "tier": 3,
-      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 3.",
-      "path": "archive/writing/magic-writing/untold-legends/part-3.html",
-      "path_html": "archive/writing/magic-writing/untold-legends/part-3.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-3.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends — Part 4 🔒",
-      "date": "",
-      "tier": 3,
-      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 4.",
-      "path": "archive/writing/magic-writing/untold-legends/part-4.html",
-      "path_html": "archive/writing/magic-writing/untold-legends/part-4.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-4.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends of the $1,000,000 Pro Tour",
-      "date": "2019-02-01",
-      "tier": 3,
-      "blurb": "HTML • 2019-02-01 • archive/writing/magic-writing/untold-legends.html",
-      "path": "archive/writing/magic-writing/untold-legends.html",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "subcategory": "magic-academy",
-      "title": "Magic Academy Archive (2006–2007)",
-      "date": "2007-08-04",
-      "tier": 4,
-      "blurb": "31-article beginner series for WotC. PDF mirrors; newest first.",
-      "path": "archive/writing/magic-writing/magic academy/index.html",
-      "thumbnail": "assets/thumbs/magic-academy.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "subcategory": "week-in-review",
-      "title": "Week in Review (Sideboard) Archive (2003)",
-      "date": "2003-07-09",
-      "tier": 4,
-      "blurb": "Sideboard.com ‘Week in Review’ columns with PDF mirrors and Wayback links.",
-      "path": "archive/writing/magic-writing/week-in-review/index.html",
-      "thumbnail": "assets/thumbs/sideboard.png"
     },
     {
       "bucket": "writing",
       "category": "magic-writing",
       "subcategory": "starcitygames",
       "title": "Star City Games Archive (2004–2018)",
-      "date": "2018-03-01",
+      "date": "2004-01-01",
       "tier": 4,
       "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
       "path": "archive/writing/magic-writing/starcitygames/index.html",
@@ -297,25 +173,54 @@
     {
       "bucket": "writing",
       "category": "magic-writing",
-      "subcategory": "misetings",
-      "title": "MiseTings Archive (2001)",
-      "date": "2001-01-01",
-      "tier": 4,
-      "blurb": "Index page for preserved MiseTings PDFs from 2001 (HTML mirrors optional).",
-      "path": "archive/writing/magic-writing/misetings/index.html",
-      "thumbnail": "assets/thumbs/misetings.png"
+      "title": "Untold Legends — Part 1",
+      "date": "2005-09-16",
+      "tier": 3,
+      "part": 1,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 1.",
+      "path": "archive/writing/magic-writing/untold-legends/part-1.html",
+      "pdf": "archive/writing/magic-writing/untold-legends/part-1.pdf",
+      "external": "archive/writing/magic-writing/starcitygames/05-09-16-Untold-Legends_1.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
     },
     {
       "bucket": "writing",
       "category": "magic-writing",
-      "subcategory": "dojo",
-      "type": "folder",
-      "title": "The Dojo Archive (1998)",
-      "date": "1998-01-01",
-      "tier": 4,
-      "blurb": "Preserved Magic Dojo text files (1998).",
-      "path": "archive/writing/magic-writing/magic dojo/index.html",
-      "thumbnail": "assets/thumbs/dojo.png"
+      "title": "Untold Legends — Part 2",
+      "date": "2005-09-23",
+      "tier": 3,
+      "part": 2,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 2.",
+      "path": "archive/writing/magic-writing/untold-legends/part-2.html",
+      "pdf": "archive/writing/magic-writing/untold-legends/part-2.pdf",
+      "external": "https://articles.starcitygames.com/articles/jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour-vol-2/",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 3",
+      "date": "2005-09-30",
+      "tier": 3,
+      "part": 3,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 3.",
+      "path": "archive/writing/magic-writing/untold-legends/part-3.html",
+      "pdf": "archive/writing/magic-writing/untold-legends/part-3.pdf",
+      "external": "https://articles.starcitygames.com/articles/jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour/",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic-writing",
+      "title": "Untold Legends — Part 4 🔒",
+      "date": "2005-10-07",
+      "tier": 3,
+      "part": 4,
+      "locked": true,
+      "blurb": "The $1,000,000 Pro Tour’s hidden beats — Part 4.",
+      "path": "archive/writing/magic-writing/untold-legends/part-4.html",
+      "pdf": "archive/writing/magic-writing/untold-legends/part-4.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
     },
     {
       "bucket": "old-movies",
@@ -336,7 +241,7 @@
       "subcategory": "standalone",
       "title": "2011-02-06 — Strange Dimension",
       "date": "2011-02-06",
-      "path": "old-movies/2011-02-06-strange-dimension.mov",
+      "path": "https://media.wjc83.ca/2011-02-06-strange-dimension.mov",
       "tier": 3
     },
     {
@@ -366,7 +271,7 @@
       "subcategory": "couch-surfing",
       "title": "2011-11-18 — Couch Surfing e3",
       "date": "2011-11-18",
-      "path": "old-movies/2011-11-11-couch-surfing-e3.mov",
+      "path": "old-movies/2011-11-18-couch-surfing-e3.mov",
       "tier": 3
     },
     {
