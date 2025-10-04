@@ -69,214 +69,294 @@
     </section>
   </main>
 
-  <script>
-    if (window.__ARCHIVE_APP_RAN__) {
-      console.debug('Archive app already ran, skipping.');
-    } else {
-      window.__ARCHIVE_APP_RAN__ = true;
+<script>
+if (window.__ARCHIVE_APP_RAN__) {
+  console.debug('Archive app already ran, skipping.');
+} else {
+  window.__ARCHIVE_APP_RAN__ = true;
 
-      // Page is /archive/index.html → manifest is in THIS folder:
-      const ROOT_MANIFEST = './manifest.json?v=7';
+  // Page is /archive/index.html → manifest at site root
+  const ROOT_MANIFEST = 'manifest.json?v=7';
 
-      const $ = (s, c=document)=>c.querySelector(s);
-      const statusEl = $('#status');
-      const bucketEls = { 'writing': $('#bucket-writing'), 'movies': $('#bucket-movies') };
-      const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'movies': $('#blurb-movies') };
-      const countEls = { 'writing': $('#count-writing'), 'movies': $('#count-movies') };
+  const $ = (s, c=document)=>c.querySelector(s);
+  const statusEl = $('#status');
+  const bucketEls = { 'writing': $('#bucket-writing'), 'movies': $('#bucket-movies') };
+  const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'movies': $('#blurb-movies') };
+  const countEls = { 'writing': $('#count-writing'), 'movies': $('#count-movies') };
 
-      const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
+  const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
 
-      // Only hide Tier 4 on the MAIN archive
-      const visibleOnMain = it => Number(it.tier ?? 3) < 4;
+  // Only hide Tier 4 on the MAIN archive
+  const visibleOnMain = it => Number(it.tier ?? 3) < 4;
 
-      const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s) || s.startsWith('/');
-      const toHref = s => {
-        if (!s) return "";
-        // Preserve explicit relative paths like ./ or ../
-        if (s.startsWith('./') || s.startsWith('../')) return s;
-        // Absolute (including root-relative) → as-is
-        if (isAbs(s)) return s;
-        // Otherwise, make it root-relative
-        return '/' + s;
-      };
+  const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
+  const toHref = s => !s ? "" : (isAbs(s) ? s : (s.startsWith("/") ? s : "/"+s));
 
-      function partBadge(it){
-        const p = Number(it.part||'');
-        return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
-      }
+  function partBadge(it){
+    const p = Number(it.part||'');
+    return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+  }
 
-      function linkPills(it, hrefPrimary) {
-        const pills = [];
-        const local = it.path_html || it.path || it.pdf || "";
+  // ✅ NEW: Show only non-primary pills
+  function linkPills(it, hrefPrimary) {
+    const norm = s => (s ? toHref(s) : "");
+    const primary = norm(hrefPrimary);
 
-        if (local) pills.push(`<a href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`);
-        if (it.pdf) pills.push(`<a href="${toHref(it.pdf)}" target="_blank" rel="noopener">PDF</a>`);
-        if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+    const candidates = [
+      ["Local",    it.path_html || it.path || ""],
+      ["PDF",      it.pdf || ""],
+      ["External", it.external || ""],
+    ];
 
-        return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
-      }
+    const pills = candidates
+      .filter(([_, url]) => url && norm(url) !== primary)
+      .map(([label, url]) => `<a href="${toHref(url)}" target="_blank" rel="noopener">${label}</a>`);
 
-      function primaryHref(it){
-        const candidate = it.path_html || it.path || it.pdf || "";
-        if (isAbs(candidate)) return candidate;
-        if (it.external && !candidate) return it.external;
-        return toHref(candidate) || it.external || "";
-      }
+    return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
+  }
 
-      function itemLI(it){
-        const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
-        const href  = primaryHref(it);
-        const date  = prettyDate(it.date);
-        const metaBits = [date];
+  function primaryHref(it){
+    const candidate = it.path_html || it.path || it.pdf || "";
+    if (isAbs(candidate)) return candidate;
+    if (it.external && !candidate) return it.external;
+    return toHref(candidate) || it.external || "";
+  }
 
-        if ((it.category||'') === 'academic' && it.school) metaBits.push(it.school);
-        if (it.type === 'folder') metaBits.push('Folder');
-        if (it.type === 'video')  metaBits.push('Video');
+  function itemLI(it){
+    const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
+    const href  = primaryHref(it);
+    const date  = prettyDate(it.date);
+    const metaBits = [date];
 
-        const metaLine = metaBits.filter(Boolean).join(' • ');
-        const baseTierClass = (it.tier||99) === 2 ? 'item tier-2' : 'item';
-        const featuredClass = it.featured ? ' featured' : '';
+    if ((it.category||'') === 'academic' && it.school) metaBits.push(it.school);
+    if (it.type === 'folder') metaBits.push('Folder');
+    if (it.type === 'video')  metaBits.push('Video');
 
-        if (it.type === 'folder') {
-          return `
-            <li class="item folder-item${featuredClass}">
-              <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+    const metaLine = metaBits.filter(Boolean).join(' • ');
+    const baseTierClass = (it.tier||99) === 2 ? 'item tier-2' : 'item';
+    const featuredClass = it.featured ? ' featured' : '';
+
+    if (it.type === 'folder') {
+      return `
+        <li class="item folder-item${featuredClass}">
+          <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+          <div class="meta">${metaLine}</div>
+        </li>
+      `;
+    }
+
+    if ((it.tier||99) === 2) {
+      const thumb = it.thumbnail ? `<img class="thumb" src="${toHref(it.thumbnail)}" alt="">` : '<div></div>';
+      return `
+        <li class="${baseTierClass}${featuredClass}">
+          <div class="row">
+            ${thumb}
+            <div>
+              <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
               <div class="meta">${metaLine}</div>
-            </li>
-          `;
-        }
+              ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+              ${linkPills(it, href)}
+            </div>
+          </div>
+        </li>
+      `;
+    }
 
-        if ((it.tier||99) === 2) {
-          const thumb = it.thumbnail ? `<img class="thumb" src="${toHref(it.thumbnail)}" alt="">` : '<div></div>';
-          return `
-            <li class="${baseTierClass}${featuredClass}">
-              <div class="row">
-                ${thumb}
-                <div>
-                  <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-                  <div class="meta">${metaLine}</div>
-                  ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-                  ${linkPills(it, href)}
-                </div>
-              </div>
-            </li>
-          `;
-        }
+    return `
+      <li class="${baseTierClass}${featuredClass}">
+        <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+        <div class="meta">${metaLine}</div>
+        ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+        ${linkPills(it, href)}
+      </li>
+    `;
+  }
 
-        return `
-          <li class="${baseTierClass}${featuredClass}">
-            <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-            <div class="meta">${metaLine}</div>
-            ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-            ${linkPills(it, href)}
-          </li>
-        `;
-      }
+  const CATEGORY_ARCHIVES = {
+    'academic': '/archive/writing/academic/',
+    'criticism': '/archive/writing/criticism/',
+    'magic': '/archive/writing/magic/',
+    'technical': '/archive/writing/technical/'
+  };
 
-      const CATEGORY_ARCHIVES = {
-        'academic': '/archive/writing/academic/',
-        'criticism': '/archive/writing/criticism/',
-        'magic': '/archive/writing/magic/'
-      };
+  function renderCategorySection(catKey, items, categoriesMap){
+    items = items.filter(visibleOnMain);
+    items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
 
-      function renderCategorySection(catKey, items, categoriesMap){
-        items = items.filter(visibleOnMain);
-        items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    const sec = document.createElement('section');
 
-        const sec = document.createElement('section');
+    const h3 = document.createElement('h3');
+    h3.textContent = catKey.replace(/-/g,' ').replace(/\b\w/g, m=>m.toUpperCase());
+    sec.appendChild(h3);
 
-        const h3 = document.createElement('h3');
-        h3.textContent = catKey.replace(/-/g,' ').replace(/\b\w/g, m=>m.toUpperCase());
-        sec.appendChild(h3);
+    const cblurb = document.createElement('div');
+    cblurb.className = 'cat-blurb';
+    const catText = categoriesMap?.[catKey];
+    if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
 
-        const cblurb = document.createElement('div');
-        cblurb.className = 'cat-blurb';
-        const catText = categoriesMap?.[catKey];
-        if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
+    const MAX = 3;
+    const shown = items.slice(0, MAX);
+    const ul = document.createElement('ul');
+    ul.innerHTML = shown.map(itemLI).join('');
+    sec.appendChild(ul);
 
-        const MAX = 3;
-        const shown = items.slice(0, MAX);
-        const ul = document.createElement('ul');
-        ul.innerHTML = shown.map(itemLI).join('');
-        sec.appendChild(ul);
+    const more = document.createElement('div');
+    more.className = 'view-archive';
+    const href = CATEGORY_ARCHIVES[catKey] || '';
+    if (href) more.innerHTML = `<a href="${href}">View full ${h3.textContent} archive →</a>`;
+    sec.appendChild(more);
 
-        const more = document.createElement('div');
-        more.className = 'view-archive';
-        const href = CATEGORY_ARCHIVES[catKey] || '';
-        if (href) more.innerHTML = `<a href="${href}">View full ${h3.textContent} archive →</a>`;
-        sec.appendChild(more);
+    return { section: sec, count: items.length };
+  }
 
-        return { section: sec, count: items.length };
-      }
+  function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
+    const target = bucketEls[bucketKey];
+    const blurb  = bucketBlurbEl[bucketKey];
+    const counter = countEls[bucketKey];
+    if (!target) return;
 
-      function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
-        const target = bucketEls[bucketKey];
-        const blurb  = bucketBlurbEl[bucketKey];
-        const counter = countEls[bucketKey];
-        if (!target) return;
+    blurb.textContent = bucketMeta?.blurb || '';
 
-        blurb.textContent = bucketMeta?.blurb || '';
+    const grouped = {};
+    for (const it of items) {
+      const cat = (it.category || 'misc').toLowerCase();
+      (grouped[cat] ||= []);
+      grouped[cat].push(it);
+    }
 
-        const grouped = {};
-        for (const it of items) {
-          const cat = (it.category || 'misc').toLowerCase();
-          (grouped[cat] ||= []);
-          grouped[cat].push(it);
-        }
+    const frag = document.createDocumentFragment();
+    let bucketCount = 0;
 
-        const frag = document.createDocumentFragment();
-        let bucketCount = 0;
-
-        for (const [cat, arr] of Object.entries(grouped)) {
-          const { section, count } = renderCategorySection(cat, arr, categoriesMap);
-          if (count > 0) {
-            bucketCount += count;
-            frag.appendChild(section);
-          }
-        }
-
-        target.innerHTML = '';
-        target.appendChild(frag);
-        if (counter) counter.textContent = String(bucketCount);
-      }
-
-      async function loadJSON(url){
-        const res = await fetch(url, {cache:'no-store'});
-        if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-        return res.json();
-      }
-
-      async function render(){
-        try {
-          const root = await loadJSON(ROOT_MANIFEST);
-          const bucketsMeta = root.buckets || {};
-          const categories  = root.categories || {};
-          const items       = Array.isArray(root.items) ? root.items.slice() : [];
-
-          const byBucket = {};
-          for (const it of items) {
-            const b = it.bucket || 'misc';
-            (byBucket[b] ||= []).push(it);
-          }
-
-          renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
-          renderBucket('movies', bucketsMeta['movies'], byBucket['movies'] || [], categories);
-
-          statusEl.textContent = `Archive loaded (${items.length} items).`;
-          statusEl.classList.add('ok'); statusEl.classList.remove('err');
-        } catch (e) {
-          console.error(e);
-          statusEl.textContent = `Error loading archive: ${e.message}`;
-          statusEl.classList.add('err'); statusEl.classList.remove('ok');
-        }
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', render);
-      } else {
-        render();
+    for (const [cat, arr] of Object.entries(grouped)) {
+      const { section, count } = renderCategorySection(cat, arr, categoriesMap);
+      if (count > 0) {
+        bucketCount += count;
+        frag.appendChild(section);
       }
     }
-  </script>
+
+    target.innerHTML = '';
+    target.appendChild(frag);
+    if (counter) counter.textContent = String(bucketCount);
+  }
+
+  async function loadJSON(url){
+    const res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    return res.json();
+  }
+
+  // ✅ NEW: Load top N Tier-3 Magic items from sub-manifests (no redundancy)
+  async function loadTopMagicFromChildren({limit=3, tier=3} = {}){
+    const MAGIC_ROOT = '/archive/writing/magic/';
+    const magicRoot = await loadJSON(MAGIC_ROOT + 'manifest.json?v=1').catch(()=>null);
+    if (!magicRoot) return [];
+
+    const kids = magicRoot.children || [];
+    const manifests = await Promise.all(
+      kids.map(async (k) => {
+        try {
+          const m = await loadJSON(MAGIC_ROOT + k.manifest.replace('./',''));
+          return { key: k.key, base: MAGIC_ROOT + k.key + '/', items: m.items || [] };
+        } catch {
+          return { key: k.key, base: MAGIC_ROOT + k.key + '/', items: [] };
+        }
+      })
+    );
+
+    // Normalize items so the main page can render them directly
+    const all = [];
+    for (const {key, base, items} of manifests) {
+      for (const it of items) {
+        if (Number(it.tier ?? 3) !== tier) continue; // Tier==3 only
+        // Build absolute-ish site paths for local assets
+        const norm = (p) => (p ? (isAbs(p) ? p : (base + p).replace(/\/+\.\//g,'/')) : '');
+        all.push({
+          id: it.id || `magic/${key}/` + ( (it.title||it.path_html||it.path||it.pdf||'item')
+                    .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') ),
+          bucket: 'writing',
+          category: 'magic',
+          title: it.title,
+          date: it.date,
+          blurb: it.blurb,
+          accolade: it.accolade,
+          path_html: it.path_html ? norm(it.path_html) : '',
+          path: it.path ? norm(it.path) : '',
+          pdf: it.pdf ? norm(it.pdf) : '',
+          external: it.external || '',
+          thumbnail: it.thumbnail ? norm(it.thumbnail) : ''
+        });
+      }
+    }
+
+    all.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+    return all.slice(0, limit);
+  }
+
+  // ✅ NEW: de-dupe helper (so spotlighted Magic items don’t double-list)
+  function dedupeItems(items){
+    const seen = new Set();
+    const keyOf = (it) =>
+      (it.id) ||
+      (it.path_html && toHref(it.path_html)) ||
+      (it.path && toHref(it.path)) ||
+      (it.pdf && toHref(it.pdf)) ||
+      (it.external || '').toLowerCase() ||
+      (it.title || '');
+
+    const out = [];
+    for (const it of items) {
+      const k = keyOf(it);
+      if (k && seen.has(k)) continue;
+      if (k) seen.add(k);
+      out.push(it);
+    }
+    return out;
+  }
+
+  async function render(){
+    try {
+      const root = await loadJSON(ROOT_MANIFEST);
+      const bucketsMeta = root.buckets || {};
+      const categories  = root.categories || {};
+      let items         = Array.isArray(root.items) ? root.items.slice() : [];
+
+      // 👉 Pull top 3 Tier-3 Magic items from sub-manifests, inject into items
+      const magicTop3 = await loadTopMagicFromChildren({limit:3, tier:3});
+      items = dedupeItems([
+        // Option A: keep all root items, then add Magic top-3
+        ...items,
+        ...magicTop3
+        // Option B (strict): if you prefer, drop ALL root magic items first:
+        // ...items.filter(it => (it.category||'').toLowerCase()!=='magic'),
+        // ...magicTop3
+      ]);
+
+      // Group by bucket and render
+      const byBucket = {};
+      for (const it of items) {
+        const b = it.bucket || 'misc';
+        (byBucket[b] ||= []).push(it);
+      }
+
+      renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
+      renderBucket('movies',  bucketsMeta['movies'],  byBucket['movies']  || [], categories);
+
+      statusEl.textContent = `Archive loaded (${items.length} items incl. Magic spotlight).`;
+      statusEl.classList.add('ok'); statusEl.classList.remove('err');
+    } catch (e) {
+      console.error(e);
+      statusEl.textContent = `Error loading archive: ${e.message}`;
+      statusEl.classList.add('err'); statusEl.classList.remove('ok');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+}
+</script>
 </body>
 </html>
