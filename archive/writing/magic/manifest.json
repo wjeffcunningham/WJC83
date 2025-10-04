@@ -58,7 +58,7 @@
       "index": "./tcgplayer/index.html",
       "manifest": "./tcgplayer/manifest.json",
       "thumbnail": ".../../assets/thumbs/tcgplayer.png",
-      "blurb": "Modern/Pro Tour retrospectives."
+      "blurb": "The return to the PT and reflections on competitive Magic"
     }
   ],
   "feed_cache": "./feed.json?v=1", 

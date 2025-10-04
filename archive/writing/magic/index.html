@@ -87,31 +87,71 @@
     return r.json();
   }
 
-  function linkPills(it){
-    const pills=[];
-    const local=it.path_html||it.path||it.filename||it.pdf||'';
-    if(local) pills.push(`<a href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`);
-    if(it.pdf) pills.push(`<a href="${toHref(it.pdf)}" target="_blank" rel="noopener">PDF</a>`);
-    if(it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-    return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
+  // ✅ Show pills only for NON-primary links
+  function linkPills(it, hrefPrimary){
+    const norm = s => (s ? toHref(s) : "");
+    const primary = norm(hrefPrimary);
+
+    const candidates = [
+      ["Local",    it.path_html || it.path || it.filename || ""],
+      ["PDF",      it.pdf || ""],
+      ["External", it.external || ""],
+    ];
+
+    const pills = candidates
+      .filter(([_, url]) => url && norm(url) !== primary)
+      .map(([label, url]) => `<a href="${toHref(url)}" target="_blank" rel="noopener">${label}</a>`);
+
+    return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
   }
 
-  // Fix thumbnails that were authored one level too shallow.
+  // Fix thumbnails authored one level too shallow for this page.
   function fixThumbPath(p){
     if (!p) return '';
     if (p.startsWith('../../assets/')) return '../' + p; // -> "../../../assets/..."
     return p;
   }
 
+  // Build a child base like "./tcgplayer/" from "./tcgplayer/index.html"
+  function childBase(child){
+    if (child?.index) return child.index.replace(/index\.html.*$/,'');
+    return `./${child.key}/`;
+  }
+
+  // Normalize an item coming from a child manifest so all local links work from THIS page
+  function normalizeItemFromChild(it, base){
+    const norm = (p) => {
+      if (!p) return '';
+      // If already absolute or starts with ./ or ../, keep it. Otherwise prefix the child base.
+      if (isAbs(p) || p.startsWith('./') || p.startsWith('../')) return p;
+      return base + p;
+    };
+    return {
+      ...it,
+      path_html: norm(it.path_html || it.path || ''), // prefer html/path
+      path:      norm(it.path || ''),
+      pdf:       norm(it.pdf || ''),
+      thumbnail: it.thumbnail ? norm(it.thumbnail) : ''
+    };
+  }
+
+  // Choose a sensible primary: prefer local (html/path/pdf), else external
+  function primaryHref(it){
+    const candidate = it.path_html || it.path || it.filename || it.pdf || '';
+    if (candidate) return toHref(candidate);
+    if (it.external) return it.external;
+    return '';
+  }
+
   function feedRow(it){
-    const title=it.title||it.path_html||it.path||'Untitled';
-    const href=it.path_html||it.path||it.pdf||it.external||'';
+    const title = it.title || it.path_html || it.path || 'Untitled';
+    const href  = primaryHref(it);
     return `
       <div class="feed-item">
         <div class="title"><a href="${toHref(href)}" target="_blank" rel="noopener">${title}</a></div>
-        <div class="meta">${prettyDate(it.date)}${it.tier?` • Tier ${it.tier}`:''}</div>
+        <div class="meta">${prettyDate(it.date)}</div>
         ${it.blurb?`<div>${it.blurb}</div>`:''}
-        ${linkPills(it)}
+        ${linkPills(it, href)}
       </div>
     `;
   }
@@ -128,7 +168,13 @@
 
       for(const child of children){
         const m=await loadJSON(child.manifest).catch(()=>({items:[]}));
-        const items=(m.items||[]).filter(tierOK).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+        const base = childBase(child);
+        // normalize each item so links resolve from /archive/writing/magic/
+        const items = (m.items||[])
+          .map(it => normalizeItemFromChild(it, base))
+          .filter(tierOK)
+          .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+
         const shown=items.slice(0,Math.min(5,items.length));
 
         const thumbSrc = fixThumbPath(child.thumbnail || '');
