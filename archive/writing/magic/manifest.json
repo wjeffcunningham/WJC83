@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.1",
+  "collection": "writing/magic",
+  "label": "Magic Archive",
+  "blurb": "All Magic writing, organized by source. Toggle to 'Feed' later to see everything merged, newest first.",
+  "children": [
+    {
+      "key": "academy",
+      "label": "Magic Academy (2006–2007)",
+      "index": "./academy/index.html",
+      "manifest": "./academy/manifest.json",
+      "thumbnail": "../../assets/thumbs/magic-academy.png",
+      "blurb": "Beginner series for WotC with PDF mirrors."
+    },
+    {
+      "key": "brainburst",
+      "label": "Brainburst (2003–2005)",
+      "index": "./brainburst/index.html",
+      "manifest": "./brainburst/manifest.json",
+      "thumbnail": "../../assets/thumbs/tcgplayer.png",
+      "blurb": "Reports, strategy, and reconstructions from the paywalled era."
+    },
+    {
+      "key": "dojo",
+      "label": "The Dojo (1998)",
+      "index": "./dojo/index.html",
+      "manifest": "./dojo/manifest.json",
+      "thumbnail": "../../assets/thumbs/dojo.png",
+      "blurb": "Preserved Dojo text files."
+    },
+    {
+      "key": "misetings",
+      "label": "MiseTings (2001)",
+      "index": "./misetings/index.html",
+      "manifest": "./misetings/manifest.json",
+      "thumbnail": "../../assets/thumbs/misetings.png",
+      "blurb": "PDF captures; HTML optional."
+    },
+    {
+      "key": "sideboard",
+      "label": "Sideboard: Week in Review (2003)",
+      "index": "./sideboard/index.html",
+      "manifest": "./sideboard/manifest.json",
+      "thumbnail": "../../assets/thumbs/sideboard.png",
+      "blurb": "Columns with Wayback links/PDFs."
+    },
+    {
+      "key": "starcitygames",
+      "label": "Star City Games (2001–2018)",
+      "index": "./starcitygames/index.html",
+      "manifest": "./starcitygames/manifest.json",
+      "thumbnail": "../../assets/thumbs/scg.png",
+      "blurb": "Columns, features, cleaned mirrors."
+    },
+    {
+      "key": "tcgplayer",
+      "label": "TCGplayer (2019–2020)",
+      "index": "./tcgplayer/index.html",
+      "manifest": "./tcgplayer/manifest.json",
+      "thumbnail": ".../../assets/thumbs/tcgplayer.png",
+      "blurb": "Modern/Pro Tour retrospectives."
+    }
+  ],
+  "feed_cache": "./feed.json?v=1", 
+  "feed_meta": {
+    "id_prefix": "magic/",
+    "default_tier": 3
+  }
+}

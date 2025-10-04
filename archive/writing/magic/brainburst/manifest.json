@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.1",
+  "collection": "writing/magic/brainburst",
+  "label": "Brainburst Archive (2003–2005)",
+  "blurb": "Reconstructed and linked articles from my Brainburst/TCGplayer era. Local files live in this folder; others link out (often via the Wayback Machine).",
+  "items": [
+    {
+      "id": "2003-01-23-pt-chicago-report-pt1",
+      "title": "PT Chicago Report Part 1: My Masters Diary",
+      "author": "Jeff Cunningham",
+      "date": "2003-01-23",
+      "type": "Report",
+      "external": "https://web.archive.org/web/20030207112517/http://www.brainburst.com/db/article.asp?id=2686",
+      "tags": ["Pro Tour","Chicago","report"],
+      "status": "linked"
+    },
+    {
+      "id": "2003-01-28-chicago-03-finding-0-4ester",
+      "title": "Chicago '03: Finding 0-4ester",
+      "author": "Jeff Cunningham",
+      "date": "2003-01-28",
+      "type": "Report",
+      "external": "https://web.archive.org/web/20030606143341/http://brainburst.com/db/article.asp?id=2699",
+      "tags": ["Pro Tour","Chicago","report"],
+      "status": "linked"
+    },
+    {
+      "id": "2003-02-19-the-magic-colony-secrets",
+      "title": "The Magic Colony: Secrets",
+      "author": "Jeff Cunningham",
+      "date": "2003-02-19",
+      "type": "Feature",
+      "external": "https://web.archive.org/web/20030330195310/http://www.brainburst.com/db/article.asp?id=2751",
+      "excerpt": "Previously unpublished interviews and the real story behind Magic Colony.",
+      "tags": ["feature","history","Colony"],
+      "status": "linked"
+    },
+
+    /* ====== Local PDFs you showed in the screenshot ====== */
+    {
+      "id": "2003-04-18-ug-madness-vs-rg-beats",
+      "title": "UG Madness: Matchup Analysis vs. RG Beats",
+      "author": "Jeff Cunningham",
+      "date": "2003-04-18",
+      "type": "Strategy",
+      "filename": "Brainburst.co…. RG Beats.pdf",
+      "external": "https://web.archive.org/web/20030606230121/http://www.brainburst.com/db/article.asp?ID=2933",
+      "tags": ["Type II","UG Madness","RG Beats","matchup"],
+      "status": "local+linked",
+      "notes": "Filename kept as-is; spaces/ellipsis OK."
+    },
+    {
+      "id": "2003-10-17-rise-and-fall-of-mt-cleverest",
+      "title": "The Rise and Fall of Mt. Cleverest",
+      "author": "Jeff Cunningham",
+      "date": "2003-10-17",
+      "type": "Report",
+      "filename": "Cleverest.pdf",
+      "external": "https://web.archive.org/web/20050127210430/http://www.brainburst.com/db/article.asp?id=3425",
+      "tags": ["Team Limited","report"],
+      "status": "local+linked"
+    },
+    {
+      "id": "2005-03-08-sloppy-joes-writers-vote",
+      "title": "Sloppy Joe's — The Writers' Vote",
+      "author": "Jeff Cunningham",
+      "date": "2005-03-08",
+      "type": "Feature",
+      "filename": "Writers Vote.pdf",
+      "tags": ["feature","community"],
+      "status": "local"
+    },
+
+    /* ====== More links + planned HTML reconstructions ====== */
+    {
+      "id": "2003-04-08-pro-tour-venice-this-is-awkward",
+      "title": "Pro Tour Venice: This Is Awkward (55th)",
+      "author": "Jeff Cunningham",
+      "date": "2003-04-08",
+      "type": "Report",
+      "external": "http://brainburst.com/db/article.asp?ID=2896",
+      "tags": ["Pro Tour","Venice","report"],
+      "status": "linked"
+    },
+    {
+      "id": "2003-05-28-oh-yoko-13th",
+      "title": "Oh, Yoko! — 13th Place",
+      "author": "Jeff Cunningham",
+      "date": "2003-05-28",
+      "type": "Report",
+      "external": "https://web.archive.org/web/20030602212727/http://www.brainburst.com/db/article.asp?ID=3052",
+      "tags": ["report"],
+      "status": "linked"
+    },
+    {
+      "id": "2004-07-22-pro-tour-seattle-jeez",
+      "title": "Pro Tour Seattle: Jeez",
+      "author": "Jeff Cunningham",
+      "date": "2004-07-22",
+      "type": "Report",
+      "external": "http://www.brainburst.com/db/article.asp?id=4289",
+      "tags": ["Pro Tour","Seattle","report"],
+      "status": "linked"
+    },
+    {
+      "id": "2005-02-02-ug-madness-extended-bok",
+      "title": "UG Madness (Extended — Betrayers of Kamigawa)",
+      "author": "Jeff Cunningham",
+      "date": "2005-02-02",
+      "type": "Strategy",
+      "html": "UG Madness — Extended (BoK).html",
+      "external": "https://web.archive.org/web/20050207000809/http://www.brainburst.com/db/article.asp?id=4903",
+      "tags": ["Extended","UG Madness","deck tech"],
+      "status": "todo"
+    },
+    {
+      "id": "2005-02-21-there-and-bok-epic-report",
+      "title": "There and BoK: the Epic Report (PT Nagoya)",
+      "author": "Jeff Cunningham",
+      "date": "2005-02-21",
+      "type": "Report",
+      "html": "There and BoK — The Epic Report.html",
+      "external": "https://web.archive.org/web/20050313191701/http://www.brainburst.com/db/article.asp?id=4968",
+      "tags": ["Pro Tour","Nagoya","Limited","report"],
+      "status": "todo"
+    }
+  ]
+}

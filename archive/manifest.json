@@ -5,7 +5,7 @@
       "label": "Writing",
       "blurb": "Academic work, criticism, and Magic: The Gathering writing."
     },
-    "old-movies": {
+    "movies": {
       "label": "Old Movies (2001-2019)",
       "blurb": "Acting work, short films"
     }
@@ -13,7 +13,7 @@
   "categories": {
     "academic": "Scholarly work (2013–2017): philosophy, thesis materials, seminar papers.",
     "criticism": "Film & culture criticism; reviews, essays, and reflections.",
-    "magic-writing": "Strategy, history, and essays about Magic: The Gathering."
+    "magic": "Strategy, history, and essays about Magic: The Gathering."
   },
   "items": [
     {
@@ -159,231 +159,233 @@
       "external": "https://jacksoncunningham.medium.com/extinction-amazon-and-the-end-of-the-american-entrepreneur-8c2645f38976",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
     },
- {
+
+    {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "title": "The End of the Magic: The Gathering Pro Tour",
       "date": "2020-03-18",
       "tier": 3,
       "blurb": "TCGplayer column on the curtain call for the Pro Tour era.",
-      "path": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-      "path_html": "archive/writing/magic writing/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
+      "path": "archive/writing/magic/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
+      "path_html": "archive/writing/magic/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
       "thumbnail": "assets/thumbs/tcgplayer.png"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "title": "Lands and Spells",
       "date": "2019-12-27",
       "tier": 3,
       "blurb": "**GP Vancouver 2019 — Modern Masters Limited (3rd Place)**.",
-      "path": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
-      "path_html": "archive/writing/magic writing/tcgplayer/2019-12-27-lands-and-spells/index.html",
+      "path": "archive/writing/magic/tcgplayer/2019-12-27-lands-and-spells/index.html",
+      "path_html": "archive/writing/magic/tcgplayer/2019-12-27-lands-and-spells/index.html",
       "thumbnail": "assets/thumbs/lands-spells.jpg"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "subcategory": "starcitygames",
       "title": "Star City Games Archive (2001–2018)",
       "date": "2001-01-01",
       "tier": 4,
       "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
-      "path": "archive/writing/magic-writing/starcitygames/index.html",
+      "path": "archive/writing/magic/starcitygames/index.html",
       "thumbnail": "assets/thumbs/scg.png"
-    },  
+    },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
       "date": "2005-09-16",
       "tier": 3,
       "part": 1,
       "blurb": "#1 Jeff Cunningham: Snapshots from Pro Tour Houston '02",
-      "path": "archive/writing/magic-writing/untold-legends/part-1.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-1.pdf",
-      "external": "archive/writing/magic-writing/starcitygames/05-09-16-Untold-Legends_1.pdf",
+      "path": "archive/writing/magic/untold-legends/part-1.html",
+      "pdf": "archive/writing/magic/untold-legends/part-1.pdf",
+      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_1.pdf",
       "thumbnail": "assets/thumbs/untold.jpg"
     },
-        {
+    {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
       "date": "2005-09-16",
       "tier": 3,
       "part": 2,
       "blurb": "#2 Ben Rubin: PT LA '98",
-      "path": "archive/writing/magic-writing/untold-legends/part-1.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-1.pdf",
-      "external": "archive/writing/magic-writing/starcitygames/05-09-16-Untold-Legends_1.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-        {
-      "bucket": "writing",
-      "category": "magic-writing",
-      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
-      "date": "2005-09-16",
-      "tier": 3,
-      "part": 3,
-      "blurb": " #3 Peter Szigeti: GP Turin '01.",
-      "path": "archive/writing/magic-writing/untold-legends/part-1.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-1.pdf",
-      "external": "archive/writing/magic-writing/starcitygames/05-09-16-Untold-Legends_1.pdf",
+      "path": "archive/writing/magic/untold-legends/part-2.html",
+      "pdf": "archive/writing/magic/untold-legends/part-2.pdf",
+      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_2.pdf",
       "thumbnail": "assets/thumbs/untold.jpg"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
+      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
+      "date": "2005-09-16",
+      "tier": 3,
+      "part": 3,
+      "blurb": "#3 Peter Szigeti: GP Turin '01.",
+      "path": "archive/writing/magic/untold-legends/part-3.html",
+      "pdf": "archive/writing/magic/untold-legends/part-3.pdf",
+      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_3.pdf",
+      "thumbnail": "assets/thumbs/untold.jpg"
+    },
+    {
+      "bucket": "writing",
+      "category": "magic",
       "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
       "date": "2005-10-07",
       "tier": 4,
       "part": 4,
       "locked": true,
       "blurb": "#4 Brett Shears: GP Denver '00 (Unpublished)",
-      "path": "archive/writing/magic-writing/untold-legends/part-4.html",
-      "pdf": "archive/writing/magic-writing/untold-legends/part-4.pdf",
+      "path": "archive/writing/magic/untold-legends/part-4.html",
+      "pdf": "archive/writing/magic/untold-legends/part-4.pdf",
       "thumbnail": "assets/thumbs/untold.jpg"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
-      "subcategory": "magic-academy",
+      "category": "magic",
+      "subcategory": "academy",
       "title": "Magic Academy Archive (2006–2007)",
       "date": "2007-08-04",
       "tier": 3,
       "blurb": "31-article run on beginner series for WotC. PDF mirrors; newest first.",
-      "path": "archive/writing/magic writing/magic academy/index.html",
+      "path": "archive/writing/magic/academy/index.html",
       "thumbnail": "assets/thumbs/magic-academy.png"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
-      "subcategory": "week-in-review",
+      "category": "magic",
+      "subcategory": "sideboard",
       "title": "Week in Review (Sideboard) Archive (2003)",
       "date": "2003-07-09",
       "tier": 3,
       "blurb": "Sideboard.com ‘Week in Review’ columns with PDF mirrors and Wayback links.",
-      "path": "archive/writing/magic writing/week-in-review/index.html",
+      "path": "archive/writing/magic/sideboard/index.html",
       "thumbnail": "assets/thumbs/sideboard.png"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "subcategory": "starcitygames",
       "title": "Star City Games Archive (2004–2018)",
       "date": "2018-03-01",
       "tier": 3,
       "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
-      "path": "archive/writing/magic writing/starcitygames/index.html",
+      "path": "archive/writing/magic/starcitygames/index.html",
       "thumbnail": "assets/thumbs/scg.png"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "subcategory": "misetings",
       "title": "MiseTings Archive (2001)",
       "date": "2001-01-01",
       "tier": 4,
       "blurb": "Index page for preserved MiseTings PDFs from 2001 (HTML mirrors optional).",
-      "path": "archive/writing/magic writing/misetings/index.html",
+      "path": "archive/writing/magic/misetings/index.html",
       "thumbnail": "assets/thumbs/misetings.png"
     },
     {
       "bucket": "writing",
-      "category": "magic-writing",
+      "category": "magic",
       "subcategory": "dojo",
       "title": "The Dojo Archive (1998)",
       "date": "1998-01-01",
       "tier": 3,
       "blurb": "Index page for preserved Magic Dojo text files (1998).",
-      "path": "archive/writing/magic writing/magic dojo/index.html",
+      "path": "archive/writing/magic/dojo/index.html",
       "thumbnail": "assets/thumbs/dojo.png"
     },
+
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "standalone",
       "title": "2006 — The Construction Movie",
       "date": "2006-01-01",
-      "path": "old-movies/2006-the-construction-movie.mov",
+      "path": "archive/movies/2006-the-construction-movie.mov",
       "thumbnail": "assets/thumbs/construction.jpg",
       "tier": 2,
       "blurb": "A campus-era featurette, centerpiece of the early work archive."
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "standalone",
       "title": "2011-02-06 — Strange Dimension",
       "date": "2011-02-06",
-      "path": "old-movies/2011-02-06-strange-dimension.mov",
+      "path": "archive/movies/2011-02-06-strange-dimension.mov",
       "tier": 3
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "couch-surfing",
       "title": "2011-10-17 — Couch Surfing e1",
       "date": "2011-10-17",
-      "path": "old-movies/2011-10-17-couch-surfing-e1.mov",
+      "path": "archive/movies/2011-10-17-couch-surfing-e1.mov",
       "tier": 3
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "couch-surfing",
       "title": "2011-11-11 — Couch Surfing e2",
       "date": "2011-11-11",
-      "path": "old-movies/2011-11-11-couch-surfing-e2.mov",
+      "path": "archive/movies/2011-11-11-couch-surfing-e2.mov",
       "tier": 3
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "couch-surfing",
       "title": "2011-11-18 — Couch Surfing e3",
       "date": "2011-11-18",
-      "path": "old-movies/2011-11-11-couch-surfing-e3.mov",
+      "path": "archive/movies/2011-11-18-couch-surfing-e3.mov",
       "tier": 3
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "video",
       "category": "video",
       "subcategory": "standalone",
       "title": "2012-01-24 — Nectar",
       "date": "2012-01-24",
-      "path": "old-movies/2012-01-24-nectar.mov",
+      "path": "archive/movies/2012-01-24-nectar.mov",
       "tier": 3
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "folder",
       "category": "video",
       "subcategory": "acting",
       "title": "acting 🔒",
-      "path": "old-movies/acting/"
+      "path": "archive/movies/acting/"
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "folder",
       "category": "video",
       "subcategory": "camcorder",
       "title": "pt houston '02 camcorder footage 🔒",
-      "path": "old-movies/pt-houston-2002-camcorder-footage/"
+      "path": "archive/movies/pt-houston-2002-camcorder-footage/"
     },
     {
-      "bucket": "old-movies",
+      "bucket": "movies",
       "type": "folder",
       "category": "video",
       "subcategory": "short-films",
       "title": "short films (1999–2019) 🔒",
-      "path": "old-movies/short-films-1999-2019/"
+      "path": "archive/movies/short-films-1999-2019/"
     }
   ]
 }

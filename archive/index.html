@@ -58,13 +58,13 @@
         <div id="bucket-writing"></div>
       </details>
 
-      <details data-bucket="old-movies">
+      <details data-bucket="movies">
         <summary>
-          <span class="title">Old Movies</span>
-          <span class="meta"><span class="count" id="count-old-movies">—</span></span>
+          <span class="title">Movies</span>
+          <span class="meta"><span class="count" id="count-movies">—</span></span>
         </summary>
-        <div class="bucket-blurb" id="blurb-old-movies"></div>
-        <div id="bucket-old-movies"></div>
+        <div class="bucket-blurb" id="blurb-movies"></div>
+        <div id="bucket-movies"></div>
       </details>
     </section>
   </main>
@@ -75,22 +75,30 @@
     } else {
       window.__ARCHIVE_APP_RAN__ = true;
 
-      // Page is /archive/index.html → manifest at site root:
-      const ROOT_MANIFEST = 'manifest.json?v=6'; // cache-bust and correct path
+      // Page is /archive/index.html → manifest is in THIS folder:
+      const ROOT_MANIFEST = './manifest.json?v=7';
 
       const $ = (s, c=document)=>c.querySelector(s);
       const statusEl = $('#status');
-      const bucketEls = { 'writing': $('#bucket-writing'), 'old-movies': $('#bucket-old-movies') };
-      const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'old-movies': $('#blurb-old-movies') };
-      const countEls = { 'writing': $('#count-writing'), 'old-movies': $('#count-old-movies') };
+      const bucketEls = { 'writing': $('#bucket-writing'), 'movies': $('#bucket-movies') };
+      const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'movies': $('#blurb-movies') };
+      const countEls = { 'writing': $('#count-writing'), 'movies': $('#count-movies') };
 
       const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
 
       // Only hide Tier 4 on the MAIN archive
       const visibleOnMain = it => Number(it.tier ?? 3) < 4;
 
-      const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
-      const toHref = s => !s ? "" : (isAbs(s) ? s : (s.startsWith("/") ? s : "/"+s));
+      const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s) || s.startsWith('/');
+      const toHref = s => {
+        if (!s) return "";
+        // Preserve explicit relative paths like ./ or ../
+        if (s.startsWith('./') || s.startsWith('../')) return s;
+        // Absolute (including root-relative) → as-is
+        if (isAbs(s)) return s;
+        // Otherwise, make it root-relative
+        return '/' + s;
+      };
 
       function partBadge(it){
         const p = Number(it.part||'');
@@ -168,8 +176,7 @@
       const CATEGORY_ARCHIVES = {
         'academic': '/archive/writing/academic/',
         'criticism': '/archive/writing/criticism/',
-        'magic-writing': '/archive/writing/magic-writing/',
-        'technical': '/archive/writing/technical/'
+        'magic': '/archive/writing/magic/'
       };
 
       function renderCategorySection(catKey, items, categoriesMap){
@@ -253,7 +260,7 @@
           }
 
           renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
-          renderBucket('old-movies', bucketsMeta['old-movies'], byBucket['old-movies'] || [], categories);
+          renderBucket('movies', bucketsMeta['movies'], byBucket['movies'] || [], categories);
 
           statusEl.textContent = `Archive loaded (${items.length} items).`;
           statusEl.classList.add('ok'); statusEl.classList.remove('err');

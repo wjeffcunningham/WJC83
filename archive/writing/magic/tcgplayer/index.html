@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TCGplayer Archive | Magic | WJC83</title>
+  <link rel="stylesheet" href="../../../../style.css">
+  <style>
+    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem;text-align:left}
+    .msg{padding:.65rem .9rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0}
+    .ok{background:rgba(0,255,0,.06)} .err{background:rgba(255,0,0,.06)}
+
+    ul{list-style:none;padding:0}
+    li.item{margin:.8rem 0;padding:.6rem .75rem;border:1px solid rgba(0,0,0,.12);border-radius:.75rem;background:#fff;display:flex;gap:1rem;align-items:flex-start}
+    .thumb-box{
+      width:96px;height:72px;flex:0 0 auto;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(0,0,0,.1);border-radius:6px;
+      background:#fafafa;overflow:hidden;
+    }
+    .thumb-img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+
+    .item-body{flex:1}
+    .item .title a{color:var(--ink,#111);font-weight:600;text-decoration:none}
+    .item .title a:hover{text-decoration:underline}
+    .meta{font-size:.9rem;opacity:.7;margin:.25rem 0}
+    .accolade{display:inline-block;margin-left:.5rem;padding:.05rem .45rem;border:1px dashed rgba(0,0,0,.25);border-radius:999px;font-size:.8rem;opacity:.9;background:#fff}
+    .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
+    .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
+    .pills a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>TCGplayer Archive</h1>
+      <p class="msg ok" id="status">Loading…</p>
+    </header>
+    <main>
+      <ul id="list"></ul>
+    </main>
+  </div>
+
+  <script>
+  const MANIFEST = './manifest.json?v=4';
+  const $ = (s,c=document)=>c.querySelector(s);
+  const listEl = $('#list'), statusEl=$('#status');
+
+  const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
+  const toHref = s => (!s ? '' : (isAbs(s) ? s : s));
+  const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
+
+  async function loadJSON(url){
+    const r=await fetch(url,{cache:'no-store'});
+    if(!r.ok) throw new Error(url+' '+r.status);
+    return r.json();
+  }
+
+  // Only show Local and PDF pills (not the primary external)
+  function linkPills(it, primary){
+    const pills=[];
+    if(it.path_html && it.path_html !== primary) pills.push(`<a href="${toHref(it.path_html)}" target="_blank" rel="noopener">Local</a>`);
+    if(it.pdf && it.pdf !== primary)           pills.push(`<a href="${toHref(it.pdf)}" target="_blank" rel="noopener">PDF</a>`);
+    return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
+  }
+
+  function accoladeBadge(text){
+    return text ? `<span class="accolade">${text}</span>` : '';
+  }
+
+  function renderItem(it){
+    const primary = it.external || it.path_html || it.pdf || '';
+    const thumb = it.thumbnail ? `<div class="thumb-box"><img class="thumb-img" src="${toHref(it.thumbnail)}" alt=""></div>` : '';
+    return `
+      <li class="item">
+        ${thumb}
+        <div class="item-body">
+          <div class="title">
+            <a href="${toHref(primary)}" target="_blank" rel="noopener">${it.title}</a>
+            ${accoladeBadge(it.accolade)}
+          </div>
+          <div class="meta">${prettyDate(it.date)}</div>
+          ${it.blurb ? `<div>${it.blurb}</div>` : ''}
+          ${linkPills(it, primary)}
+        </div>
+      </li>
+    `;
+  }
+
+  async function render(){
+    try{
+      const data=await loadJSON(MANIFEST);
+      const items=(data.items||[]).slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+      listEl.innerHTML=items.map(renderItem).join('');
+      statusEl.textContent=`Loaded ${items.length} articles.`;
+      statusEl.classList.add('ok');statusEl.classList.remove('err');
+    }catch(e){
+      console.error(e);
+      statusEl.textContent='Error: '+e.message;
+      statusEl.classList.add('err');statusEl.classList.remove('ok');
+    }
+  }
+
+  render();
+  </script>
+</body>
+</html>

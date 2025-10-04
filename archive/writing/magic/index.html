@@ -1,119 +1,183 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Magic: The Gathering — Archive | WJC83.CA</title>
-<link rel="stylesheet" href="/style.css" />
-<meta name="theme-color" content="#0b0b0c" />
-<meta property="og:title" content="Magic: The Gathering — Archive" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="WJC83" />
-<meta property="og:url" content="https://wjc83.ca/archive/writing/magic-writing/" />
-<style>
-  .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
-  h1.site-title{margin:12px 0 16px;line-height:1}
-  .status{padding:.55rem .75rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0;background:rgba(0,0,0,.03);font-size:.95rem}
-  ul{list-style:none;margin:0;padding:0}
-  li.item{display:block;margin:.6rem 0;padding:.65rem .75rem;border:1px solid #eee;border-radius:.75rem;background:#fff}
-  .title a{font-weight:600;color:var(--ink,#111);text-decoration:none}
-  .title a:hover{text-decoration:underline}
-  .meta{font-size:.9rem;opacity:.75}
-  .blurb{margin:.25rem 0 .1rem}
-  .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.38rem}
-  .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
-  .pills a:hover{background:rgba(0,0,0,.04)}
-  .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magic Archive | WJC83</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <style>
+    body{text-align:left}
+    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
+    .msg{padding:.65rem .9rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0}
+    .ok{background:rgba(0,255,0,.06)} .err{background:rgba(255,0,0,.06)}
+
+    /* Hero header */
+    header.hero{position:relative;margin:0 0 1rem;border-radius:12px;overflow:hidden}
+    header.hero img.hero-img{width:100%;height:auto;display:block}
+    header.hero .hero-inner{
+      position:absolute;inset:auto 0 0 0;
+      padding:1rem 1.25rem;
+      color:#fff;
+      text-shadow:0 2px 8px rgba(0,0,0,.45);
+      font-weight:700;
+      font-size:clamp(1.25rem,2.5vw,2rem);
+    }
+
+    /* Archive blocks */
+    details.archive-block{margin:1.25rem 0 1.75rem;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.03);overflow:hidden}
+    details > summary{list-style:none;cursor:pointer;padding:.8rem 1rem;display:flex;gap:1rem;align-items:flex-start}
+    details > summary::-webkit-details-marker{display:none}
+
+    /* Thumb fix: contain inside a framed box */
+    .thumb-box{
+      width:120px;height:90px;flex:0 0 auto;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(0,0,0,.1);border-radius:8px;
+      background:#fafafa;overflow:hidden;
+    }
+    .thumb-img{
+      max-width:100%;max-height:100%;
+      width:auto;height:auto;object-fit:contain;display:block;
+    }
+
+    .archive-info h2{margin:0;font-size:1.15rem}
+    .archive-info p{margin:.25rem 0 .25rem;font-size:.9rem;opacity:.85}
+
+    .feed-items{padding:0 1rem 1rem;border-top:1px dashed rgba(0,0,0,.1)}
+    .feed-item{padding:.5rem 0;border-bottom:1px dashed rgba(0,0,0,.06)}
+    .feed-item:last-child{border-bottom:none}
+    .feed-item .title a{color:var(--ink,#111);font-weight:600;text-decoration:none}
+    .feed-item .title a:hover{text-decoration:underline}
+    .feed-item .meta{font-size:.85rem;opacity:.7}
+
+    .pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.25rem}
+    .pills a{font-size:.8rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.1rem .45rem;text-decoration:none;color:var(--ink,#111)}
+    .pills a:hover{text-decoration:underline}
+    .chev{margin-left:auto;opacity:.6}
+  </style>
 </head>
 <body>
-  <header class="site-header"><h1 class="site-title">Magic: The Gathering — Archive</h1></header>
-  <main class="wrap" id="app">
-    <div class="status" id="status">Loading…</div>
-    <ul id="list"></ul>
-  </main>
+  <div class="wrap">
+    <header class="hero">
+      <img class="hero-img" src="./magic-archive-header.webp" alt="Magic Archive header image" width="1600" height="500">
+      <div class="hero-inner">
+        <h1>Magic Archive</h1>
+      </div>
+    </header>
 
-<script>
-(async function(){
-  // This page lives at /archive/writing/magic-writing/
-  // So manifest is two levels up:
-  const MANIFEST_URL = "../../manifest.json";
+    <p class="msg ok" id="status">Loading…</p>
+    <main id="archives"></main>
+  </div>
 
+  <script>
+  const ROOT = './';
+  const ROOT_MANIFEST = ROOT + 'manifest.json?v=1';
   const $ = (s,c=document)=>c.querySelector(s);
-  const status = $("#status");
-  const listEl = $("#list");
+  const statusEl = $('#status');
+  const container = $('#archives');
 
-  const prettyDate = d => {
-    if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0,10);
-    if (typeof d === 'string' && /^\d{4}-\d{2}/.test(d)) return d.slice(0,7);
-    if (typeof d === 'string' && /^\d{4}/.test(d)) return d.slice(0,4);
-    return '';
-  };
+  const isAbs = s => /^https?:\/\//i.test(s)||/^\/\//.test(s)||s?.startsWith('/');
+  const toHref = s => (!s?'':(s.startsWith('./')||s.startsWith('../')||isAbs(s))?s:'/'+s);
+  const prettyDate = d => (typeof d==='string'&&/^\d{4}-\d{2}-\d{2}/.test(d))?d.slice(0,10):'';
+  const tierOK = it => Number(it.tier??3)<=3;
 
-  function partBadge(it){
-    const p = Number(it.part||"");
-    return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+  async function loadJSON(url){
+    const r=await fetch(url,{cache:'no-store'});
+    if(!r.ok) throw new Error(url+' '+r.status);
+    return r.json();
   }
 
-  function primaryHref(it){
-    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
-    return local ? '/'+local : (it.external||'');
+  function linkPills(it){
+    const pills=[];
+    const local=it.path_html||it.path||it.filename||it.pdf||'';
+    if(local) pills.push(`<a href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`);
+    if(it.pdf) pills.push(`<a href="${toHref(it.pdf)}" target="_blank" rel="noopener">PDF</a>`);
+    if(it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
+    return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
   }
 
-  function pills(it){
-    const out = [];
-    const local = (it.path_html || it.path || it.pdf || '').replace(/^\/+/,'');
-    if (local) out.push(`<a href="/${local}" target="_blank" rel="noopener">Local</a>`);
-    if (it.pdf) out.push(`<a href="/${String(it.pdf).replace(/^\/+/,'')}" target="_blank" rel="noopener">PDF</a>`);
-    if (it.external) out.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-    return out.length ? `<div class="pills">${out.join('')}</div>` : '';
+  // Fix thumbnails that were authored one level too shallow.
+  function fixThumbPath(p){
+    if (!p) return '';
+    if (p.startsWith('../../assets/')) return '../' + p; // -> "../../../assets/..."
+    return p;
   }
 
-  function itemHTML(it){
-    const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
-    const href  = primaryHref(it);
-    const date  = prettyDate(it.date);
-    const meta  = date ? `<div class="meta">${date}</div>` : '';
+  function feedRow(it){
+    const title=it.title||it.path_html||it.path||'Untitled';
+    const href=it.path_html||it.path||it.pdf||it.external||'';
     return `
-      <li class="item">
-        <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-        ${meta}
-        ${it.blurb ? `<div class="blurb">${it.blurb}</div>` : ''}
-        ${pills(it)}
-      </li>
+      <div class="feed-item">
+        <div class="title"><a href="${toHref(href)}" target="_blank" rel="noopener">${title}</a></div>
+        <div class="meta">${prettyDate(it.date)}${it.tier?` • Tier ${it.tier}`:''}</div>
+        ${it.blurb?`<div>${it.blurb}</div>`:''}
+        ${linkPills(it)}
+      </div>
     `;
   }
 
-  async function loadJSON(url){
-    const res = await fetch(url, {cache:'no-store'});
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-    return res.json();
+  async function render(){
+    try{
+      const root=await loadJSON(ROOT_MANIFEST);
+      let children=root.children||[];
+      // Order: TCGplayer → StarCityGames → Magic Academy → Brainburst → Sideboard → MiseTings → Dojo
+      const order=['tcgplayer','starcitygames','academy','brainburst','sideboard','misetings','dojo'];
+      children.sort((a,b)=>order.indexOf(a.key)-order.indexOf(b.key));
+
+      const collapsedKeys = new Set(['misetings','dojo']); // collapse these by default
+
+      for(const child of children){
+        const m=await loadJSON(child.manifest).catch(()=>({items:[]}));
+        const items=(m.items||[]).filter(tierOK).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+        const shown=items.slice(0,Math.min(5,items.length));
+
+        const thumbSrc = fixThumbPath(child.thumbnail || '');
+        const thumb = thumbSrc
+          ? `<div class="thumb-box"><img class="thumb-img" src="${toHref(thumbSrc)}" alt=""></div>`
+          : '';
+
+        const openAttr = collapsedKeys.has(child.key) ? '' : ' open';
+        const html=`
+          <details class="archive-block" id="${child.key}"${openAttr}>
+            <summary>
+              ${thumb}
+              <div class="archive-info">
+                <h2><a href="${child.index}">${child.label}</a></h2>
+                <p>${child.blurb||''}</p>
+              </div>
+              <span class="chev">▸</span>
+            </summary>
+            <div class="feed-items">
+              ${shown.map(feedRow).join('')}
+              ${items.length>shown.length?`<div style="margin-top:.4rem;"><a href="${child.index}">View all ${items.length} →</a></div>`:''}
+            </div>
+          </details>`;
+        container.insertAdjacentHTML('beforeend',html);
+      }
+
+      // rotate chevron on open/close
+      container.addEventListener('toggle', e=>{
+        const d=e.target;
+        if(d.tagName!=='DETAILS') return;
+        const chev=d.querySelector('.chev');
+        if(chev) chev.textContent = d.open ? '▾' : '▸';
+      }, true);
+      // init chevrons
+      container.querySelectorAll('details.archive-block').forEach(d=>{
+        const chev=d.querySelector('.chev');
+        if(chev) chev.textContent = d.open ? '▾' : '▸';
+      });
+
+      statusEl.textContent='Loaded all Magic sub-archives.';
+      statusEl.classList.add('ok');statusEl.classList.remove('err');
+    }catch(e){
+      console.error(e);
+      statusEl.textContent='Error: '+e.message;
+      statusEl.classList.add('err');statusEl.classList.remove('ok');
+    }
   }
 
-  function byDateDesc(a,b){
-    const da = String(a.date||'');
-    const db = String(b.date||'');
-    if (!da && !db) return String(a.title||'').localeCompare(String(b.title||''));
-    if (!da) return 1;
-    if (!db) return -1;
-    return db.localeCompare(da);
-  }
-
-  try{
-    const manifest = await loadJSON(MANIFEST_URL);
-
-    // SHOW ALL tiers here; just filter by category
-    const items = (manifest.items||[])
-      .filter(it => (it.category || '').toLowerCase() === 'magic-writing')
-      .sort(byDateDesc);
-
-    listEl.innerHTML = items.map(itemHTML).join('') || '<li class="item"><div class="meta">— No items —</div></li>';
-    status.textContent = `Loaded ${items.length} Magic items.`;
-  }catch(err){
-    console.error(err);
-    status.textContent = `Error: ${err.message}`;
-  }
-})();
-</script>
+  render();
+  </script>
 </body>
 </html>
