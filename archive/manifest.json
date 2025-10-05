@@ -111,40 +111,67 @@
       "school": "Carleton",
       "grade": "A"
     },
+{
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
+  "date": "2023-05-01",
+  "tier": 3,
+  "status": "draft",
+  "blurb": "In today's cynical world, what even constitutes poor taste?",
+  "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
+  "thumbnail": "assets/thumbs/curse.jpg",
+
+  "versions": [
     {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
-      "date": "2023-05-01",
-      "tier": 3,
-      "blurb": "In today's cynical world, what even constitutes poor taste?",
-      "path": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
-      "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
-      "thumbnail": "assets/thumbs/curse.jpg"
+      "date": "2022-11-23",
+      "status": "draft 1",
+      "pdf": "archive/writing/criticism/BAD VIBE CITY/.pdf"
     },
     {
-      "bucket": "writing",
-      "category": "criticism",
-      "title": "Review: Colossal Cave Adventure VR",
-      "date": "2023-03-09",
-      "tier": 3,
-      "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
-      "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-      "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-      "thumbnail": "assets/thumbs/colossal-cave.jpg"
+      "date": "2022-11-23",
+      "status": "draft 1.1",
+      "pdf": "archive/writing/criticism/BAD VIBE CITY 1.1/.pdf"
     },
     {
+      "date": "2022-11-24",
+      "status": "draft 1.2",
+      "pdf": "archive/writing/criticism/BAD VIBE CITY/1.2.1.pdf"
+    },
+    {
+      "date": "2022-12-01",
+      "status": "draft 1.4",
+      "pdf": "archive/writing/criticism/BAD VIBE CITY/1.4.3.pdf"
+    }
+  ]
+},
+{
+  "bucket": "writing",
+  "category": "criticism",
+  "title": "Review: Colossal Cave Adventure VR",
+  "date": "2023-03-09",
+  "tier": 3,
+  "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
+  "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
+  "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
+  "thumbnail": "assets/thumbs/colossal-cave.jpg",
+
+  "rating": 3,
+  "rating_max": 5
+},
+{
       "bucket": "writing",
       "category": "criticism",
-      "title": "Digital Exile: How I Got Banned For Life From AirBnB",
+      "title": "Digital Exile: How I Got Banned For Life From AirBnB **2nd most-read Medium.com article, ever**",
       "role": "Editor",
       "date": "2018-07-18",
       "tier": 3,
-      "blurb": "On big tech and draconian justice. **Second most-read Medium.com article, ever.**",
+      "blurb": "On big tech and draconian justice.",
       "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
       "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
       "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
-      "thumbnail": "assets/thumbs/digital-exile.jpg"
+      "thumbnail": "assets/thumbs/digital-exile.jpg",
+      "accolade": ""
     },
     {
       "bucket": "writing",
@@ -159,148 +186,6 @@
       "external": "https://jacksoncunningham.medium.com/extinction-amazon-and-the-end-of-the-american-entrepreneur-8c2645f38976",
       "thumbnail": "assets/thumbs/digital-exile.jpg"
     },
-
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "The End of the Magic: The Gathering Pro Tour",
-      "date": "2020-03-18",
-      "tier": 3,
-      "blurb": "TCGplayer column on the curtain call for the Pro Tour era.",
-      "path": "archive/writing/magic/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-      "path_html": "archive/writing/magic/tcgplayer/2020-03-18-end-of-pro-tour/index.html",
-      "thumbnail": "assets/thumbs/tcgplayer.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "Lands and Spells",
-      "date": "2019-12-27",
-      "tier": 3,
-      "blurb": "**GP Vancouver 2019 — Modern Masters Limited (3rd Place)**.",
-      "path": "archive/writing/magic/tcgplayer/2019-12-27-lands-and-spells/index.html",
-      "path_html": "archive/writing/magic/tcgplayer/2019-12-27-lands-and-spells/index.html",
-      "thumbnail": "assets/thumbs/lands-spells.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "starcitygames",
-      "title": "Star City Games Archive (2001–2018)",
-      "date": "2001-01-01",
-      "tier": 4,
-      "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
-      "path": "archive/writing/magic/starcitygames/index.html",
-      "thumbnail": "assets/thumbs/scg.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
-      "date": "2005-09-16",
-      "tier": 3,
-      "part": 1,
-      "blurb": "#1 Jeff Cunningham: Snapshots from Pro Tour Houston '02",
-      "path": "archive/writing/magic/untold-legends/part-1.html",
-      "pdf": "archive/writing/magic/untold-legends/part-1.pdf",
-      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_1.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
-      "date": "2005-09-16",
-      "tier": 3,
-      "part": 2,
-      "blurb": "#2 Ben Rubin: PT LA '98",
-      "path": "archive/writing/magic/untold-legends/part-2.html",
-      "pdf": "archive/writing/magic/untold-legends/part-2.pdf",
-      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_2.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
-      "date": "2005-09-16",
-      "tier": 3,
-      "part": 3,
-      "blurb": "#3 Peter Szigeti: GP Turin '01.",
-      "path": "archive/writing/magic/untold-legends/part-3.html",
-      "pdf": "archive/writing/magic/untold-legends/part-3.pdf",
-      "external": "archive/writing/magic/starcitygames/05-09-16-Untold-Legends_3.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "title": "Untold Legends of the Million Dollar Magic: The Gathering Pro Tour",
-      "date": "2005-10-07",
-      "tier": 4,
-      "part": 4,
-      "locked": true,
-      "blurb": "#4 Brett Shears: GP Denver '00 (Unpublished)",
-      "path": "archive/writing/magic/untold-legends/part-4.html",
-      "pdf": "archive/writing/magic/untold-legends/part-4.pdf",
-      "thumbnail": "assets/thumbs/untold.jpg"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "academy",
-      "title": "Magic Academy Archive (2006–2007)",
-      "date": "2007-08-04",
-      "tier": 3,
-      "blurb": "31-article run on beginner series for WotC. PDF mirrors; newest first.",
-      "path": "archive/writing/magic/academy/index.html",
-      "thumbnail": "assets/thumbs/magic-academy.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "sideboard",
-      "title": "Week in Review (Sideboard) Archive (2003)",
-      "date": "2003-07-09",
-      "tier": 3,
-      "blurb": "Sideboard.com ‘Week in Review’ columns with PDF mirrors and Wayback links.",
-      "path": "archive/writing/magic/sideboard/index.html",
-      "thumbnail": "assets/thumbs/sideboard.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "starcitygames",
-      "title": "Star City Games Archive (2004–2018)",
-      "date": "2018-03-01",
-      "tier": 3,
-      "blurb": "SCG columns and features with cleaned HTML mirrors and PDFs.",
-      "path": "archive/writing/magic/starcitygames/index.html",
-      "thumbnail": "assets/thumbs/scg.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "misetings",
-      "title": "MiseTings Archive (2001)",
-      "date": "2001-01-01",
-      "tier": 4,
-      "blurb": "Index page for preserved MiseTings PDFs from 2001 (HTML mirrors optional).",
-      "path": "archive/writing/magic/misetings/index.html",
-      "thumbnail": "assets/thumbs/misetings.png"
-    },
-    {
-      "bucket": "writing",
-      "category": "magic",
-      "subcategory": "dojo",
-      "title": "The Dojo Archive (1998)",
-      "date": "1998-01-01",
-      "tier": 3,
-      "blurb": "Index page for preserved Magic Dojo text files (1998).",
-      "path": "archive/writing/magic/dojo/index.html",
-      "thumbnail": "assets/thumbs/dojo.png"
-    },
-
     {
       "bucket": "movies",
       "type": "video",

@@ -33,9 +33,52 @@
     .folder-item .title a { font-style: italic; color: var(--muted-ink, #666); text-decoration:none; }
     .folder-item .title a:hover { text-decoration: underline; }
 
-    .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.35rem}
-    .pills a{font-size:.85rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.15rem .55rem;text-decoration:none;color:var(--ink,#111)}
-    .pills a:hover{text-decoration:underline}
+    /* Unified pill button design (consistent on mobile) */
+    :root { --pill-fs: clamp(.78rem, 2.6vw, .85rem); --pill-pad-y:.18rem; --pill-pad-x:.6rem; }
+    .pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.35rem}
+    .pill, .pills a{
+      font-size:var(--pill-fs);
+      line-height:1;
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:999px;
+      padding:var(--pill-pad-y) var(--pill-pad-x);
+      text-decoration:none;
+      color:var(--ink,#111);
+      display:inline-flex; align-items:center; gap:.35rem;
+      background:#fff;
+      will-change:transform;
+      transition:transform .06s ease;
+    }
+    .pills a:hover { text-decoration:underline }
+    .pill:active, .pills a:active { transform:translateY(1px) }
+    .pill-ico{width:1em;height:1em;display:inline-block;vertical-align:-0.1em}
+
+    /* Accolade badge, Draft badge */
+    .badge-accolade{
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.78rem; border:1px dashed rgba(0,0,0,.25);
+      border-radius:999px; padding:.12rem .5rem; margin-left:.45rem;
+      background:#fff;
+    }
+    .badge-draft{
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.75rem; border:1px dashed rgba(0,0,0,.28);
+      border-radius:8px; padding:.1rem .4rem; margin-left:.5rem;
+      background:#fff7f5; color:#8a3b00;
+    }
+
+    /* Star rating */
+    .stars{display:inline-flex;gap:.1rem;margin-left:.45rem;opacity:.9}
+    .stars svg{width:1em;height:1em}
+
+    /* Drawer icon (decorative only for now) */
+    .drawer-ico {
+      font-size: .9rem;
+      opacity: .6;
+      margin-left: .4rem;
+      cursor: default;
+      user-select: none;
+    }
 
     .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
   </style>
@@ -76,7 +119,7 @@ if (window.__ARCHIVE_APP_RAN__) {
   window.__ARCHIVE_APP_RAN__ = true;
 
   // Page is /archive/index.html → manifest at site root
-  const ROOT_MANIFEST = 'manifest.json?v=7';
+  const ROOT_MANIFEST = 'manifest.json?v=9';
 
   const $ = (s, c=document)=>c.querySelector(s);
   const statusEl = $('#status');
@@ -97,20 +140,47 @@ if (window.__ARCHIVE_APP_RAN__) {
     return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
   }
 
-  // ✅ NEW: Show only non-primary pills
+  // Stars, Accolade, Draft helpers
+  function starsHTML(it){
+    const n = Number(it.rating||0), max = Number(it.rating_max||5)||5;
+    if (!n || n<=0) return '';
+    const star = (filled) => filled
+      ? `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`;
+    let out = '';
+    for (let i=1;i<=max;i++) out += star(i<=n);
+    return `<span class="stars" title="${n}/${max} stars">${out}</span>`;
+  }
+  function accoladeBadge(text){
+    return text ? `<span class="badge-accolade">${text}</span>` : '';
+  }
+  function isDraft(it){
+    const s = (it.status||'').toLowerCase();
+    const t = (it.tag||'').toLowerCase();
+    return s==='draft' || t==='draft' || it.draft===true;
+  }
+
+  // Show only non-primary pills; PDF gets icon; External shows domain
   function linkPills(it, hrefPrimary) {
     const norm = s => (s ? toHref(s) : "");
     const primary = norm(hrefPrimary);
+    const domain = url => { try { return new URL(url).hostname.replace(/^www\./,''); } catch { return ''; } };
+    const icoPDF = `<svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 15v-6h4a2 2 0 0 1 0 4h-2v2H8zm6-6h2v6h-2z" fill="currentColor"/></svg>`;
 
-    const candidates = [
-      ["Local",    it.path_html || it.path || ""],
-      ["PDF",      it.pdf || ""],
-      ["External", it.external || ""],
-    ];
+    const pills = [];
 
-    const pills = candidates
-      .filter(([_, url]) => url && norm(url) !== primary)
-      .map(([label, url]) => `<a href="${toHref(url)}" target="_blank" rel="noopener">${label}</a>`);
+    const local = it.path_html || it.path || "";
+    if (local && norm(local) !== primary) pills.push(
+      `<a class="pill" href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`
+    );
+
+    if (it.pdf && norm(it.pdf) !== primary) pills.push(
+      `<a class="pill" href="${toHref(it.pdf)}" target="_blank" rel="noopener">${icoPDF}<span>PDF</span></a>`
+    );
+
+    if (it.external && norm(it.external) !== primary) pills.push(
+      `<a class="pill" href="${it.external}" target="_blank" rel="noopener">${domain(it.external)}</a>`
+    );
 
     return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
   }
@@ -120,6 +190,11 @@ if (window.__ARCHIVE_APP_RAN__) {
     if (isAbs(candidate)) return candidate;
     if (it.external && !candidate) return it.external;
     return toHref(candidate) || it.external || "";
+  }
+
+  // --- Drawer indicator only: show icon if versions/earlierDrafts exist (no rendering of drafts list) ---
+  function hasDrawer(it){
+    return (Array.isArray(it.versions) && it.versions.length) || (Array.isArray(it.earlierDrafts) && it.earlierDrafts.length);
   }
 
   function itemLI(it){
@@ -135,6 +210,8 @@ if (window.__ARCHIVE_APP_RAN__) {
     const metaLine = metaBits.filter(Boolean).join(' • ');
     const baseTierClass = (it.tier||99) === 2 ? 'item tier-2' : 'item';
     const featuredClass = it.featured ? ' featured' : '';
+    const draftBadge = isDraft(it) ? `<span class="badge-draft">Draft</span>` : '';
+    const drawerIcon = hasDrawer(it) ? `<span class="drawer-ico" title="Earlier drafts">🗄️</span>` : '';
 
     if (it.type === 'folder') {
       return `
@@ -152,7 +229,10 @@ if (window.__ARCHIVE_APP_RAN__) {
           <div class="row">
             ${thumb}
             <div>
-              <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+              <div class="title">
+                ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}
+                ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${starsHTML(it)} ${drawerIcon}
+              </div>
               <div class="meta">${metaLine}</div>
               ${it.blurb ? `<div>${it.blurb}</div>` : ''}
               ${linkPills(it, href)}
@@ -164,7 +244,10 @@ if (window.__ARCHIVE_APP_RAN__) {
 
     return `
       <li class="${baseTierClass}${featuredClass}">
-        <div class="title">${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
+        <div class="title">
+          ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}
+          ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${starsHTML(it)} ${drawerIcon}
+        </div>
         <div class="meta">${metaLine}</div>
         ${it.blurb ? `<div>${it.blurb}</div>` : ''}
         ${linkPills(it, href)}
@@ -246,7 +329,7 @@ if (window.__ARCHIVE_APP_RAN__) {
     return res.json();
   }
 
-  // ✅ NEW: Load top N Tier-3 Magic items from sub-manifests (no redundancy)
+  // Load top N Tier-3 Magic items from sub-manifests (no redundancy)
   async function loadTopMagicFromChildren({limit=3, tier=3} = {}){
     const MAGIC_ROOT = '/archive/writing/magic/';
     const magicRoot = await loadJSON(MAGIC_ROOT + 'manifest.json?v=1').catch(()=>null);
@@ -264,12 +347,10 @@ if (window.__ARCHIVE_APP_RAN__) {
       })
     );
 
-    // Normalize items so the main page can render them directly
     const all = [];
     for (const {key, base, items} of manifests) {
       for (const it of items) {
         if (Number(it.tier ?? 3) !== tier) continue; // Tier==3 only
-        // Build absolute-ish site paths for local assets
         const norm = (p) => (p ? (isAbs(p) ? p : (base + p).replace(/\/+\.\//g,'/')) : '');
         all.push({
           id: it.id || `magic/${key}/` + ( (it.title||it.path_html||it.path||it.pdf||'item')
@@ -280,6 +361,9 @@ if (window.__ARCHIVE_APP_RAN__) {
           date: it.date,
           blurb: it.blurb,
           accolade: it.accolade,
+          status: it.status,
+          rating: it.rating,
+          rating_max: it.rating_max,
           path_html: it.path_html ? norm(it.path_html) : '',
           path: it.path ? norm(it.path) : '',
           pdf: it.pdf ? norm(it.pdf) : '',
@@ -293,7 +377,7 @@ if (window.__ARCHIVE_APP_RAN__) {
     return all.slice(0, limit);
   }
 
-  // ✅ NEW: de-dupe helper (so spotlighted Magic items don’t double-list)
+  // de-dupe helper
   function dedupeItems(items){
     const seen = new Set();
     const keyOf = (it) =>
@@ -321,18 +405,11 @@ if (window.__ARCHIVE_APP_RAN__) {
       const categories  = root.categories || {};
       let items         = Array.isArray(root.items) ? root.items.slice() : [];
 
-      // 👉 Pull top 3 Tier-3 Magic items from sub-manifests, inject into items
+      // Pull top 3 Tier-3 Magic items from sub-manifests, inject into items
       const magicTop3 = await loadTopMagicFromChildren({limit:3, tier:3});
-      items = dedupeItems([
-        // Option A: keep all root items, then add Magic top-3
-        ...items,
-        ...magicTop3
-        // Option B (strict): if you prefer, drop ALL root magic items first:
-        // ...items.filter(it => (it.category||'').toLowerCase()!=='magic'),
-        // ...magicTop3
-      ]);
+      items = dedupeItems([...items, ...magicTop3]);
 
-      // Group by bucket and render
+      // Group by bucket and render (preserves categories per bucket)
       const byBucket = {};
       for (const it of items) {
         const b = it.bucket || 'misc';
@@ -342,7 +419,7 @@ if (window.__ARCHIVE_APP_RAN__) {
       renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
       renderBucket('movies',  bucketsMeta['movies'],  byBucket['movies']  || [], categories);
 
-      statusEl.textContent = `Archive loaded (${items.length} items incl. Magic spotlight).`;
+      statusEl.textContent = `Archive loaded (${items.length} items).`;
       statusEl.classList.add('ok'); statusEl.classList.remove('err');
     } catch (e) {
       console.error(e);
