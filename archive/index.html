@@ -53,7 +53,7 @@
     .pill:active, .pills a:active { transform:translateY(1px) }
     .pill-ico{width:1em;height:1em;display:inline-block;vertical-align:-0.1em}
 
-    /* Accolade badge, Draft badge */
+    /* Accolade badge, Draft badge, Role badge */
     .badge-accolade{
       display:inline-flex; align-items:center; gap:.35rem;
       font-size:.78rem; border:1px dashed rgba(0,0,0,.25);
@@ -65,6 +65,12 @@
       font-size:.75rem; border:1px dashed rgba(0,0,0,.28);
       border-radius:8px; padding:.1rem .4rem; margin-left:.5rem;
       background:#fff7f5; color:#8a3b00;
+    }
+    .badge-role{
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.75rem; border:1px solid rgba(0,0,0,.18);
+      border-radius:999px; padding:.1rem .45rem; margin-left:.45rem;
+      background:#eef2ff; color:#2c2ca0;
     }
 
     /* Star rating */
@@ -80,7 +86,12 @@
       user-select: none;
     }
 
-    .part-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;border:1px solid rgba(0,0,0,.14);border-radius:999px;padding:.1rem .45rem;margin-left:.4rem;background:#fff;opacity:.85}
+    .part-pill{
+      display:inline-flex;align-items:center;gap:.35rem;
+      font-size:.75rem;border:1px solid rgba(0,0,0,.14);
+      border-radius:999px;padding:.1rem .45rem;
+      margin-left:.4rem;background:#fff;opacity:.85
+    }
   </style>
 </head>
 <body>
@@ -118,319 +129,278 @@ if (window.__ARCHIVE_APP_RAN__) {
 } else {
   window.__ARCHIVE_APP_RAN__ = true;
 
-  // Page is /archive/index.html → manifest at site root
-  const ROOT_MANIFEST = 'manifest.json?v=9';
-
-  const $ = (s, c=document)=>c.querySelector(s);
+  const ROOT_MANIFEST = 'manifest.json?v=10';
+  const $ = (s,c=document)=>c.querySelector(s);
   const statusEl = $('#status');
-  const bucketEls = { 'writing': $('#bucket-writing'), 'movies': $('#bucket-movies') };
-  const bucketBlurbEl = { 'writing': $('#blurb-writing'), 'movies': $('#blurb-movies') };
-  const countEls = { 'writing': $('#count-writing'), 'movies': $('#count-movies') };
+  const bucketEls = { writing: $('#bucket-writing'), movies: $('#bucket-movies') };
+  const bucketBlurbEl = { writing: $('#blurb-writing'), movies: $('#blurb-movies') };
+  const countEls = { writing: $('#count-writing'), movies: $('#count-movies') };
 
   const prettyDate = d => (typeof d==='string' && /^\d{4}-\d{2}-\d{2}/.test(d)) ? d.slice(0,10) : '';
-
-  // Only hide Tier 4 on the MAIN archive
   const visibleOnMain = it => Number(it.tier ?? 3) < 4;
-
   const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
   const toHref = s => !s ? "" : (isAbs(s) ? s : (s.startsWith("/") ? s : "/"+s));
 
   function partBadge(it){
     const p = Number(it.part||'');
-    return (isFinite(p)&&p>0) ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>` : (it.locked?` <span class="part-pill">🔒</span>`:'');
+    return (isFinite(p)&&p>0)
+      ? ` <span class="part-pill">Part ${p}${it.locked?' 🔒':''}</span>`
+      : (it.locked?` <span class="part-pill">🔒</span>`:'');
   }
 
-  // Stars, Accolade, Draft helpers
+  // --- visual helpers ---
   function starsHTML(it){
     const n = Number(it.rating||0), max = Number(it.rating_max||5)||5;
     if (!n || n<=0) return '';
-    const star = (filled) => filled
-      ? `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`
-      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`;
-    let out = '';
-    for (let i=1;i<=max;i++) out += star(i<=n);
+    const star = filled => filled
+      ? `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 17.3l-6.18 3.64 1.64-6.99L2 8.77l7.09-.61L12 1.5l2.91 6.66 7.09.61-5.46 5.18 1.64 6.99z"/></svg>`;
+    let out=''; for(let i=1;i<=max;i++) out+=star(i<=n);
     return `<span class="stars" title="${n}/${max} stars">${out}</span>`;
   }
-  function accoladeBadge(text){
-    return text ? `<span class="badge-accolade">${text}</span>` : '';
+  function accoladeBadge(text){ return text ? `<span class="badge-accolade">${text}</span>` : ''; }
+  function roleBadge(it){
+    return (typeof it.role === 'string' && /editor/i.test(it.role))
+      ? `<span class="badge-role">Editor</span>` : '';
   }
   function isDraft(it){
-    const s = (it.status||'').toLowerCase();
-    const t = (it.tag||'').toLowerCase();
-    return s==='draft' || t==='draft' || it.draft===true;
+    const s=(it.status||'').toLowerCase(), t=(it.tag||'').toLowerCase();
+    return s==='draft'||t==='draft'||it.draft===true;
   }
 
-  // Show only non-primary pills; PDF gets icon; External shows domain
-  function linkPills(it, hrefPrimary) {
-    const norm = s => (s ? toHref(s) : "");
-    const primary = norm(hrefPrimary);
-    const domain = url => { try { return new URL(url).hostname.replace(/^www\./,''); } catch { return ''; } };
-    const icoPDF = `<svg class="pill-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 15v-6h4a2 2 0 0 1 0 4h-2v2H8zm6-6h2v6h-2z" fill="currentColor"/></svg>`;
-
-    const pills = [];
-
-    const local = it.path_html || it.path || "";
-    if (local && norm(local) !== primary) pills.push(
-      `<a class="pill" href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`
-    );
-
-    if (it.pdf && norm(it.pdf) !== primary) pills.push(
-      `<a class="pill" href="${toHref(it.pdf)}" target="_blank" rel="noopener">${icoPDF}<span>PDF</span></a>`
-    );
-
-    if (it.external && norm(it.external) !== primary) pills.push(
-      `<a class="pill" href="${it.external}" target="_blank" rel="noopener">${domain(it.external)}</a>`
-    );
-
-    return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
+  // pills
+  function linkPills(it, hrefPrimary){
+    const norm=s=>s?toHref(s):"";
+    const primary=norm(hrefPrimary);
+    const domain=url=>{try{return new URL(url).hostname.replace(/^www\./,'');}catch{return'';}};
+    const icoPDF=`<svg class="pill-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 15v-6h4a2 2 0 0 1 0 4h-2v2H8zm6-6h2v6h-2z" fill="currentColor"/></svg>`;
+    const pills=[];
+    const local=it.path_html||it.path||"";
+    if(local && norm(local)!==primary) pills.push(`<a class="pill" href="${toHref(local)}" target="_blank" rel="noopener">Local</a>`);
+    if(it.pdf && norm(it.pdf)!==primary) pills.push(`<a class="pill" href="${toHref(it.pdf)}" target="_blank" rel="noopener">${icoPDF}<span>PDF</span></a>`);
+    if(it.external && norm(it.external)!==primary) pills.push(`<a class="pill" href="${it.external}" target="_blank" rel="noopener">${domain(it.external)}</a>`);
+    return pills.length?`<div class="pills">${pills.join('')}</div>`:'';
   }
 
   function primaryHref(it){
-    const candidate = it.path_html || it.path || it.pdf || "";
-    if (isAbs(candidate)) return candidate;
-    if (it.external && !candidate) return it.external;
-    return toHref(candidate) || it.external || "";
+    const candidate=it.path_html||it.path||it.pdf||"";
+    if(isAbs(candidate)) return candidate;
+    if(it.external && !candidate) return it.external;
+    return toHref(candidate)||it.external||"";
   }
 
-  // --- Drawer indicator only: show icon if versions/earlierDrafts exist (no rendering of drafts list) ---
   function hasDrawer(it){
-    return (Array.isArray(it.versions) && it.versions.length) || (Array.isArray(it.earlierDrafts) && it.earlierDrafts.length);
+    return (Array.isArray(it.versions)&&it.versions.length)||
+           (Array.isArray(it.earlierDrafts)&&it.earlierDrafts.length);
   }
 
   function itemLI(it){
-    const title = it.title || it.path_html || it.path || it.pdf || 'Untitled';
-    const href  = primaryHref(it);
-    const date  = prettyDate(it.date);
-    const metaBits = [date];
+    const title=it.title||it.path_html||it.path||it.pdf||'Untitled';
+    const href=primaryHref(it);
+    const date=prettyDate(it.date);
+    const metaBits=[date];
+    if((it.category||'')==='academic'&&it.school) metaBits.push(it.school);
+    if(it.type==='folder') metaBits.push('Folder');
+    if(it.type==='video') metaBits.push('Video');
+    const metaLine=metaBits.filter(Boolean).join(' • ');
+    const baseTierClass=(it.tier||99)===2?'item tier-2':'item';
+    const featuredClass=it.featured?' featured':'';
+    const draftBadge=isDraft(it)?`<span class="badge-draft">Draft</span>`:'';
+    const drawerIcon=hasDrawer(it)?`<span class="drawer-ico" title="Earlier drafts">🗄️</span>`:'';
 
-    if ((it.category||'') === 'academic' && it.school) metaBits.push(it.school);
-    if (it.type === 'folder') metaBits.push('Folder');
-    if (it.type === 'video')  metaBits.push('Video');
-
-    const metaLine = metaBits.filter(Boolean).join(' • ');
-    const baseTierClass = (it.tier||99) === 2 ? 'item tier-2' : 'item';
-    const featuredClass = it.featured ? ' featured' : '';
-    const draftBadge = isDraft(it) ? `<span class="badge-draft">Draft</span>` : '';
-    const drawerIcon = hasDrawer(it) ? `<span class="drawer-ico" title="Earlier drafts">🗄️</span>` : '';
-
-    if (it.type === 'folder') {
-      return `
-        <li class="item folder-item${featuredClass}">
-          <div class="title">📁 ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}${partBadge(it)}</div>
-          <div class="meta">${metaLine}</div>
-        </li>
-      `;
-    }
-
-    if ((it.tier||99) === 2) {
-      const thumb = it.thumbnail ? `<img class="thumb" src="${toHref(it.thumbnail)}" alt="">` : '<div></div>';
-      return `
-        <li class="${baseTierClass}${featuredClass}">
-          <div class="row">
-            ${thumb}
-            <div>
-              <div class="title">
-                ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}
-                ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${starsHTML(it)} ${drawerIcon}
-              </div>
-              <div class="meta">${metaLine}</div>
-              ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-              ${linkPills(it, href)}
-            </div>
-          </div>
-        </li>
-      `;
-    }
-
-    return `
-      <li class="${baseTierClass}${featuredClass}">
-        <div class="title">
-          ${href ? `<a href="${href}" target="_blank" rel="noopener">${title}</a>` : title}
-          ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${starsHTML(it)} ${drawerIcon}
-        </div>
+    if(it.type==='folder'){
+      return `<li class="item folder-item${featuredClass}">
+        <div class="title">📁 ${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}${partBadge(it)}</div>
         <div class="meta">${metaLine}</div>
-        ${it.blurb ? `<div>${it.blurb}</div>` : ''}
-        ${linkPills(it, href)}
-      </li>
-    `;
+      </li>`;
+    }
+
+    if((it.tier||99)===2){
+      const thumb=it.thumbnail?`<img class="thumb" src="${toHref(it.thumbnail)}" alt="">`:'<div></div>';
+      return `<li class="${baseTierClass}${featuredClass}">
+        <div class="row">
+          ${thumb}
+          <div>
+            <div class="title">
+              ${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}
+              ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${roleBadge(it)}${starsHTML(it)} ${drawerIcon}
+            </div>
+            <div class="meta">${metaLine}</div>
+            ${it.blurb?`<div>${it.blurb}</div>`:''}
+            ${linkPills(it,href)}
+          </div>
+        </div>
+      </li>`;
+    }
+
+    return `<li class="${baseTierClass}${featuredClass}">
+      <div class="title">
+        ${href?`<a href="${href}" target="_blank" rel="noopener">${title}</a>`:title}
+        ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${roleBadge(it)}${starsHTML(it)} ${drawerIcon}
+      </div>
+      <div class="meta">${metaLine}</div>
+      ${it.blurb?`<div>${it.blurb}</div>`:''}
+      ${linkPills(it,href)}
+    </li>`;
   }
 
-  const CATEGORY_ARCHIVES = {
-    'academic': '/archive/writing/academic/',
-    'criticism': '/archive/writing/criticism/',
-    'magic': '/archive/writing/magic/',
-    'technical': '/archive/writing/technical/'
+  const CATEGORY_ARCHIVES={
+    'academic':'/archive/writing/academic/',
+    'criticism':'/archive/writing/criticism/',
+    'magic':'/archive/writing/magic/',
+    'technical':'/archive/writing/technical/'
   };
 
-  function renderCategorySection(catKey, items, categoriesMap){
-    items = items.filter(visibleOnMain);
+  function renderCategorySection(catKey,items,categoriesMap){
+    items=items.filter(visibleOnMain);
     items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-
-    const sec = document.createElement('section');
-
-    const h3 = document.createElement('h3');
-    h3.textContent = catKey.replace(/-/g,' ').replace(/\b\w/g, m=>m.toUpperCase());
+    const sec=document.createElement('section');
+    const h3=document.createElement('h3');
+    h3.textContent=catKey.replace(/-/g,' ').replace(/\b\w/g,m=>m.toUpperCase());
     sec.appendChild(h3);
-
-    const cblurb = document.createElement('div');
-    cblurb.className = 'cat-blurb';
-    const catText = categoriesMap?.[catKey];
-    if (catText) { cblurb.textContent = catText; sec.appendChild(cblurb); }
-
-    const MAX = 3;
-    const shown = items.slice(0, MAX);
-    const ul = document.createElement('ul');
-    ul.innerHTML = shown.map(itemLI).join('');
+    const cblurb=document.createElement('div');
+    cblurb.className='cat-blurb';
+    const catText=categoriesMap?.[catKey];
+    if(catText){cblurb.textContent=catText;sec.appendChild(cblurb);}
+    const MAX=3;
+    const shown=items.slice(0,MAX);
+    const ul=document.createElement('ul');
+    ul.innerHTML=shown.map(itemLI).join('');
     sec.appendChild(ul);
-
-    const more = document.createElement('div');
-    more.className = 'view-archive';
-    const href = CATEGORY_ARCHIVES[catKey] || '';
-    if (href) more.innerHTML = `<a href="${href}">View full ${h3.textContent} archive →</a>`;
+    const more=document.createElement('div');
+    more.className='view-archive';
+    const href=CATEGORY_ARCHIVES[catKey]||'';
+    if(href) more.innerHTML=`<a href="${href}">View full ${h3.textContent} archive →</a>`;
     sec.appendChild(more);
-
-    return { section: sec, count: items.length };
+    return {section:sec,count:items.length};
   }
 
-  function renderBucket(bucketKey, bucketMeta, items, categoriesMap){
-    const target = bucketEls[bucketKey];
-    const blurb  = bucketBlurbEl[bucketKey];
-    const counter = countEls[bucketKey];
-    if (!target) return;
-
-    blurb.textContent = bucketMeta?.blurb || '';
-
-    const grouped = {};
-    for (const it of items) {
-      const cat = (it.category || 'misc').toLowerCase();
+  function renderBucket(bucketKey,bucketMeta,items,categoriesMap){
+    const target=bucketEls[bucketKey];
+    const blurb=bucketBlurbEl[bucketKey];
+    const counter=countEls[bucketKey];
+    if(!target)return;
+    blurb.textContent=bucketMeta?.blurb||'';
+    const grouped={};
+    for(const it of items){
+      const cat=(it.category||'misc').toLowerCase();
       (grouped[cat] ||= []);
       grouped[cat].push(it);
     }
-
-    const frag = document.createDocumentFragment();
-    let bucketCount = 0;
-
-    for (const [cat, arr] of Object.entries(grouped)) {
-      const { section, count } = renderCategorySection(cat, arr, categoriesMap);
-      if (count > 0) {
-        bucketCount += count;
-        frag.appendChild(section);
-      }
+    const frag=document.createDocumentFragment();
+    let bucketCount=0;
+    for(const [cat,arr] of Object.entries(grouped)){
+      const {section,count}=renderCategorySection(cat,arr,categoriesMap);
+      if(count>0){bucketCount+=count;frag.appendChild(section);}
     }
-
-    target.innerHTML = '';
+    target.innerHTML='';
     target.appendChild(frag);
-    if (counter) counter.textContent = String(bucketCount);
+    if(counter) counter.textContent=String(bucketCount);
   }
 
   async function loadJSON(url){
-    const res = await fetch(url, {cache:'no-store'});
-    if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    const res=await fetch(url,{cache:'no-store'});
+    if(!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
     return res.json();
   }
 
-  // Load top N Tier-3 Magic items from sub-manifests (no redundancy)
-  async function loadTopMagicFromChildren({limit=3, tier=3} = {}){
-    const MAGIC_ROOT = '/archive/writing/magic/';
-    const magicRoot = await loadJSON(MAGIC_ROOT + 'manifest.json?v=1').catch(()=>null);
-    if (!magicRoot) return [];
-
-    const kids = magicRoot.children || [];
-    const manifests = await Promise.all(
-      kids.map(async (k) => {
-        try {
-          const m = await loadJSON(MAGIC_ROOT + k.manifest.replace('./',''));
-          return { key: k.key, base: MAGIC_ROOT + k.key + '/', items: m.items || [] };
-        } catch {
-          return { key: k.key, base: MAGIC_ROOT + k.key + '/', items: [] };
+  async function loadTopMagicFromChildren({limit=3,tier=3}={}){
+    const MAGIC_ROOT='/archive/writing/magic/';
+    const magicRoot=await loadJSON(MAGIC_ROOT+'manifest.json?v=1').catch(()=>null);
+    if(!magicRoot) return [];
+    const kids=magicRoot.children||[];
+    const manifests=await Promise.all(
+      kids.map(async k=>{
+        try{
+          const m=await loadJSON(MAGIC_ROOT + k.manifest.replace('./',''));
+          return { key:k.key, base: MAGIC_ROOT + k.key + '/', items: m.items||[] };
+        }catch{
+          return { key:k.key, base: MAGIC_ROOT + k.key + '/', items: [] };
         }
       })
     );
 
-    const all = [];
-    for (const {key, base, items} of manifests) {
-      for (const it of items) {
-        if (Number(it.tier ?? 3) !== tier) continue; // Tier==3 only
-        const norm = (p) => (p ? (isAbs(p) ? p : (base + p).replace(/\/+\.\//g,'/')) : '');
+    const all=[];
+    for(const {key,base,items} of manifests){
+      for(const it of items){
+        if(Number(it.tier ?? 3)!==tier) continue; // Tier==3 only
+        const norm=p=>p?(isAbs(p)?p:(base+p).replace(/\/+\.\//g,'/')):'';
         all.push({
-          id: it.id || `magic/${key}/` + ( (it.title||it.path_html||it.path||it.pdf||'item')
-                    .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') ),
-          bucket: 'writing',
-          category: 'magic',
-          title: it.title,
-          date: it.date,
-          blurb: it.blurb,
-          accolade: it.accolade,
-          status: it.status,
-          rating: it.rating,
-          rating_max: it.rating_max,
+          id: it.id || `magic/${key}/` + ((it.title||it.path_html||it.path||it.pdf||'item')
+                .toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')),
+          bucket:'writing',
+          category:'magic',
+          title:it.title,
+          date:it.date,
+          blurb:it.blurb,
+          accolade:it.accolade,
+          status:it.status,
+          rating:it.rating,
+          rating_max:it.rating_max,
           path_html: it.path_html ? norm(it.path_html) : '',
-          path: it.path ? norm(it.path) : '',
-          pdf: it.pdf ? norm(it.pdf) : '',
-          external: it.external || '',
+          path:      it.path ? norm(it.path) : '',
+          pdf:       it.pdf ? norm(it.pdf) : '',
+          external:  it.external || '',
           thumbnail: it.thumbnail ? norm(it.thumbnail) : ''
         });
       }
     }
-
     all.sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-    return all.slice(0, limit);
+    return all.slice(0,limit);
   }
 
-  // de-dupe helper
   function dedupeItems(items){
-    const seen = new Set();
-    const keyOf = (it) =>
+    const seen=new Set();
+    const keyOf=it=>
       (it.id) ||
       (it.path_html && toHref(it.path_html)) ||
       (it.path && toHref(it.path)) ||
       (it.pdf && toHref(it.pdf)) ||
       (it.external || '').toLowerCase() ||
       (it.title || '');
-
-    const out = [];
-    for (const it of items) {
-      const k = keyOf(it);
-      if (k && seen.has(k)) continue;
-      if (k) seen.add(k);
+    const out=[];
+    for(const it of items){
+      const k=keyOf(it);
+      if(k && seen.has(k)) continue;
+      if(k) seen.add(k);
       out.push(it);
     }
     return out;
   }
 
   async function render(){
-    try {
-      const root = await loadJSON(ROOT_MANIFEST);
-      const bucketsMeta = root.buckets || {};
-      const categories  = root.categories || {};
-      let items         = Array.isArray(root.items) ? root.items.slice() : [];
+    try{
+      const root=await loadJSON(ROOT_MANIFEST);
+      const bucketsMeta=root.buckets||{};
+      const categories=root.categories||{};
+      let items=Array.isArray(root.items)?root.items.slice():[];
 
-      // Pull top 3 Tier-3 Magic items from sub-manifests, inject into items
-      const magicTop3 = await loadTopMagicFromChildren({limit:3, tier:3});
-      items = dedupeItems([...items, ...magicTop3]);
+      // Pull top 3 Tier-3 Magic items from sub-manifests, inject, then de-dupe
+      const magicTop3=await loadTopMagicFromChildren({limit:3,tier:3});
+      items=dedupeItems([...items, ...magicTop3]);
 
-      // Group by bucket and render (preserves categories per bucket)
-      const byBucket = {};
-      for (const it of items) {
-        const b = it.bucket || 'misc';
+      // Group by bucket and render
+      const byBucket={};
+      for(const it of items){
+        const b=it.bucket||'misc';
         (byBucket[b] ||= []).push(it);
       }
 
-      renderBucket('writing', bucketsMeta['writing'], byBucket['writing'] || [], categories);
-      renderBucket('movies',  bucketsMeta['movies'],  byBucket['movies']  || [], categories);
+      renderBucket('writing', bucketsMeta['writing'], byBucket['writing']||[], categories);
+      renderBucket('movies',  bucketsMeta['movies'],  byBucket['movies'] ||[], categories);
 
-      statusEl.textContent = `Archive loaded (${items.length} items).`;
+      statusEl.textContent=`Archive loaded (${items.length} items).`;
       statusEl.classList.add('ok'); statusEl.classList.remove('err');
-    } catch (e) {
+    }catch(e){
       console.error(e);
-      statusEl.textContent = `Error loading archive: ${e.message}`;
+      statusEl.textContent=`Error loading archive: ${e.message}`;
       statusEl.classList.add('err'); statusEl.classList.remove('ok');
     }
   }
 
-  if (document.readyState === 'loading') {
+  if(document.readyState==='loading'){
     document.addEventListener('DOMContentLoaded', render);
-  } else {
+  }else{
     render();
   }
 }
