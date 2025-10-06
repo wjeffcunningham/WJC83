@@ -92,6 +92,24 @@
       border-radius:999px;padding:.1rem .45rem;
       margin-left:.4rem;background:#fff;opacity:.85
     }
+
+    /* ===== Emphasis shimmer for **double-asterisk** text ===== */
+    .fx-em{
+      background: linear-gradient(90deg, #111, #6c6cff, #111);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fx-shimmer 3s linear infinite;
+      font-weight: 700;
+    }
+    @keyframes fx-shimmer{
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fx-em{ animation: none; background-size: 100% 100%; }
+    }
   </style>
 </head>
 <body>
@@ -129,7 +147,7 @@ if (window.__ARCHIVE_APP_RAN__) {
 } else {
   window.__ARCHIVE_APP_RAN__ = true;
 
-  const ROOT_MANIFEST = 'manifest.json?v=10';
+  const ROOT_MANIFEST = 'manifest.json?v=11';
   const $ = (s,c=document)=>c.querySelector(s);
   const statusEl = $('#status');
   const bucketEls = { writing: $('#bucket-writing'), movies: $('#bucket-movies') };
@@ -140,6 +158,11 @@ if (window.__ARCHIVE_APP_RAN__) {
   const visibleOnMain = it => Number(it.tier ?? 3) < 4;
   const isAbs = s => /^https?:\/\//i.test(s) || /^\/\//.test(s);
   const toHref = s => !s ? "" : (isAbs(s) ? s : (s.startsWith("/") ? s : "/"+s));
+
+  // Replace **text** with <span class="fx-em">text</span>
+  function decorateEmphasis(str){
+    return String(str ?? '').replace(/\*\*(.+?)\*\*/g, '<span class="fx-em">$1</span>');
+  }
 
   function partBadge(it){
     const p = Number(it.part||'');
@@ -158,7 +181,10 @@ if (window.__ARCHIVE_APP_RAN__) {
     let out=''; for(let i=1;i<=max;i++) out+=star(i<=n);
     return `<span class="stars" title="${n}/${max} stars">${out}</span>`;
   }
-  function accoladeBadge(text){ return text ? `<span class="badge-accolade">${text}</span>` : ''; }
+  function accoladeBadge(text){
+    const inner = decorateEmphasis(text||'');
+    return text ? `<span class="badge-accolade">${inner}</span>` : '';
+  }
   function roleBadge(it){
     return (typeof it.role === 'string' && /editor/i.test(it.role))
       ? `<span class="badge-role">Editor</span>` : '';
@@ -195,10 +221,11 @@ if (window.__ARCHIVE_APP_RAN__) {
   }
 
   function itemLI(it){
-    const title=it.title||it.path_html||it.path||it.pdf||'Untitled';
-    const href=primaryHref(it);
-    const date=prettyDate(it.date);
-    const metaBits=[date];
+    const rawTitle = it.title || it.path_html || it.path || it.pdf || 'Untitled';
+    const title = decorateEmphasis(rawTitle);
+    const href  = primaryHref(it);
+    const date  = prettyDate(it.date);
+    const metaBits = [date];
     if((it.category||'')==='academic'&&it.school) metaBits.push(it.school);
     if(it.type==='folder') metaBits.push('Folder');
     if(it.type==='video') metaBits.push('Video');
@@ -207,6 +234,7 @@ if (window.__ARCHIVE_APP_RAN__) {
     const featuredClass=it.featured?' featured':'';
     const draftBadge=isDraft(it)?`<span class="badge-draft">Draft</span>`:'';
     const drawerIcon=hasDrawer(it)?`<span class="drawer-ico" title="Earlier drafts">🗄️</span>`:'';
+    const blurbHTML = it.blurb ? decorateEmphasis(it.blurb) : '';
 
     if(it.type==='folder'){
       return `<li class="item folder-item${featuredClass}">
@@ -226,7 +254,7 @@ if (window.__ARCHIVE_APP_RAN__) {
               ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${roleBadge(it)}${starsHTML(it)} ${drawerIcon}
             </div>
             <div class="meta">${metaLine}</div>
-            ${it.blurb?`<div>${it.blurb}</div>`:''}
+            ${blurbHTML?`<div>${blurbHTML}</div>`:''}
             ${linkPills(it,href)}
           </div>
         </div>
@@ -239,7 +267,7 @@ if (window.__ARCHIVE_APP_RAN__) {
         ${partBadge(it)}${draftBadge}${accoladeBadge(it.accolade)}${roleBadge(it)}${starsHTML(it)} ${drawerIcon}
       </div>
       <div class="meta">${metaLine}</div>
-      ${it.blurb?`<div>${it.blurb}</div>`:''}
+      ${blurbHTML?`<div>${blurbHTML}</div>`:''}
       ${linkPills(it,href)}
     </li>`;
   }
@@ -261,7 +289,7 @@ if (window.__ARCHIVE_APP_RAN__) {
     const cblurb=document.createElement('div');
     cblurb.className='cat-blurb';
     const catText=categoriesMap?.[catKey];
-    if(catText){cblurb.textContent=catText;sec.appendChild(cblurb);}
+    if(catText){cblurb.innerHTML = decorateEmphasis(catText); sec.appendChild(cblurb);}
     const MAX=3;
     const shown=items.slice(0,MAX);
     const ul=document.createElement('ul');
@@ -280,7 +308,7 @@ if (window.__ARCHIVE_APP_RAN__) {
     const blurb=bucketBlurbEl[bucketKey];
     const counter=countEls[bucketKey];
     if(!target)return;
-    blurb.textContent=bucketMeta?.blurb||'';
+    blurb.innerHTML = decorateEmphasis(bucketMeta?.blurb || '');
     const grouped={};
     for(const it of items){
       const cat=(it.category||'misc').toLowerCase();
