@@ -1,281 +1,728 @@
 {
-  "collection": "Star City Games",
+  "schema_version": "1.1",
+  "bucket": "magic-writing",
+  "label": "Star City Games Archive",
+  "blurb": "Jeff’s Star City Games articles (PDF & HTML mirrors).",
   "items": [
     {
-      "order": 500,
-      "filename": "2018-03-01 From Zero To The Top Tier Of Modern - Star City Games.html",
-      "title": "From Zero To The Top Tier Of Modern",
+      "title": "The Grind Part 2 Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2018-03-01",
-      "format": "html",
-      "path_html": "./2018-03-01 From Zero To The Top Tier Of Modern - Star City Games.html",
-      "pdf": "./From Zero To The Top Tier Of Modern - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "The Grind_ Part 2 - Star City Games.pdf",
+      "slug": "the-grind-part-2-star-city-games",
+      "series": "The Grind",
+      "part": 2,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 499,
-      "filename": "An Announcement Regarding Untold Legends Of The Million Dollar Magic: The Gathering Pro Tour - Star .html",
-      "title": "An Announcement Regarding Untold Legends Of The Million Dollar Magic: The Gathering Pro Tour",
+      "title": "The Grind Part 1 Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
-      "format": "html",
-      "path_html": "./An Announcement Regarding Untold Legends Of The Million Dollar Magic: The Gathering Pro Tour - Star .html",
-      "pdf": "./An Announcement Regarding Untold Legends Of The Million Dollar Magic: The Gathering Pro Tour - Star .pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "The Grind_ Part 1 - Star City Games.pdf",
+      "slug": "the-grind-part-1-star-city-games",
+      "series": "The Grind",
+      "part": 1,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 498,
-      "filename": "Another Look At The Recent Standard Bannings - Star City Games.html",
-      "title": "Another Look At The Recent Standard Bannings",
+      "title": "The Brave, the Bold, This Year’s Invitational Ballot Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
-      "format": "html",
-      "path_html": "./Another Look At The Recent Standard Bannings - Star City Games.html",
-      "pdf": "./Another Look At The Recent Standard Bannings - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "The Brave, The Bold, This Year’s Invitational Ballot - Star City Games.pdf",
+      "slug": "the-brave-the-bold-this-years-invitational-ballot-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 497,
-      "filename": "Because Somebody Had To: PT Barcelona Report (31st) - Star City Games.html",
-      "title": "Because Somebody Had To: PT Barcelona Report (31st)",
+      "title": "Star City Games Archive — WJC83",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Because Somebody Had To: PT Barcelona Report (31st) - Star City Games.html",
-      "pdf": "./Because Somebody Had To: PT Barcelona Report (31st) - Star City Games.pdf",
-      "external": ""
+      "path": "index.html",
+      "slug": "star-city-games-archive-wjc83",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 496,
-      "filename": "Cunningham's Response to \"Who Stole The CMU-Togit Kobe Decks?\" - Star City Games.html",
-      "title": "Cunningham's Response to 'Who Stole The CMU-Togit Kobe Decks?'",
+      "title": "Jeff Cunningham’s “Untold Legends of the Million Dollar Magic: The Gathering Pro Tour”",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Cunningham's Response to \"Who Stole The CMU-Togit Kobe Decks?\" - Star City Games.html",
-      "pdf": "./Cunningham's Response to \"Who Stole The CMU-Togit Kobe Decks?\" - Star City Games.pdf",
-      "external": ""
+      "path": "Jeff Cunningham’s “Untold Legends of the Million Dollar Magic_ The Gathering Pro Tour” - Star City Games.html",
+      "slug": "jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 495,
-      "filename": "Feature Article - Bant Aggro in Extended - Star City Games.html",
-      "title": "Feature Article: Bant Aggro in Extended",
+      "title": "Jeff Cunningham, Author At Star City Games Page 2 of 2",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
-      "format": "html",
-      "path_html": "./Feature Article - Bant Aggro in Extended - Star City Games.html",
-      "pdf": "./Feature Article - Bant Aggro in Extended - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham, Author at Star City Games - Page 2 of 2.pdf",
+      "slug": "jeff-cunningham-author-at-star-city-games-page-2-of-2",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 494,
-      "filename": "Get Big or Die Trying: The 2006 Magic Invitational (Part 1) - Star City Games.html",
-      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 1)",
+      "title": "Jeff Cunningham, Author At Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-??-??",
-      "format": "html",
-      "path_html": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 1) - Star City Games.html",
-      "pdf": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 1) - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham, Author at Star City Games.pdf",
+      "slug": "jeff-cunningham-author-at-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 493,
-      "filename": "Get Big or Die Trying: The 2006 Magic Invitational (Part 2) - Star City Games.html",
-      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 2)",
+      "title": "Jeff Cunningham's Untold Legends of the Million Dollar Magic the Gathering™ Pro Tour Vol. 2 Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-??-??",
-      "format": "html",
-      "path_html": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 2) - Star City Games.html",
-      "pdf": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 2) - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's _Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour_ Vol. 2 - Star City Games.pdf",
+      "slug": "jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gatheringtm-pro-tour-vol-2-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 492,
-      "filename": "Get Big or Die Trying: The 2006 Magic Invitational (Part 3) - Star City Games.html",
-      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 3)",
+      "title": "Jeff Cunningham's Untold Legends of the Million Dollar Magic the Gathering Pro Tour Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-??-??",
-      "format": "html",
-      "path_html": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 3) - Star City Games.html",
-      "pdf": "./Get Big or Die Trying: The 2006 Magic Invitational (Part 3) - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's _Untold Legends Of The Million Dollar Magic The Gathering Pro Tour_ - Star City Games.pdf",
+      "slug": "jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 491,
-      "filename": "Ghost Report From Pro Tour Magic 2015 - Star City Games.html",
-      "title": "Ghost Report From Pro Tour Magic 2015",
+      "title": "Jeff Cunningham's Coldsnap Review, Part 5: Blue and Wrap-Up",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2015-??-??",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Ghost Report From Pro Tour Magic 2015 - Star City Games.html",
-      "pdf": "./Ghost Report From Pro Tour Magic 2015 - Star City Games.pdf",
-      "external": ""
+      "path": "Jeff Cunningham's Coldsnap Review, Part 5_ Blue and Wrap-Up - Star City Games.html",
+      "slug": "jeff-cunninghams-coldsnap-review-part-5-blue-and-wrap-up",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 5,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 490,
-      "filename": "God Of Magic: An Interview With Richard Garfield - Star City Games.html",
-      "title": "God Of Magic: An Interview With Richard Garfield",
+      "title": "Jeff Cunningham's Coldsnap Review, Part 5 Blue and Wrap Up Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
-      "format": "html",
-      "path_html": "./God Of Magic: An Interview With Richard Garfield - Star City Games.html",
-      "pdf": "./God Of Magic: An Interview With Richard Garfield - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 5_ Blue and Wrap-Up - Star City Games.pdf",
+      "slug": "jeff-cunninghams-coldsnap-review-part-5-blue-and-wrap-up-star-city-games",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 5,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 489,
-      "filename": "In Defense of Elegance: Reconsidering the Modern Banned List - Star City Games.html",
+      "title": "Jeff Cunningham's Coldsnap Review, Part 4: Black and Gold",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 4_ Black and Gold - Star City Games.html",
+      "slug": "jeff-cunninghams-coldsnap-review-part-4-black-and-gold",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 4,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 4 Black and Gold Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 4_ Black and Gold - Star City Games.pdf",
+      "slug": "jeff-cunninghams-coldsnap-review-part-4-black-and-gold-star-city-games",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 4,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 3: Green and Lands",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 3_ Green and Lands - Star City Games.html",
+      "slug": "jeff-cunninghams-coldsnap-review-part-3-green-and-lands",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 3,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 3 Green and Lands Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 3_ Green and Lands - Star City Games.pdf",
+      "slug": "jeff-cunninghams-coldsnap-review-part-3-green-and-lands-star-city-games",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 3,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 2: Red and Artifacts",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 2_ Red and Artifacts - Star City Games.html",
+      "slug": "jeff-cunninghams-coldsnap-review-part-2-red-and-artifacts",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 2,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 2 Red and Artifacts Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 2_ Red and Artifacts - Star City Games.pdf",
+      "slug": "jeff-cunninghams-coldsnap-review-part-2-red-and-artifacts-star-city-games",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 2,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 1: White",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 1_ White - Star City Games.html",
+      "slug": "jeff-cunninghams-coldsnap-review-part-1-white",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 1,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's Coldsnap Review, Part 1 White Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Jeff Cunningham's Coldsnap Review, Part 1_ White - Star City Games.pdf",
+      "slug": "jeff-cunninghams-coldsnap-review-part-1-white-star-city-games",
+      "series": "Jeff Cunningham's Coldsnap Review,",
+      "part": 1,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour\" Vol. 2",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Jeff Cunningham's _Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour_ Vol. 2 - Star City Games.html",
+      "slug": "jeff-cunninghams-untold-legends-of-the-million-dollar-magic-the-gatheringtm-pro-tour-vol-2",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
       "title": "In Defense of Elegance: Reconsidering the Modern Banned List",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./In Defense of Elegance: Reconsidering the Modern Banned List - Star City Games.html",
-      "pdf": "./In Defense of Elegance: Reconsidering the Modern Banned List - Star City Games.pdf",
-      "external": ""
+      "path": "In Defense of Elegance_ Reconsidering the Modern Banned List - Star City Games.html",
+      "slug": "in-defense-of-elegance-reconsidering-the-modern-banned-list",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 488,
-      "filename": "Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering Pro Tour\" - Star City Ga.html",
-      "title": "Untold Legends Of The Million Dollar Magic The Gathering Pro Tour",
+      "title": "In Defense of Elegance Reconsidering the Modern Banned List Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2019-02-??",
-      "format": "html",
-      "path_html": "./Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering Pro Tour\" - Star City Ga.html",
-      "pdf": "./Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering Pro Tour\" - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "In Defense of Elegance_ Reconsidering the Modern Banned List - Star City Games.pdf",
+      "slug": "in-defense-of-elegance-reconsidering-the-modern-banned-list-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 487,
-      "filename": "Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour\" Vol. 2 - Star.html",
-      "title": "Untold Legends Of The Million Dollar Magic The Gathering Pro Tour (Vol. 2)",
+      "title": "Ghost Report From Pro Tour Magic 2015 Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2019-02-??",
-      "format": "html",
-      "path_html": "./Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour\" Vol. 2 - Star.html",
-      "pdf": "./Jeff Cunningham's \"Untold Legends Of The Million Dollar Magic The Gathering™ Pro Tour\" Vol. 2 - Star.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Ghost Report From Pro Tour Magic 2015 - Star City Games.pdf",
+      "slug": "ghost-report-from-pro-tour-magic-2015-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 486,
-      "filename": "Jeff Cunningham's Coldsnap Review, Part 1: White - Star City Games.html",
-      "title": "Coldsnap Review, Part 1: White",
+      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 3)",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-07-??",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Jeff Cunningham's Coldsnap Review, Part 1: White - Star City Games.html",
-      "pdf": "./Jeff Cunningham's Coldsnap Review, Part 1: White - Star City Games.pdf",
-      "external": ""
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 3) - Star City Games.html",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-3",
+      "series": "Get Big or Die Trying: The 2006 Magic Invitational",
+      "part": 3,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 485,
-      "filename": "Jeff Cunningham's Coldsnap Review, Part 2: Red and Artifacts - Star City Games.html",
-      "title": "Coldsnap Review, Part 2: Red and Artifacts",
+      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 2)",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-07-??",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Jeff Cunningham's Coldsnap Review, Part 2: Red and Artifacts - Star City Games.html",
-      "pdf": "./Jeff Cunningham's Coldsnap Review, Part 2: Red and Artifacts - Star City Games.pdf",
-      "external": ""
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 2) - Star City Games.html",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-2",
+      "series": "Get Big or Die Trying: The 2006 Magic Invitational",
+      "part": 2,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 484,
-      "filename": "Jeff Cunningham's Coldsnap Review, Part 3: Green and Lands - Star City Games.html",
-      "title": "Coldsnap Review, Part 3: Green and Lands",
+      "title": "Get Big or Die Trying: The 2006 Magic Invitational (Part 1)",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-07-??",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./Jeff Cunningham's Coldsnap Review, Part 3: Green and Lands - Star City Games.html",
-      "pdf": "./Jeff Cunningham's Coldsnap Review, Part 3: Green and Lands - Star City Games.pdf",
-      "external": ""
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 1) - Star City Games.html",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-1",
+      "series": "Get Big or Die Trying: The 2006 Magic Invitational",
+      "part": 1,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 483,
-      "filename": "Jeff Cunningham's Coldsnap Review, Part 4: Black and Gold - Star City Games.html",
-      "title": "Coldsnap Review, Part 4: Black and Gold",
+      "title": "Get Big Or Die Trying the 2006 Magic Invitational (part 3) Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-07-??",
-      "format": "html",
-      "path_html": "./Jeff Cunningham's Coldsnap Review, Part 4: Black and Gold - Star City Games.html",
-      "pdf": "./Jeff Cunningham's Coldsnap Review, Part 4: Black and Gold - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 3) - Star City Games.pdf",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-3-star-city-games",
+      "series": "Get Big Or Die Trying the 2006 Magic Invitational",
+      "part": 3,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 482,
-      "filename": "Jeff Cunningham's Coldsnap Review, Part 5: Blue and Wrap-Up - Star City Games.html",
-      "title": "Coldsnap Review, Part 5: Blue and Wrap-Up",
+      "title": "Get Big Or Die Trying the 2006 Magic Invitational (part 2) Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2006-07-??",
-      "format": "html",
-      "path_html": "./Jeff Cunningham's Coldsnap Review, Part 5: Blue and Wrap-Up - Star City Games.html",
-      "pdf": "./Jeff Cunningham's Coldsnap Review, Part 5: Blue and Wrap-Up - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 2) - Star City Games.pdf",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-2-star-city-games",
+      "series": "Get Big Or Die Trying the 2006 Magic Invitational",
+      "part": 2,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 481,
-      "filename": "Jeff Cunningham’s “Untold Legends of the Million Dollar Magic: The Gathering Pro Tour” - Star City G.html",
-      "title": "Untold Legends of the Million Dollar Magic The Gathering Pro Tour",
+      "title": "Get Big Or Die Trying the 2006 Magic Invitational (part 1) Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2019-02-??",
-      "format": "html",
-      "path_html": "./Jeff Cunningham’s “Untold Legends of the Million Dollar Magic: The Gathering Pro Tour” - Star City G.html",
-      "pdf": "./Jeff Cunningham’s “Untold Legends of the Million Dollar Magic: The Gathering Pro Tour” - Star City G.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Get Big or Die Trying_ The 2006 Magic Invitational (Part 1) - Star City Games.pdf",
+      "slug": "get-big-or-die-trying-the-2006-magic-invitational-part-1-star-city-games",
+      "series": "Get Big Or Die Trying the 2006 Magic Invitational",
+      "part": 1,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 480,
-      "filename": "The Brave, The Bold, This Year’s Invitational Ballot - Star City Games.html",
-      "title": "The Brave, The Bold, This Year’s Invitational Ballot",
+      "title": "From Zero to the Top Tier of Modern Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "",
-      "format": "html",
-      "path_html": "./The Brave, The Bold, This Year’s Invitational Ballot - Star City Games.html",
-      "pdf": "./The Brave, The Bold, This Year’s Invitational Ballot - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "From Zero To The Top Tier Of Modern - Star City Games.pdf",
+      "slug": "from-zero-to-the-top-tier-of-modern-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 479,
-      "filename": "The Grind: Part 1 - Star City Games.html",
-      "title": "The Grind: Part 1",
+      "title": "Feature Article Bant Aggro in Extended Star City Games",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2001-??-??",
-      "format": "html",
-      "path_html": "./The Grind: Part 1 - Star City Games.html",
-      "pdf": "./The Grind: Part 1 - Star City Games.pdf",
-      "external": ""
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Feature Article - Bant Aggro in Extended - Star City Games.pdf",
+      "slug": "feature-article-bant-aggro-in-extended-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     },
     {
-      "order": 478,
-      "filename": "The Grind: Part 2 - Star City Games.html",
-      "title": "The Grind: Part 2",
+      "title": "Feature Article - Bant Aggro in Extended",
+      "date": null,
       "author": "Jeff Cunningham",
-      "source": "Star City Games",
-      "date": "2001-??-??",
+      "source": "StarCityGames",
       "format": "html",
-      "path_html": "./The Grind: Part 2 - Star City Games.html",
-      "pdf": "./The Grind: Part 2 - Star City Games.pdf",
-      "external": ""
+      "path": "Feature Article - Bant Aggro in Extended - Star City Games.html",
+      "slug": "feature-article-bant-aggro-in-extended",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Cunningham's Response to Who Stole the Cmu Togit Kobe Decks Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Cunningham's Response to _Who Stole The CMU-Togit Kobe Decks__ - Star City Games.pdf",
+      "slug": "cunninghams-response-to-who-stole-the-cmu-togit-kobe-decks-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Cunningham's Response to \"Who Stole The CMU-Togit Kobe Decks?\"",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Cunningham's Response to _Who Stole The CMU-Togit Kobe Decks__ - Star City Games.html",
+      "slug": "cunninghams-response-to-who-stole-the-cmu-togit-kobe-decks",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Because Somebody Had To: PT Barcelona Report (31st)",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "Because Somebody Had To_ PT Barcelona Report (31st) - Star City Games.html",
+      "slug": "because-somebody-had-to-pt-barcelona-report-31st",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Because Somebody Had to Pt Barcelona Report (31st) Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Because Somebody Had To_ PT Barcelona Report (31st) - Star City Games.pdf",
+      "slug": "because-somebody-had-to-pt-barcelona-report-31st-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "Another Look At the Recent Standard Bannings Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "Another Look At The Recent Standard Bannings - Star City Games.pdf",
+      "slug": "another-look-at-the-recent-standard-bannings-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-3",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "An Announcement Regarding Untold Legends Of The Million Dollar Magic: The Gathering Pro Tour",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "html",
+      "path": "An Announcement Regarding Untold Legends Of The Million Dollar Magic_ The Gathering Pro Tour - Star City Games.html",
+      "slug": "an-announcement-regarding-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "An Announcement Regarding Untold Legends of the Million Dollar Magic the Gathering Pro Tour Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "An Announcement Regarding Untold Legends Of The Million Dollar Magic_ The Gathering Pro Tour - Star City Games.pdf",
+      "slug": "an-announcement-regarding-untold-legends-of-the-million-dollar-magic-the-gathering-pro-tour-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": false,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
+    },
+    {
+      "title": "God of Magic an Interview with Richard Garfield Star City Games",
+      "date": null,
+      "author": "Jeff Cunningham",
+      "source": "StarCityGames",
+      "format": "pdf",
+      "path": "God Of Magic_ An Interview With Richard Garfield - Star City Games.pdf",
+      "slug": "god-of-magic-an-interview-with-richard-garfield-star-city-games",
+      "series": null,
+      "part": null,
+      "tier": "tier-2",
+      "featured": true,
+      "tags": [
+        "Magic",
+        "SCG"
+      ],
+      "blurb": ""
     }
   ]
 }

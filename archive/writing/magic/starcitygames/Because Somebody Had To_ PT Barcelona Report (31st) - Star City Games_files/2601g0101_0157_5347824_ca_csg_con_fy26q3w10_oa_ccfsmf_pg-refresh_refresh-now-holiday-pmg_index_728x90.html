@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- saved from url=(0166)https://s0.2mdn.net/sadbundle/2434165905302256921/2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_index_728x90.html?ev=01_262 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="ad.size" content="width=728,height=90">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dell</title>
+<link rel="stylesheet" href="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_style_728x90.css">
+<link rel="stylesheet" href="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_style-mq_728x90.css">
+    <link href="./css(1)" rel="stylesheet">
+
+<!-- ClickTag -->
+<script type="text/javascript">
+  var clickTag = "";
+</script> 
+
+<script type="text/javascript">
+    
+  (function() {
+    var MAX_URL_PARAM_LENGTH = 34;
+    var CLICK_X_URL_KEY = 'nx';
+    var CLICK_Y_URL_KEY = 'ny';
+    var CREATIVE_DIMENSIONS_KEY = 'dim';
+    var AD_URL_PARAM = '&adurl=';
+
+    var relegateNavigation = '';
+    var urlParamMap = {};
+
+    var isNewtonTokenSet = false;
+    var isTurtleXAdClick = false;
+    var reportingIds = {};
+
+    urlParamMap[CLICK_X_URL_KEY] = null;
+    urlParamMap[CLICK_Y_URL_KEY] = null;
+    urlParamMap[CREATIVE_DIMENSIONS_KEY] = null;
+
+    var handleClickTagMessage = function(e) {
+      try {
+        var eventData = JSON.parse(e.data);
+      } catch (err) {
+        return;
+      }
+      if (eventData.isInitClickTag) {
+        if (eventData.clickTags) {
+          for (var i = 0; i < eventData.clickTags.length; i++) {
+            var clkTag = eventData.clickTags[i];
+            window[clkTag.name] = clkTag.url;
+
+            if (clkTag.eTldPlusOne) {
+              eTldPlusOnes[clkTag.url] = clkTag.eTldPlusOne;
+            }
+            if (clkTag.reportingId) {
+              reportingIds[clkTag.url] = clkTag.reportingId;
+            }
+          }
+        } else if (eventData.clickTag) {
+          window.clickTag = eventData.clickTag;
+        }
+        relegateNavigation = eventData.relegateNavigation;
+      }
+      if (isNewtonEnabled(eventData) && !isNewtonTokenSet) {
+        var newtonOt2Token = eventData.newtonOt2Token;
+        enableAttributionReportingApi(newtonOt2Token);
+      }
+      if (eventData.isTurtleXAdClick) {
+        isTurtleXAdClick = true;
+      }
+    };
+
+    var isNewtonEnabled = function(eventData) {
+      return 'newtonOt2Token' in eventData;
+    }
+
+    var enableAttributionReportingApi = function(originTrialToken) {
+      if (/Chrome/.test(window.navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.httpEquiv = 'origin-trial';
+        meta.content = String(originTrialToken);
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        isNewtonTokenSet = true;
+      }
+    };
+
+    var storeClickCoordinates = function(e) {
+      urlParamMap[CLICK_X_URL_KEY] = Math.round(e.clientX);
+      urlParamMap[CLICK_Y_URL_KEY] = Math.round(e.clientY);
+    };
+
+    var getCreativeDimensions = function() {
+      return window.innerWidth + 'x' + window.innerHeight;
+    }
+
+    var getExitClickParams = function(e) {
+      urlParamMap[CREATIVE_DIMENSIONS_KEY] = getCreativeDimensions();
+
+      var exitParams = '';
+      for (var key in urlParamMap) {
+        exitParams += '&' + key + '=';
+        if (urlParamMap[key] !== null) {
+          exitParams += urlParamMap[key];
+        }
+      }
+      return exitParams;
+    }
+
+    var appendExitClickParams = function(url) {
+      var adUrlIndex = url.toLowerCase().indexOf(AD_URL_PARAM);
+      var paramsToBeAdded = getExitClickParams();
+      if (adUrlIndex > -1 && paramsToBeAdded.length <= MAX_URL_PARAM_LENGTH) {
+        url = url.substr(0, adUrlIndex) + paramsToBeAdded +
+          url.substr(adUrlIndex);
+      };
+      return url;
+    };
+
+    if (open.call) {
+      window.open = function(open) {
+        return function(url, name, features) {
+          if (isTurtleXAdClick && !!reportingIds[url]) {
+            var message = {
+              'reportingId': reportingIds[url],
+              'clickX': urlParamMap[CLICK_X_URL_KEY],
+              'clickY': urlParamMap[CLICK_Y_URL_KEY],
+              'creativeDims': getCreativeDimensions()
+              };
+            parent.postMessage(JSON.stringify(message), '*');
+          }
+          url = appendExitClickParams(url);
+          if (relegateNavigation === 'parent') {
+            var message = {'clickTag': url, 'isPostClickTag': true};
+            parent.postMessage(JSON.stringify(message), '*');
+          } else {
+            var args = [url, name];
+            var windowFeatures = '';
+
+            if (features) {
+              windowFeatures = windowFeatures.concat(features);
+            }
+            if (isNewtonTokenSet &&
+                !!document.featurePolicy?.allowedFeatures().includes(
+                  'attribution-reporting')) {
+              if (features) {
+                if (!features.includes('attributionsrc')) {
+                  windowFeatures = windowFeatures.concat(features, ', attributionsrc');
+                }
+              } else {
+                windowFeatures = windowFeatures.concat('attributionsrc');
+              }
+            }
+
+            if (windowFeatures) {
+              args.push(windowFeatures);
+            }
+            open.apply(window,args);
+          }
+        };
+      }(window.open);
+    }
+
+    if (window.addEventListener) {
+      window.addEventListener(
+          'message', handleClickTagMessage, false);
+      window.addEventListener('mousedown', storeClickCoordinates, true);
+    } else {
+      window.attachEvent('onmessage', handleClickTagMessage);
+    }
+  })();
+    
+  </script><meta http-equiv="origin-trial" content="A4AD7vbM2W0e5fHylDM4fFrsUvtmQ95U+ZVrdOdh3fgH0l0e7RVkAsZryrSQIRhPVvmC60wTlh880eDyo+HpXQAAAABueyJvcmlnaW4iOiJodHRwczovL3MwLjJtZG4ubmV0OjQ0MyIsImZlYXR1cmUiOiJQcml2YWN5U2FuZGJveEFkc0FQSXMiLCJleHBpcnkiOjE2OTUxNjc5OTksImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="></head>
+<body>
+  <div id="ad" role="banner" aria-labelledby="banner-description">
+
+			<a href="javascript:void(0);" onclick="window.open(window.clickTag)" id="clickTAG" aria-label="Go to site">
+        <!--[if lte IE 9]>
+            <div class="ie-fallback"><img src="2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_index_728x90.jpg" alt="" title="" width="728" height="90"></div>
+        <![endif]-->
+    </a>
+		<!-- Accessibility Alt Image Text -->
+		<div id="banner-description" class="sr-only" style="visibility: hidden; position: absolute;">
+		<!-- Accessibility Text -->
+		</div>
+
+			<div id="banner" aria-hidden="true" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); visibility: visible;">
+			
+			  <!-- Frame One-->
+		<div id="frame_one"> 
+		   <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f1_728x90.jpg" alt="A man working at a bakery uses a Dell laptop" class="f1-bg">
+           <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_dell-logo_728x90.png" alt="Dell Technologies logo" class="dell-logo">
+
+         <div class="txt-cont">		
+							
+						<div class="title1-1 title1" style="translate: none; rotate: none; scale: none; transform: translate(0%, 0px); opacity: 1; visibility: inherit;">This is your new Dell PC</div>
+				 <div class="dell-ell1 title1" style="translate: none; rotate: none; scale: none; transform: translate(0%, 0px); opacity: 1; visibility: inherit;"></div></div>
+		 
+           <div class="txt-cont1" style="translate: none; rotate: none; scale: none; transform: translate(0%, 0px); opacity: 1; visibility: inherit;">Price Match<br>Guarantee</div><img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_funding_728x90.png" alt="Intel logo" class="funding-logo"> 	  
+      </div>
+				
+				
+      <!-- Frame Two-->
+      <div id="frame_two"> 
+		   
+		   <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f2-left_728x90.jpg" alt="An image of baked goods appears next to a on-screen log of bakery orders" class="f2-bg-left" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); left: -100%;">			  
+         <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f2-right_728x90.jpg" alt="An image of baked goods appears next to a on-screen log of bakery orders" class="f2-bg-right" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); left: 100%;"><div class="txt-cont">		
+			    	
+			    <div class="title2-1 title2" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">It helps you handle a lot</div>
+	       <div class="dell-ell2 title2" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;"></div></div>		  
+	  </div>			
+		
+		
+      <!-- Frame Three-->
+      <div id="frame_three">
+
+		   			  
+           <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f3_728x90.jpg" alt="A Dell laptop with an AI chatbot open on screen" class="f3-bg" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); top: -100%;"><div class="txt-cont2">		
+			    
+			    <div class="title3-1 title3" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">From multitasking  </div>			   
+			    <div class="title3-2 title3" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">without lag </div>
+	       <div class="dell-ell3 title3" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;"></div></div>
+		  
+        <div class="txt-cont3" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">Price Match<br>Guarantee</div></div>
+				
+		
+      <!-- Frame Four-->
+      <div id="frame_four">
+		   
+		   <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f4-left_728x90.jpg" alt="A girl sitting at a desk uses AI on her Dell laptop to help plan her holiday shopping" class="f4-bg-left" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); left: -100%;">			  
+          <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f4-right_728x90.jpg" alt="A girl sitting at a desk uses AI on her Dell laptop to help plan her holiday shopping" class="f4-bg-right" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); left: 100%;"><div class="txt-cont2">		
+			    
+			    <div class="title4-1 title4" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">To organizing</div>	
+			    <div class="title4-2 title4" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">your holiday to-dos</div>
+	      <div class="dell-ell4 title4" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;"></div></div> 
+        </div>		
+
+      <!-- Frame Five-->
+      <div id="frame_five">
+		   			  
+		         <img src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_bg-f5_728x90.jpg" alt="A Dell laptop sits open on a desk" class="f5-bg" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); top: 100%;">			  
+           <div class="cta" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 0; visibility: hidden;">Explore Now</div><div class="txt-cont2">		
+			    
+			    <div class="title5-1 title5" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">Upgrade now </div>			   
+			    <div class="title5-2 title5" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;">to save a lot </div>
+	       <div class="dell-ell5 title5" style="translate: none; rotate: none; scale: none; transform: translate(-20%, 0px); opacity: 0; visibility: hidden;"></div></div>
+		   		
+        <div class="funding-copy" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 0; visibility: hidden;">That’s the power of<br>a Dell PC with Intel Inside<sup>®</sup></div></div>				
+		
+    </div> 
+	<!-- banner -->
+	  
+        <!-- border-->
+        <div id="border" aria-hidden="true"> </div> 
+	  
+  </div>
+<!--<img src="t.png" style="position: absolute; opacity: 0.4; z-index: 2;" alt="" >	-->
+<script src="./gsap.min.js"></script>
+<script type="text/javascript" src="./2601g0101_0157_5347824_ca_csg_con_fy26q3w10_oa_ccfsmf_pg-refresh_refresh-now-holiday-pmg_custom_728x90.js" charset="UTF-8"></script>
+
+</body></html>

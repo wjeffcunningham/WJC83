@@ -1,0 +1,171 @@
+
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+  vertical-align: baseline;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#border {
+  cursor: pointer;
+  position: absolute;
+  opacity: 1;
+  border: 1px solid #000000;
+  width: 336px;
+  height: 280px;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  z-index: 600;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+#container {
+  position: absolute;
+  width: 336px;
+  height: 280px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+/*  background-color: #0076e5;*/
+}
+
+.fsize{
+  position: absolute;
+  width: 336px;
+  height: 280px;
+  top: 0px;
+  left: 0px;
+  background-size: 336px 280px;
+}
+
+#bg1 {
+  background-image: url("bg1.png");
+}
+#slider {
+  background-image: url("slider.png");
+}
+#bg2 {
+  background-image: url("bg2.png");
+}
+
+#img1 {
+  background-image: url("img1.png");
+}
+#img_mask {
+  background-image: url("img_mask.png");
+}
+
+.hide{
+  opacity: 0;
+}
+
+#cta1 {
+/*  background-image: url("cta1.png");*/
+}
+
+#logo1 {
+  background-image: url("logo1.png");
+}
+
+#logo2 {
+  background-image: url("logo2.png");
+}
+
+
+#card{
+  position: absolute;
+  width: 336px;
+  height: 350px;
+  top: 0px;
+  left: 0px;
+  background-size: 336px 350px;
+  background-image: url("card.png");
+  border-radius: 17.55px 17.55px 0px 0px;
+  box-shadow: 0px 0px 17.5px 0px rgba(0, 0, 0, 0.20);
+
+}
+#mask{
+  position: absolute;
+  width: 336px;
+  height: 350px;
+  background-size: 336px 350px;
+  top: 0px;
+  left: 0px;
+  background-image: url("mask.png");
+
+}
+
+#guide {
+  position: absolute;
+/*  background-image: url(guide2.png);*/
+  width: 336px;
+  height: 280px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 100;
+}
+
+
+#c2 {
+  background-image: url("c2.png");
+}
+
+#c3 {
+  background-image: url("c3.png");
+}
+
+
+#c4 {
+  background-image: url("c4.png");
+}
+
+#tac {
+  background-image: url("tac.png");
+}
+#speechline {
+  background-image: url("speechline.png");
+}
+
+#bellboy {
+  background-image: url("bellboy.png");
+}
+#lottie-container-2 {
+    position: absolute;
+    top: 205px;
+    left: 168px;
+    width: 188px !important;
+    height: 100% !important;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+#bellboy2 {
+  background-image: url("bellboy2.png");
+}
+#bellboy3 {
+  background-image: url("bellboy3.png");
+}
+#speechline1 {
+  background-image: url("speechline1.png");
+}
+#c11 {
+  background-image: url("c11.png");
+}
+#c12 {
+  background-image: url("c12.png");
+}
+#c13 {
+  background-image: url("c13.png");
+}
+#c14 {
+  background-image: url("c14.png");
+}

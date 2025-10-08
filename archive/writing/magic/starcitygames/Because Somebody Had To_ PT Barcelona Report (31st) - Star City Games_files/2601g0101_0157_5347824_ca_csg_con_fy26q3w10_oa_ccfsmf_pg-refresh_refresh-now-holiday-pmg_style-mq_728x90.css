@@ -1,0 +1,9 @@
+/*Portrait resize */
+@media only screen and (orientation: portrait){
+    #ad{
+        font-size: 3.33vw;
+    }
+}
+	
+
+

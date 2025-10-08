@@ -1,0 +1,14 @@
+.scg-article-tools-content {
+    padding: 16px;
+}
+
+.scg-article-tools-item-header {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.scg-article-tools-item-body {
+    text-align: center;
+    padding: 5px;
+}

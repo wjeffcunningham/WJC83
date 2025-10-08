@@ -1,0 +1,254 @@
+/*-------------------------------------
+  Reset
+---------------------------------------*/
+/******Basic settings**********/
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+img {
+  border: 0;
+}
+a {
+  text-decoration: none;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #FFFFFF;
+}
+sup {
+  vertical-align: .5em;
+  line-height: 0;
+}
+.font-preloader {
+  font-family: 'Roboto';
+  font-weight: 300;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+#frame_one, #frame_two, #frame_three, #frame_four, #frame_five {
+  width: 100%;
+  height: 100%;
+}
+/*-------------------------------------
+  Layout
+---------------------------------------*/
+#ad {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+  font-size: 4vh;
+}
+#banner {
+  position: absolute;
+  background: #a3a0fa;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  visibility: hidden;
+}
+#clickTAG {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+#border {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  border: 1px solid #444;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.sr-only {
+  visibility: hidden;
+}
+/*-------------------------------------
+  Frame One frame duration: 3s
+---------------------------------------*/
+.f1-bg, .f2-bg-left, .f3-bg, .f5-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.f4-bg-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 43%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.f2-bg-left {
+	width: 38.2%;
+}
+.f2-bg-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 61.8%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.f4-bg-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 57%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.txt-cont, .txt-cont2 {
+  position: absolute;
+  width: 80em;
+  height: 10em;
+  bottom: 23%;
+  left: 19.3%;
+  z-index: 1;
+}
+.txt-cont1, .txt-cont3{
+    position: absolute;
+    font-size: 2.9em;
+    line-height: 1.2em;
+    font-weight: 300;
+    text-align: left;
+    color: #fff;
+    bottom: 40%;
+    right: 17.5%;
+}
+#frame_two .txt-cont {
+	bottom: 20%;
+	left: 42%;
+}
+.title1-1, .title1-2, .title2-1, .title2-2, .title3-1, .title3-2, .title4-1, .title4-2, .title5-1, .title5-2 {
+  position: absolute;
+  font-size: 5.2em;
+  line-height: 1.2em;
+  font-weight: 300;
+  text-align: left;
+  color: #fff;
+  bottom: 35%;
+  left: 0;
+}
+.title1-2 {
+  bottom: 26%;
+}
+.title2-1 {
+	font-size: 5.6em;
+	letter-spacing: -0.005em;
+}
+.title3-1, .title3-2, .title4-1, .title4-2, .title5-1, .title5-2 {
+	font-size: 5.5em;
+	bottom: 62%;
+}
+.title3-2, .title4-2, .title5-2 {
+  bottom: 26%;
+}
+.dell-ell1, .dell-ell2, .dell-ell3, .dell-ell4, .dell-ell5 {
+  position: absolute;
+  width: 5.5em;
+  height: 1em;
+  background: #fff;
+  left: 0;
+  bottom: 0;
+}
+.dell-logo {
+  position: absolute;
+  width: 17.6em;
+  height: auto;
+  top: 29%;
+  left: 3%;
+  z-index: 1;
+}
+.funding-logo {
+  position: absolute;
+  width: 15.6em;
+  height: auto;
+  top: 21%;
+  right: 2.1%;
+  z-index: 1;
+}
+/*-------------------------------------
+  Frame two frame duration: 3s
+---------------------------------------*/
+/*-------------------------------------
+  Frame three frame duration: 3s
+---------------------------------------*/
+/*-------------------------------------
+  Frame One four duration: 3s
+---------------------------------------*/
+/*-------------------------------------
+  Frame five frame duration: 3s
+---------------------------------------*/
+.txt-cont2 {
+  height: 16em;
+  bottom: 19%;
+	left: 19.2%;
+}
+#frame_four .txt-cont2 {
+	left: 45.6%;
+}
+#frame_five .txt-cont2 {
+	left: 15%;
+}
+.cta {
+  position: absolute;
+  border: solid 1px #fff;
+  color: #fff;
+  text-align: center;
+  bottom: 36%;
+  left: 58%;
+  display: block;
+  padding: 0.7em 0.6em 0.7em 0.6em;
+  font-size: 2.7em;
+  line-height: 1em;
+  font-weight: 400;
+  letter-spacing: 0.030em;
+  white-space: nowrap;
+  vertical-align: middle;
+  z-index: 1;
+}
+.funding-copy {
+  position: absolute;
+  font-size: 2.7em;
+  line-height: 1.4em;
+  font-weight: 300;
+  text-align: center;
+  color: #fff;
+  bottom: 35%;
+  right: 13.6%;
+}
+.funding-copy sup {
+  font-size: 0.65em;
+  vertical-align: 0.4em;
+}

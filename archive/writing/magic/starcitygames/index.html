@@ -1,81 +1,139 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SCG Archive | WJC83</title>
-  <link rel="stylesheet" href="../../../../style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Star City Games Archive | WJC83</title>
+  <link rel="stylesheet" href="../style.css">
   <style>
-    body { text-align: left; }
-    .wrap { max-width: 860px; margin: 1.25rem auto 3rem; padding: 0 1rem; }
-    header h1 { margin:.25rem 0 .5rem; }
-    .intro { opacity:.85; margin-bottom:1rem; }
-    .list { border-top: 2px solid var(--ink, #000); margin-top: 1rem; }
-    .item { padding:.65rem 0; border-bottom: 1px dashed rgba(0,0,0,.2); }
-    .item a { color: var(--ink, #000); text-decoration: none; font-weight: bold; }
-    .meta { font-size:.9rem; opacity:.7; }
-    .msg { padding:.5rem .75rem; border:1px solid #ddd; border-radius:6px; margin:.75rem 0; background:#f6fff6; }
-    .err { background:#fff6f6; border-color:#f1c5c5; }
-    .pills { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.35rem; }
-    .pills a { display:inline-block; padding:.25rem .55rem; border:1px solid rgba(0,0,0,.12); border-radius:999px; font-size:.85rem; text-decoration:none; color:var(--ink); }
-    .pills a:hover { background: rgba(0,0,0,.04); }
+    /* light structural styles; your ../style.css provides the look */
+    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
+    h1{margin:.2rem 0 1rem;font-size:1.6rem}
+    h2{margin:1.5rem 0 .5rem;font-size:1.05rem;opacity:.75}
+    ul{list-style:none;padding:0;margin:.25rem 0 1rem}
+    li{margin:.5rem 0}
+    .series-block{margin:1rem 0;padding:.75rem .9rem;border:1px solid rgba(0,0,0,.1);border-radius:.75rem;background:var(--paper,#fff)}
+    .series-block h3{margin:0 0 .5rem;font-size:1rem}
+    .muted{opacity:.7}
+    .small{font-size:.9rem}
+    a{color:var(--ink,#111);text-decoration:none}
+    a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>SCG Archive</h1>
-      <p class="intro">Local mirrors (HTML + PDF) of Jeff Cunningham’s <em>Star City Games</em> articles. Sorted newest → oldest.</p>
-      <p><a href="../../..">← Back to Archive</a></p>
-    </header>
-
-    <div id="status" class="msg">Loading…</div>
-    <section id="list" class="list"></section>
-  </div>
+  <main class="wrap">
+    <h1>Star City Games Archive</h1>
+    <div id="mount" class="archive"></div>
+  </main>
 
   <script>
-  (async function () {
-    const status = document.getElementById('status');
-    const container = document.getElementById('list');
+  (async function(){
+    const res = await fetch('manifest.json', {cache:'no-store'});
+    if(!res.ok){ document.getElementById('mount').textContent='Missing manifest.json'; return; }
+    const data = await res.json();
+    let items = Array.isArray(data.items) ? data.items.slice() : [];
 
-    const pillRow = (it) => {
-      const pills = [];
-      if (it.path_html) pills.push(`<a href="${it.path_html}" target="_blank" rel="noopener">Read online</a>`);
-      if (it.pdf) pills.push(`<a href="${it.pdf}" target="_blank" rel="noopener">PDF</a>`);
-      if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
-      return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
+    // 1) ignore the page itself if present
+    items = items.filter(it => (it.path||'').toLowerCase() !== 'index.html');
+
+    // 2) prefer PDFs & dedupe html/pdf duplicates
+    // key: series+part if series present, else normalized title
+    const norm = s => String(s||'').toLowerCase().replace(/[\s_]+/g,' ').trim();
+    const keyOf = it => {
+      if(it.series) return `series:${norm(it.series)}|part:${it.part||''}|title:${norm(it.title)}`;
+      return `title:${norm(it.title)}`;
+    };
+    const grouped = new Map();
+    for(const it of items){
+      const k = keyOf(it);
+      if(!grouped.has(k)) grouped.set(k, []);
+      grouped.get(k).push(it);
+    }
+    const preferPdf = arr => {
+      // choose the pdf entry if present; else first
+      const pdf = arr.find(x => (x.format||'').toLowerCase()==='pdf');
+      return pdf || arr[0];
+    };
+    const deduped = Array.from(grouped.values()).map(preferPdf);
+
+    // 3) little helpers
+    const parseDate = s => {
+      if(!s) return null;
+      const d = new Date(s);
+      return isNaN(d) ? null : d;
+    };
+    const newestOf = arr => {
+      let best = null;
+      for(const it of arr){ const d = parseDate(it.date); if(d && (!best || d>best)) best = d; }
+      return best; // can be null
+    };
+    const byDateDesc = (a,b) => {
+      const da = parseDate(a.date), db = parseDate(b.date);
+      if(da && db) return db - da;
+      if(da) return -1;
+      if(db) return 1;
+      return (a.title||'').localeCompare(b.title||'');
     };
 
-    try {
-      const res = await fetch('./manifest.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-
-      const items = Array.isArray(data.items) ? data.items.slice() : [];
-
-      // Sort: order desc → date desc → title
-      items.sort((a,b) => {
-        const ao = Number(b.order||0) - Number(a.order||0);
-        if (ao !== 0) return ao;
-        const dd = String(b.date||'').localeCompare(String(a.date||''));
-        if (dd !== 0) return dd;
-        return String(a.title||'').localeCompare(String(b.title||''));
-      });
-
-      container.innerHTML = items.map(it => `
-        <div class="item">
-          <div><a href="${it.path_html || it.pdf || it.external || '#'}" target="_blank" rel="noopener">${it.title || it.filename}</a></div>
-          <div class="meta">${[it.date || '', it.source || ''].filter(Boolean).join(' • ')}</div>
-          ${pillRow(it)}
-        </div>
-      `).join('') || '<div class="item">No items yet.</div>';
-
-      status.textContent = `Loaded ${items.length} items.`;
-    } catch (err) {
-      console.error(err);
-      status.classList.add('err');
-      status.textContent = `Error loading manifest: ${err.message}`;
+    // 4) split into series vs standalone
+    const seriesMap = new Map();
+    const standalone = [];
+    for(const it of deduped){
+      if(it.series){
+        const key = it.series;
+        if(!seriesMap.has(key)) seriesMap.set(key, []);
+        seriesMap.get(key).push(it);
+      } else {
+        standalone.push(it);
+      }
     }
+
+    // 5) sort series blocks by newest item inside (desc); parts inside by part# then date
+    const seriesBlocks = Array.from(seriesMap.entries()).map(([name, arr])=>{
+      const itemsSorted = arr.slice().sort((a,b)=>{
+        if(a.part && b.part) return a.part - b.part;
+        const da = parseDate(a.date), db = parseDate(b.date);
+        if(da && db) return da - db; // chronological within series when no part numbers
+        return (a.title||'').localeCompare(b.title||'');
+      });
+      return { name, items: itemsSorted, newest: newestOf(arr) };
+    }).sort((A,B)=>{
+      if(A.newest && B.newest) return B.newest - A.newest;
+      if(A.newest) return -1;
+      if(B.newest) return 1;
+      return A.name.localeCompare(B.name);
+    });
+
+    // 6) sort standalone by date desc
+    standalone.sort(byDateDesc);
+
+    // 7) render — titles only, link goes to PDF (or whatever the deduper chose)
+    const aTag = it => {
+      // default link to PDF path; deduper already prefers pdf
+      const href = it.path || it.pdf || it.path_html || '';
+      const safe = href ? href.replace(/^\//,'') : '';
+      const t = it.title || safe || 'Untitled';
+      return `<li><a href="${safe}" target="_blank" rel="noopener">${t}${it.part?` — Part ${it.part}`:''}</a></li>`;
+    };
+
+    let html = '';
+
+    if(seriesBlocks.length){
+      html += `<h2>Series</h2>`;
+      for(const blk of seriesBlocks){
+        html += `<div class="series-block">`;
+        html += `<h3>${blk.name}</h3>`;
+        html += `<ul>${blk.items.map(aTag).join('')}</ul>`;
+        html += `</div>`;
+      }
+    }
+
+    if(standalone.length){
+      html += `<h2>Standalone</h2>`;
+      html += `<ul>${standalone.map(aTag).join('')}</ul>`;
+    }
+
+    document.getElementById('mount').innerHTML = html || '<div class="muted small">No items.</div>';
   })();
   </script>
 </body>
