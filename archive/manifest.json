@@ -13,7 +13,8 @@
   "categories": {
     "academic": "Scholarly work (2013–2017): philosophy, thesis materials, seminar papers.",
     "criticism": "Film & culture criticism; reviews, essays, and reflections.",
-    "magic": "Strategy, history, and essays about Magic: The Gathering."
+    "magic": "Strategy, history, and essays about Magic: The Gathering.",
+    "video": "Short films, camcorder footage, and acting work from 1999–2019."
   },
   "items": [
     {
@@ -111,55 +112,53 @@
       "school": "Carleton",
       "grade": "A"
     },
-{
-  "bucket": "writing",
-  "category": "criticism",
-  "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
-  "date": "2023-05-01",
-  "tier": 3,
-  "status": "draft",
-  "blurb": "In today's cynical world, what even constitutes poor taste?",
-  "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
-  "thumbnail": "assets/thumbs/curse.jpg",
-
-  "versions": [
     {
-      "date": "2022-11-23",
-      "status": "draft 1",
-      "pdf": "archive/writing/criticism/BAD VIBE CITY/.pdf"
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Big Ick Energy — on Showtime’s The Curse (S01E01)",
+      "date": "2023-05-01",
+      "tier": 3,
+      "status": "draft",
+      "blurb": "In today's cynical world, what even constitutes poor taste?",
+      "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
+      "thumbnail": "assets/thumbs/curse.jpg",
+      "versions": [
+        {
+          "date": "2022-11-23",
+          "status": "draft 1",
+          "pdf": "archive/writing/criticism/BAD VIBE CITY/.pdf"
+        },
+        {
+          "date": "2022-11-23",
+          "status": "draft 1.1",
+          "pdf": "archive/writing/criticism/BAD VIBE CITY 1.1/.pdf"
+        },
+        {
+          "date": "2022-11-24",
+          "status": "draft 1.2",
+          "pdf": "archive/writing/criticism/BAD VIBE CITY/1.2.1.pdf"
+        },
+        {
+          "date": "2022-12-01",
+          "status": "draft 1.4",
+          "pdf": "archive/writing/criticism/BAD VIBE CITY/1.4.3.pdf"
+        }
+      ]
     },
     {
-      "date": "2022-11-23",
-      "status": "draft 1.1",
-      "pdf": "archive/writing/criticism/BAD VIBE CITY 1.1/.pdf"
+      "bucket": "writing",
+      "category": "criticism",
+      "title": "Review: Colossal Cave Adventure VR",
+      "date": "2023-03-09",
+      "tier": 3,
+      "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
+      "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
+      "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
+      "thumbnail": "assets/thumbs/colossal-cave.jpg",
+      "rating": 3,
+      "rating_max": 5
     },
     {
-      "date": "2022-11-24",
-      "status": "draft 1.2",
-      "pdf": "archive/writing/criticism/BAD VIBE CITY/1.2.1.pdf"
-    },
-    {
-      "date": "2022-12-01",
-      "status": "draft 1.4",
-      "pdf": "archive/writing/criticism/BAD VIBE CITY/1.4.3.pdf"
-    }
-  ]
-},
-{
-  "bucket": "writing",
-  "category": "criticism",
-  "title": "Review: Colossal Cave Adventure VR",
-  "date": "2023-03-09",
-  "tier": 3,
-  "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
-  "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-  "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-  "thumbnail": "assets/thumbs/colossal-cave.jpg",
-
-  "rating": 3,
-  "rating_max": 5
-},
-{
       "bucket": "writing",
       "category": "criticism",
       "title": "Digital Exile: How I Got Banned For Life From AirBnB **2nd most-read Medium.com article, ever**",
@@ -193,9 +192,10 @@
       "subcategory": "standalone",
       "title": "2006 — The Construction Movie",
       "date": "2006-01-01",
-      "path": "archive/movies/2006-the-construction-movie.mov",
+      "path": "https://media.wjc83.ca/2006-the-construction-movie.mp4",
       "thumbnail": "assets/thumbs/construction.jpg",
       "tier": 2,
+      "featured": true,
       "blurb": "A campus-era featurette, centerpiece of the early work archive."
     },
     {
@@ -205,7 +205,7 @@
       "subcategory": "standalone",
       "title": "2011-02-06 — Strange Dimension",
       "date": "2011-02-06",
-      "path": "archive/movies/2011-02-06-strange-dimension.mov",
+      "path": "https://media.wjc83.ca/2011-02-06-strange-dimension.mov",
       "tier": 3
     },
     {
@@ -215,7 +215,7 @@
       "subcategory": "couch-surfing",
       "title": "2011-10-17 — Couch Surfing e1",
       "date": "2011-10-17",
-      "path": "archive/movies/2011-10-17-couch-surfing-e1.mov",
+      "path": "https://media.wjc83.ca/2011-10-17-couch-surfing-e1.mov",
       "tier": 3
     },
     {
@@ -225,7 +225,7 @@
       "subcategory": "couch-surfing",
       "title": "2011-11-11 — Couch Surfing e2",
       "date": "2011-11-11",
-      "path": "archive/movies/2011-11-11-couch-surfing-e2.mov",
+      "path": "https://media.wjc83.ca/2011-11-11-couch-surfing-e2.mov",
       "tier": 3
     },
     {
@@ -235,7 +235,7 @@
       "subcategory": "couch-surfing",
       "title": "2011-11-18 — Couch Surfing e3",
       "date": "2011-11-18",
-      "path": "archive/movies/2011-11-18-couch-surfing-e3.mov",
+      "path": "https://media.wjc83.ca/2011-11-18-couch-surfing-e3.mov",
       "tier": 3
     },
     {
@@ -245,7 +245,7 @@
       "subcategory": "standalone",
       "title": "2012-01-24 — Nectar",
       "date": "2012-01-24",
-      "path": "archive/movies/2012-01-24-nectar.mov",
+      "path": "https://media.wjc83.ca/2012-01-24-nectar.mov",
       "tier": 3
     },
     {
