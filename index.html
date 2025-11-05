@@ -1,116 +1,79 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WJC83.CA</title>
-  <link rel="icon" href="/assets/favicon.png">
-  <link rel="preload" as="image" href="/assets/hero.jpeg">
-  <link rel="stylesheet" href="/style.css">
-  <style>
-    :root{
-      --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
-      --wrap:760px;            /* overall column */
-      --radius:18px; --shadow:0 6px 14px rgba(0,0,0,.08);
-      --tile: 152px;           /* app icon size (square) */
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WJC83.CA</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="stylesheet" href="/style.css">
+<style>
+:root{
+  --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
+  --wrap:760px; --radius:18px; --shadow:0 6px 14px rgba(0,0,0,.08);
+  --tile:152px;
+}
+body{margin:0;font:17px/1.55 "Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background:var(--paper);color:var(--ink);}
+body.dark{background:#0c0c0c;color:#e9e9e9;--ink:#e9e9e9;--paper:#0c0c0c;--muted:rgba(255,255,255,.66);}
 
-    body{
-      margin:0;
-      font:17px/1.55 "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      background:var(--paper); color:var(--ink);
-    }
-    body.dark{
-      background:#0c0c0c; color:#e9e9e9;
-      --ink:#e9e9e9; --paper:#0c0c0c; --muted:rgba(255,255,255,.66);
-    }
+header{max-width:var(--wrap);margin:.9rem auto .35rem;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
+.logo{height:32px;object-fit:contain;}
+.mode-indicator{display:none;width:28px;height:28px;border-radius:999px;border:1px solid rgba(0,0,0,.14);display:grid;place-items:center;background:#111;box-shadow:var(--shadow);font-size:16px;line-height:1;}
+body.dark .mode-indicator{border-color:rgba(255,255,255,.18);}
+.mode-indicator span{transform:translateY(1px);}
+.toggle-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;color:inherit}
 
-    /* Header (simple) */
-    header{
-      max-width:var(--wrap); margin:.9rem auto .35rem; padding:0 1rem;
-      display:flex; align-items:center; justify-content:space-between; gap:.75rem;
-    }
-    .logo{
-      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight:800; font-size:1.35rem; letter-spacing:.04em;
-      line-height:1; text-transform:uppercase; color:var(--ink);
-    }
+.hero-wrap{max-width:var(--wrap);margin:.4rem auto 1.1rem;padding:0 1rem;text-align:center;}
+.hero-frame{border:1px solid rgba(0,0,0,.1);border-radius:16px;background:#fff;box-shadow:var(--shadow);display:inline-block;}
+body.dark .hero-frame{background:#111;border-color:rgba(255,255,255,.14);}
+.hero{display:block;max-width:100%;height:auto;border-radius:14px;}
 
-    /* Night-only indicator (owl). Hidden in day. */
-    .mode-indicator{
-      display:none; /* JS shows at night only */
-      width:28px; height:28px; border-radius:999px;
-      border:1px solid rgba(0,0,0,.14);
-      display:grid; place-items:center;
-      background:#111; box-shadow:var(--shadow);
-      font-size:16px; line-height:1;
-    }
-    body.dark .mode-indicator{ border-color:rgba(255,255,255,.18) }
-    .mode-indicator span{ transform:translateY(1px) }
+.apps{max-width:var(--wrap);margin:0 auto 1.6rem;padding:0 1rem;display:grid;gap:1.2rem;grid-template-columns:1fr;justify-items:center;}
+@media(min-width:560px){.apps{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.app{width:100%;max-width:360px;border:1px solid rgba(0,0,0,.08);background:#fff;border-radius:24px;box-shadow:var(--shadow);text-decoration:none;color:inherit;padding:1rem 1rem 1.1rem;display:grid;justify-items:center;align-items:start;gap:.75rem;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;}
+.app:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.12);border-color:rgba(0,0,0,.12);}
+body.dark .app{background:#121212;border-color:rgba(255,255,255,.1);}
+body.dark .app:hover{box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:rgba(255,255,255,.18);}
+.app-icon{width:var(--tile);height:var(--tile);border-radius:22%;object-fit:cover;background:#ddd;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+.app-name{font-weight:800;font-size:1.12rem;letter-spacing:.02em;}
+.app-tag{font-size:.95rem;opacity:.78;text-align:center;max-width:24ch;}
 
-    /* HERO snug frame */
-    .hero-wrap{ max-width:var(--wrap); margin:.4rem auto 1.1rem; padding:0 1rem; text-align:center; }
-    .hero-frame{
-      border:1px solid rgba(0,0,0,.1); border-radius:16px;
-      background:#fff; box-shadow:var(--shadow); display:inline-block;
-    }
-    body.dark .hero-frame{ background:#111; border-color:rgba(255,255,255,.14) }
-    .hero{ display:block; max-width:100%; height:auto; border-radius:14px }
+.feed-grid{max-width:760px;margin:1rem auto;padding:0 1rem;}
+.feed-grid article img{width:100%;border-radius:10px;margin-bottom:.5rem;}
+.feed-loader{padding:2rem;text-align:center;font-size:1.1rem;opacity:.7;}
+.feed-pagination{display:flex;justify-content:center;gap:.75rem;margin:1rem 0;}
+.feed-pagination button{padding:.4rem .8rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;background:#fff;cursor:pointer;}
+.feed-pagination button:hover{background:rgba(0,0,0,.05);}
 
-    /* APPS grid */
-    .apps{
-      max-width:var(--wrap); margin:0 auto 1.6rem; padding:0 1rem;
-      display:grid; gap:1.2rem;
-      grid-template-columns:1fr; justify-items:center;
-    }
-    @media (min-width:560px){
-      .apps{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
-    }
+/* tiny polish for the toggle */
+.toggle-btn svg{transition:transform .15s ease,opacity .15s ease;}
+.toggle-btn:hover svg{transform:scale(1.05);opacity:.85;}
 
-    .app{
-      width:100%; max-width:360px;
-      border:1px solid rgba(0,0,0,.08); background:#fff; border-radius:24px;
-      box-shadow:var(--shadow);
-      text-decoration:none; color:inherit;
-      padding:1rem 1rem 1.1rem;
-      display:grid; justify-items:center; align-items:start; gap:.75rem;
-      transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-    }
-    .app:focus-visible{ outline:2px solid rgba(0,0,0,.35); outline-offset:2px; }
-    .app:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12); border-color:rgba(0,0,0,.12); }
-    body.dark .app{ background:#121212; border-color:rgba(255,255,255,.1); }
-    body.dark .app:hover{ box-shadow:0 10px 24px rgba(0,0,0,.25); border-color:rgba(255,255,255,.18); }
-
-    .app-icon{
-      width:var(--tile); height:var(--tile);
-      border-radius:22%; object-fit:cover; background:#ddd;
-      box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    }
-    .app-name{ font-weight:800; font-size:1.12rem; letter-spacing:.02em; }
-    .app-tag{ font-size:.95rem; opacity:.78; text-align:center; max-width:24ch; }
-
-    /* Footer */
-    footer{ border-top:1px solid rgba(0,0,0,.08); }
-    body.dark footer{ border-top-color:rgba(255,255,255,.12) }
-    .foot{
-      max-width:var(--wrap); margin:0 auto; padding:1rem;
-      display:flex; flex-direction:column; align-items:center; gap:.75rem;
-    }
-    .bio{ max-width:620px; text-align:center; opacity:.88; font-size:1rem }
-    .socials{ display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; justify-content:center }
-    .ico{ width:16px; height:16px; border-radius:4px; background:#ccc center/cover no-repeat; display:inline-block }
-    .socials a{ display:inline-flex; align-items:center; gap:.38rem; padding:.34rem .55rem; border-radius:999px; border:1px solid rgba(0,0,0,.12); text-decoration:none; color:inherit; font-size:.92rem }
-    body.dark .socials a{ border-color:rgba(255,255,255,.18) }
-  </style>
+.sublist {
+  list-style:none;
+  margin:.4rem 0 0;
+  padding:0;
+  font-size:.9rem;
+  opacity:.9;
+}
+.sublist li{margin:.2rem 0;}
+.sublist a{text-decoration:none;font-weight:600;color:inherit;}
+.sublist a:hover{text-decoration:underline;}
+.sublist .meta{margin-left:.4rem;font-size:.8rem;opacity:.7;}
+article.tier-1 .sublist{background:rgba(0,0,0,.03);border-radius:8px;padding:.4rem .7rem;margin-top:.5rem;}
+body.dark article.tier-1 .sublist{background:rgba(255,255,255,.05);}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">WJC83</div>
-    <!-- Owl appears only at night (12–4am) -->
-    <div id="modeDot" class="mode-indicator" aria-hidden="true"><span>🦉</span></div>
-  </header>
+
+<header>
+  <img class="logo" src="/assets/logo_wjc83.png" alt="WJC83">
+  <div id="modeDot" class="mode-indicator" aria-hidden="true"><span>🦉</span></div>
+  <button id="modeToggle" class="toggle-btn" aria-label="Toggle Feed/Home">
+    <!-- only ONE shows at a time -->
+    <svg id="iconFeed" viewBox="0 0 24 24" width="26" height="26"><path d="M4 5h16M4 11h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg id="iconHome" viewBox="0 0 24 24" width="26" height="26" hidden><path d="M3 10L12 3l9 7v11H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</header>
 
 <div class="hero-wrap">
   <figure class="hero-figure">
@@ -121,112 +84,245 @@
   </figure>
 </div>
 
-  <!-- APPS (2×2 when space allows) -->
-  <main class="apps">
-    <a href="/ijpauc/" class="app">
-      <img src="/assets/thumbs/ijpa.png" alt="" class="app-icon">
-      <div class="app-name">IJPAUC?</div>
-      <div class="app-tag">Film history & moral inquiry</div>
-    </a>
+<!-- HOME / APPS -->
+<main class="apps" id="apps">
+  <a href="/ijpauc/" class="app">
+    <img src="/assets/thumbs/ijpa.png" alt="" class="app-icon">
+    <div class="app-name">IJPAUC?</div>
+    <div class="app-tag">Film history & moral inquiry</div>
+  </a>
+  <a href="/vvip25/" class="app">
+    <img src="/assets/thumbs/vvip25.png" alt="" class="app-icon">
+    <div class="app-name">VVIP25</div>
+    <div class="app-tag">Music & video project</div>
+  </a>
+  <a href="/notes/" class="app">
+    <img src="/assets/thumbs/notes.png" alt="" class="app-icon">
+    <div class="app-name">NOTES</div>
+    <div class="app-tag">Plain-text dropbox</div>
+  </a>
+  <a href="/archive/" class="app">
+    <img src="/assets/thumbs/archive.png" alt="" class="app-icon">
+    <div class="app-name">Archive</div>
+    <div class="app-tag">Essays, criticism, technical writing</div>
+  </a>
+</main>
 
-    <a href="/vvip25/" class="app">
-      <img src="/assets/thumbs/vvip25.png" alt="" class="app-icon">
-      <div class="app-name">VVIP25</div>
-      <div class="app-tag">Music & video project</div>
-    </a>
+<!-- FEED -->
+<main id="feed" class="feed-grid" hidden></main>
+<div id="feedPagination" class="feed-pagination" hidden></div>
 
-    <a href="/notes/" class="app">
-      <img src="/assets/thumbs/notes.png" alt="" class="app-icon">
-      <div class="app-name">NOTES</div>
-      <div class="app-tag">Plain-text dropbox</div>
-    </a>
-
-    <a href="/archive/" class="app">
-      <img src="/assets/thumbs/archive.png" alt="" class="app-icon">
-      <div class="app-name">Archive</div>
-      <div class="app-tag">Essays, criticism, technical writing</div>
-    </a>
-  </main>
-
-  <footer>
-    <div class="foot">
-      <div class="bio">
-        <strong>Author Bio:</strong> W. Jeff Cunningham is a Vancouver-based writer whose work spans Magic: The Gathering journalism, long-form essays, academic research, and creative projects from the mid to late twentieth century.
-      </div>
-
-<a href="https://wjc83.substack.com/subscribe" class="btn">Subscribe</a>
-
-      <nav class="socials">
-        <a href="https://www.instagram.com/wjeffcunningham" rel="me" target="_blank">
-          <span class="ico" style="background-image:url('/assets/social/instagram.png');"></span> Instagram
-        </a>
-        <a href="https://www.threads.com/@wjeffcunningham" rel="me" target="_blank">
-          <span class="ico" style="background-image:url('/assets/social/threads.png');"></span> Threads
-        </a>
-        <a href="https://www.youtube.com/@VVVVIIPP25" rel="me" target="_blank">
-          <span class="ico" style="background-image:url('/assets/social/youtube.png');"></span> YouTube
-        </a>
-        <a href="https://ijpauc.net" target="_blank">
-          <span class="ico" style="background-image:url('/assets/social/ijpauc.png');"></span> IJPAUC?
-        </a>
-        <a href="https://vvipmedia.net" target="_blank">
-          <span class="ico" style="background-image:url('/assets/social/vvipmedia.png');"></span> VVIPMEDIA
-        </a>
-      </nav>
+<footer id="foot">
+  <div class="foot">
+    <div class="bio">
+      <strong>Author Bio:</strong> W. Jeff Cunningham is a Vancouver-based writer whose work spans Magic: The Gathering journalism, long-form essays, academic research, and creative projects from the mid to late twentieth century.
     </div>
-  </footer>
+    <a href="https://wjc83.substack.com/subscribe" class="btn">Subscribe</a>
+  </div>
+</footer>
 
-  <script>
-    /* ========= 0) Hero candidates (match filenames) ========= */
-    const HERO_CANDIDATES = ['/assets/hero.jpeg','/assets/hero1.jpeg']; // <- .jpeg
+<script>
+/* === NIGHT THEME === */
+function applyScheduledTheme(){
+  const h=new Date().getHours(),isNight=(h>=0&&h<4);
+  document.body.classList.toggle('dark',isNight);
+  const dot=document.getElementById('modeDot'); if(dot) dot.style.display=isNight?'grid':'none';
+}
+applyScheduledTheme(); setInterval(applyScheduledTheme,60_000);
 
-    /* ========= 1) Time-based theme + NIGHT-ONLY indicator ========= */
-    function applyScheduledTheme(){
-      const h = new Date().getHours();
-      const isNight = (h >= 0 && h < 4);
-      document.body.classList.toggle('dark', isNight);
-      const dot = document.getElementById('modeDot');
-      if (dot) dot.style.display = isNight ? 'grid' : 'none';
-    }
-    applyScheduledTheme();
-    setInterval(applyScheduledTheme, 60_000);
+/* === HERO (simple rotate) === */
+(()=>{const h=['/assets/hero.jpeg','/assets/hero1.jpeg'];const el=document.getElementById('heroImg');el.src=h[Math.floor(Math.random()*h.length)];})();
 
-    /* ========= 2) Hero logic: 50% newest, 50% random + fallback ========= */
-    async function pickHero(){
-      const fallback = '/assets/hero.jpeg';
-      const img = document.getElementById('heroImg');
-      const setHero = (url) => {
-        img.onerror = () => { img.onerror = null; img.src = fallback; };
-        img.src = url;
+/* === TOGGLE BEHAVIOR === */
+const btn=document.getElementById('modeToggle');
+const iconFeed=document.getElementById('iconFeed');
+const iconHome=document.getElementById('iconHome');
+const apps=document.getElementById('apps');
+const hero=document.querySelector('.hero-wrap');
+const foot=document.getElementById('foot');
+const feed=document.getElementById('feed');
+const pager=document.getElementById('feedPagination');
+let feedLoaded=false;
+
+btn.addEventListener('click',async()=>{
+  const feedVisible=!feed.hidden;
+  if(feedVisible){
+    feed.hidden=true;pager.hidden=true;feed.innerHTML="";pager.innerHTML="";
+    apps.hidden=false;apps.style.display="";hero.hidden=false;foot.hidden=false;
+    iconHome.hidden=true;iconFeed.hidden=false;
+  }else{
+    apps.hidden=true;apps.style.display="none";hero.hidden=true;foot.hidden=true;
+    feed.hidden=false;pager.hidden=false;iconFeed.hidden=true;iconHome.hidden=false;
+    if(!feedLoaded){await loadFeed();feedLoaded=true;}
+    const cached=sessionStorage.getItem('feedData');
+    if(cached)renderFeed(JSON.parse(cached),1);
+  }
+});
+
+/* === VVIP25 live videos via YouTube Worker === */
+async function fetchVVIP25Videos(){
+  try{
+    const API_BASE=(location.hostname.includes('localhost')||location.hostname.startsWith('127.'))
+      ?'https://wjc83.ca/api/yt':'/api/yt';
+    const CHANNEL_ID='UCRQMQeiTlrzyA-eONIXDq1g';
+    const uploadsData=await fetch(`${API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}`).then(r=>r.json());
+    const uploadsId=uploadsData?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+    if(!uploadsId)return[];
+    const data=await fetch(`${API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${uploadsId}&maxResults=50`).then(r=>r.json());
+    const items=(data.items||[]).map(it=>({
+      title:it.snippet?.title,
+      videoId:it.contentDetails?.videoId,
+      publishedAt:it.contentDetails?.videoPublishedAt
+    }));
+    const ids=items.map(v=>v.videoId).join(',');
+    const det=await fetch(`${API_BASE}/videos?part=contentDetails,statistics&id=${ids}`).then(r=>r.json());
+    const map=new Map(det.items.map(x=>[x.id,x]));
+    const vids=items.map(v=>{
+      const d=map.get(v.videoId);
+      const dur=d?.contentDetails?.duration||'PT0S';
+      const m=dur.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+      const s=(m?((+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0)):0);
+      return{
+        title:v.title,
+        external:`https://www.youtube.com/watch?v=${v.videoId}`,
+        date:v.publishedAt,
+        seconds:s,
+        duration:dur,
+        thumbnail:`https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`
       };
+    })
+    .filter(v=>v.seconds>60)  // ignore Shorts
+    .sort((a,b)=>new Date(b.date)-new Date(a.date))
+    .slice(0,3);
+    return vids;
+  }catch(e){console.warn('VVIP25 API error',e);return[];}
+}
 
-      const chooseNewest = Math.random() < 0.5;
-      const cfg = { owner:'wjeffcunningham', repo:'wjc83', branch:'main' };
-      let newest = HERO_CANDIDATES[HERO_CANDIDATES.length - 1];
+/* === FEED LOADER (spec rules) === */
+async function loadFeed(){
+  const feedEl=document.getElementById('feed');
+  feedEl.innerHTML='<div class="feed-loader">✨ Gathering archives...</div>';
+  const cache=sessionStorage.getItem('feedData');
+  if(cache){renderFeed(JSON.parse(cache),1);return;}
 
-      try{
-        const contents = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/assets?ref=${cfg.branch}`).then(r=>r.json());
-        const items = Array.isArray(contents) ? contents : [];
-        const heroFiles = items.filter(x => x.type === 'file' && /(^|\/)hero.*\.(jpe?g|png|webp)$/i.test(x.path||x.name));
-        if (heroFiles.length){
-          const withDates = await Promise.all(heroFiles.map(async f => {
-            const path = f.path || `assets/${f.name}`;
-            const commits = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/commits?path=${encodeURIComponent(path)}&per_page=1`).then(r=>r.json());
-            const date = commits?.[0]?.commit?.committer?.date || commits?.[0]?.commit?.author?.date || '';
-            return { url:'/' + path.replace(/^\/?/, ''), date };
-          }));
-          withDates.sort((a,b)=> new Date(a.date) - new Date(b.date));
-          newest = withDates[withDates.length - 1].url;
-        }
-      }catch{/* ignore; keep default */}
+  const items=[];
 
-      const hero = chooseNewest
-        ? newest
-        : HERO_CANDIDATES[Math.floor(Math.random()*HERO_CANDIDATES.length)];
+  // IJPAUC pinned
+  items.push({title:'IJPAUC?',date:'',blurb:'Film history & moral inquiry.',tier:1,
+    thumbnail:'/assets/thumbs/ijpa.png',path:'/ijpauc/',external:''});
 
-      setHero(hero);
+  // VVIP25 pinned + live vids
+  const vvipSubs=await fetchVVIP25Videos();
+  items.push({
+    title:'VVIP25',
+    date:vvipSubs[0]?.date||'',
+    blurb:'Music & video project.',
+    tier:1,
+    thumbnail:'/assets/thumbs/vvip25.png',
+    path:'/vvip25/',
+    subitems:vvipSubs
+  });
+
+  // NOTES — Tier 2
+  try{
+    const notes=await fetch('/notes/notes_index.json',{cache:'no-store'}).then(r=>r.json());
+    const list=Array.isArray(notes)?notes:(notes.items||notes.notes||[]);
+    for(const n of(list||[])){
+      const slug=n.slug||(n.filename||'').replace(/\.[^.]+$/,'')||(n.title||'').toLowerCase().replace(/\s+/g,'-');
+      items.push({title:n.title||slug||'Note',date:n.date||'',blurb:n.blurb||'',tier:2,
+        thumbnail:n.thumbnail||'/assets/thumbs/notes.png',path:n.path_html||`/notes/${slug}.html`,external:n.external||''});
     }
-    pickHero();
-  </script>
+  }catch(e){console.warn('notes load failed',e);}
+
+  // ARCHIVE (Academic & Criticism)
+  try{
+    const arch=await fetch('/archive/manifest.json',{cache:'no-store'}).then(r=>r.json());
+    const list=arch.items||[];
+    for(const a of list){
+      const p=(a.path_html||a.path||a.url||'')+'';
+      if(/\/writing\/magic\//i.test(p))continue;
+      items.push({title:a.title||'Untitled',date:a.date||'',blurb:a.blurb||'',
+        tier:Number(String(a.tier||'').replace(/\D/g,''))||3,
+        thumbnail:a.thumbnail||'',path:a.path_html||a.path||a.url||'',external:a.external||''});
+    }
+  }catch(e){console.warn('archive load failed',e);}
+
+  // MAGIC (folders + Tier ≤3)
+  try{
+    const magic=await fetch('/archive/writing/magic/manifest.json',{cache:'no-store'}).then(r=>r.json());
+    const kids=magic.children||[];
+    for(const c of kids){
+      items.push({title:c.label,date:'',blurb:c.blurb||'',tier:4,
+        thumbnail:c.thumbnail||'',path:c.index||'',external:''});
+    }
+    await Promise.all(kids.map(async k=>{
+      try{
+        const sub=await fetch(`/archive/writing/magic/${k.key}/manifest.json`).then(r=>r.json());
+        const arr=sub.items||[];
+        arr.filter(it=>{
+          const t=Number(String(it.tier||'').replace(/\D/g,''))||3;
+          return t<=3;
+        }).forEach(it=>{
+          items.push({title:it.title||'Untitled',date:it.date||'',blurb:it.blurb||'',
+            tier:Number(String(it.tier||'').replace(/\D/g,''))||3,
+            thumbnail:it.thumbnail||'',path:`/archive/writing/magic/${k.key}/`+(it.path_html||it.path||it.url||''),external:it.external||''});
+        });
+      }catch(e){console.warn('magic sub load failed',k.key,e);}
+    }));
+  }catch(e){console.warn('magic tree load failed',e);}
+
+  // sort
+  const pins=items.filter(x=>x.tier===1);
+  const rest=items.filter(x=>x.tier!==1).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const final=[...pins,...rest];
+
+  sessionStorage.setItem('feedData',JSON.stringify(final));
+  renderFeed(final,1);
+}
+
+/* === RENDER + PAGINATION === */
+function renderFeed(items,page=1){
+  const feedEl=document.getElementById('feed');
+  const pager=document.getElementById('feedPagination');
+  const perPage=50;
+  const totalPages=Math.ceil(items.length/perPage);
+
+  function show(n){
+    page=Math.max(1,Math.min(totalPages||1,n));
+    const start=(page-1)*perPage,end=start+perPage;
+    const slice=items.slice(start,end);
+
+    feedEl.innerHTML=slice.map(it=>{
+      let subHTML='';
+      if(Array.isArray(it.subitems)&&it.subitems.length){
+        const subs=it.subitems.map(s=>
+          `<li><a href="${s.external}" target="_blank">${s.title}</a>
+           <span class="meta">${new Date(s.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span></li>`).join('');
+        subHTML=`<ul class="sublist">${subs}</ul>`;
+      }
+      return `
+        <article class="tier-${it.tier}">
+          ${it.thumbnail?`<img src="${it.thumbnail}" alt="">`:''}
+          <h3><a href="${it.path||it.external}" target="_blank" rel="noopener">${it.title}</a>${it.tier===1?' ⭐':''}</h3>
+          ${it.date?`<p class="meta">${it.date}</p>`:''}
+          ${it.blurb?`<p>${it.blurb}</p>`:''}
+          ${subHTML}
+        </article>`;
+    }).join('')||'<p>No feed items found.</p>';
+
+    pager.innerHTML='';
+    if(totalPages>1){
+      const prev=document.createElement('button');
+      prev.textContent='← Prev';prev.disabled=(page===1);prev.onclick=()=>show(page-1);
+      const next=document.createElement('button');
+      next.textContent='Next →';next.disabled=(page===totalPages);next.onclick=()=>show(page+1);
+      const count=document.createElement('span');
+      count.textContent=`Page ${page} of ${totalPages}`;
+      pager.append(prev,count,next);
+    }
+  }
+  show(1);
+}
+</script>
 </body>
 </html>

@@ -260,3 +260,12 @@ li.item .title a:hover { text-decoration: underline; }
 
 /* Make summary taps feel nicer on mobile */
 .archive summary { -webkit-tap-highlight-color: transparent; }
+
+/* Feed/home toggle hover feel */
+.toggle-btn svg {
+  transition: transform .15s ease, opacity .15s ease;
+}
+.toggle-btn:hover svg {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
