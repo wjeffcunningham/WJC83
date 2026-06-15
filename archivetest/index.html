@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Archive Index</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f4f0; color: #1a1a1a; padding: 2rem; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+  input[type=text] { padding: 8px 12px; border: 0.5px solid #ccc; border-radius: 8px; font-size: 14px; min-width: 200px; flex: 1; background: #fff; }
+  input[type=text]:focus { outline: none; border-color: #888; }
+  select { padding: 8px 12px; border: 0.5px solid #ccc; border-radius: 8px; font-size: 14px; background: #fff; min-width: 160px; }
+  .stat { font-size: 13px; color: #888; margin-left: auto; white-space: nowrap; }
+  .table-wrap { background: #fff; border-radius: 12px; border: 0.5px solid #ddd; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+  thead th { text-align: left; font-weight: 500; font-size: 12px; color: #888; padding: 10px 12px; border-bottom: 0.5px solid #e0e0e0; cursor: pointer; user-select: none; background: #fafaf8; white-space: nowrap; }
+  thead th:hover { color: #1a1a1a; }
+  .arr { margin-left: 4px; opacity: 0.4; font-size: 10px; }
+  th.active .arr { opacity: 1; }
+  td { padding: 8px 12px; border-bottom: 0.5px solid #f0f0f0; vertical-align: top; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf8; }
+  .neg { font-variant-numeric: tabular-nums; color: #888; font-size: 13px; font-family: monospace; }
+  .notes { color: #666; font-size: 13px; }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .cat-People    { background: #dbeafe; color: #1e40af; }
+  .cat-Aviation  { background: #dcfce7; color: #166534; }
+  .cat-Events    { background: #fef3c7; color: #92400e; }
+  .cat-Places    { background: #d1fae5; color: #065f46; }
+  .cat-Sports    { background: #fce7f3; color: #9d174d; }
+  .cat-Misc      { background: #f3f4f6; color: #374151; }
+  .empty { text-align: center; padding: 3rem; color: #aaa; font-size: 14px; }
+  th:nth-child(1) { width: 90px; }
+  th:nth-child(2) { width: 42%; }
+  th:nth-child(3) { width: auto; }
+  th:nth-child(4) { width: 95px; }
+  @media (max-width: 600px) {
+    body { padding: 1rem; }
+    th:nth-child(3) { display: none; }
+    td:nth-child(3) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Photo Archive Index</h1>
+<p class="subtitle">A section — sortable by any column</p>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Search subject, name, notes, number…" oninput="render()">
+  <select id="catFilter" onchange="render()">
+    <option value="">All categories</option>
+    <option value="People">People</option>
+    <option value="Aviation">Aviation</option>
+    <option value="Events">Events</option>
+    <option value="Places">Places</option>
+    <option value="Sports">Sports</option>
+    <option value="Misc">Misc</option>
+  </select>
+  <span class="stat" id="stat"></span>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th onclick="sortBy('neg')" id="th-neg">Neg # <span class="arr" id="arr-neg">↕</span></th>
+      <th onclick="sortBy('subject')" id="th-subject">Subject / Name <span class="arr" id="arr-subject">↕</span></th>
+      <th onclick="sortBy('notes')" id="th-notes">Notes <span class="arr" id="arr-notes">↕</span></th>
+      <th onclick="sortBy('cat')" id="th-cat">Category <span class="arr" id="arr-cat">↕</span></th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<script>
+const raw = [
+  {neg:"2",subject:"Almond, Frank / Stan",notes:"",cat:"People"},
+  {neg:"3",subject:"Almond, Stan",notes:"",cat:"People"},
+  {neg:"13",subject:"Agostini, Mike",notes:"",cat:"People"},
+  {neg:"60",subject:"Allen, Wally",notes:"Bowling",cat:"Sports"},
+  {neg:"80-3",subject:"Bradley, Carm.",notes:"Swimming",cat:"Sports"},
+  {neg:"94",subject:"Andrews, Gord",notes:"",cat:"People"},
+  {neg:"102",subject:"Abercrombie",notes:"Basketball",cat:"Sports"},
+  {neg:"109",subject:"Adams, Bob",notes:"",cat:"People"},
+  {neg:"157",subject:"Bicycle — General",notes:"",cat:"Misc"},
+  {neg:"167",subject:"Baillie, Bill",notes:"NZ",cat:"People"},
+  {neg:"168",subject:"Baillie, Dave",notes:"Weight",cat:"People"},
+  {neg:"169",subject:"Bannister, Rosen",notes:"87",cat:"People"},
+  {neg:"175",subject:"Anderson, John",notes:"Swimming (w)",cat:"Sports"},
+  {neg:"175A",subject:"Alexander, Lord",notes:"",cat:"People"},
+  {neg:"177-2",subject:"Barber, Sarah",notes:"Swimming",cat:"Sports"},
+  {neg:"178-1",subject:"Aspinall, Dean",notes:"Swimming",cat:"Sports"},
+  {neg:"206",subject:"Accidents",notes:"",cat:"Events"},
+  {neg:"242",subject:"Alsbury, Tom",notes:"",cat:"People"},
+  {neg:"275",subject:"Air — Wrecked Planes",notes:"",cat:"Aviation"},
+  {neg:"312",subject:"Air — Convair 540",notes:"",cat:"Aviation"},
+  {neg:"399",subject:"Best, Alan",notes:"",cat:"People"},
+  {neg:"400",subject:"Brown, Brent?",notes:"",cat:"People"},
+  {neg:"549-3",subject:"Alsbury, Stu",notes:"",cat:"People"},
+  {neg:"585",subject:"Brandlmeyer",notes:"",cat:"People"},
+  {neg:"587",subject:"Brownell, Don",notes:"",cat:"People"},
+  {neg:"594",subject:"Berman, Shelly",notes:"",cat:"People"},
+  {neg:"595",subject:"Bunce, Sharon",notes:"Paddy — Calgary",cat:"People"},
+  {neg:"601",subject:"Animals",notes:"",cat:"Misc"},
+  {neg:"607",subject:"Aircraft — Britannia",notes:"",cat:"Aviation"},
+  {neg:"613",subject:"Aircraft — Norseman",notes:"",cat:"Aviation"},
+  {neg:"614",subject:"Boal",notes:"",cat:"People"},
+  {neg:"615",subject:"Boffa",notes:"",cat:"People"},
+  {neg:"617",subject:"Boreham, Jack",notes:"",cat:"People"},
+  {neg:"618",subject:"Bradley, Tom",notes:"",cat:"People"},
+  {neg:"619",subject:"Brennan, Jim / Billie / Sibbie",notes:"",cat:"People"},
+  {neg:"620",subject:"Bowering, Bill",notes:"RCAF",cat:"People"},
+  {neg:"631",subject:"Braidner, Ted",notes:"",cat:"People"},
+  {neg:"632",subject:"Boytzun, Russ",notes:"",cat:"People"},
+  {neg:"642",subject:"Brown, Don",notes:"",cat:"People"},
+  {neg:"653",subject:"Brenner, Bill",notes:"",cat:"People"},
+  {neg:"654",subject:"Atkinson, Lorne",notes:"",cat:"People"},
+  {neg:"673",subject:"Buck, Tim",notes:"",cat:"People"},
+  {neg:"674",subject:"Bionda, Jack",notes:"88",cat:"People"},
+  {neg:"689",subject:"Anscombe, Herbert",notes:"",cat:"People"},
+  {neg:"694",subject:"Auger, Jud",notes:"",cat:"People"},
+  {neg:"696",subject:"Branca, Angelo",notes:"432",cat:"People"},
+  {neg:"697",subject:"Bionda, Jack",notes:"",cat:"People"},
+  {neg:"698",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"699",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"700",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"701",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"702",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"703",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"704",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"705",subject:"Search — TCA Slesse",notes:"",cat:"Aviation"},
+  {neg:"707",subject:"Accidents",notes:"",cat:"Events"},
+  {neg:"738",subject:"Agar, Carl",notes:"Penticton / Aircraft Formation",cat:"People"},
+  {neg:"763",subject:"Aircraft in Formation",notes:"",cat:"Aviation"},
+  {neg:"842",subject:"Kelowna",notes:"",cat:"Places"},
+  {neg:"954",subject:"Athans, Dr. Geo.",notes:"1988",cat:"People"},
+  {neg:"955",subject:"Austins",notes:"483 Laponte 15/10/48",cat:"People"},
+  {neg:"961",subject:"Atkinson, Harry",notes:"",cat:"People"},
+  {neg:"962",subject:"Aerocar",notes:"",cat:"Aviation"},
+  {neg:"967",subject:"Army — Nanaimo",notes:"",cat:"Events"},
+  {neg:"968",subject:"Applegate",notes:"",cat:"People"},
+  {neg:"969",subject:"Arnold / Quigley",notes:"",cat:"People"},
+  {neg:"970",subject:"Arena — New Const.",notes:"",cat:"Events"},
+  {neg:"971",subject:"Appleby, Dr. Lyon",notes:"",cat:"People"},
+  {neg:"972",subject:"Angelomatis",notes:"",cat:"People"},
+  {neg:"973",subject:"Anderson, Marion",notes:"",cat:"People"},
+  {neg:"974",subject:"Allison, Jim",notes:"",cat:"People"},
+  {neg:"1040",subject:"Aldred, Joel",notes:"",cat:"People"},
+  {neg:"1094",subject:"Anvil Battery",notes:"",cat:"Events"},
+  {neg:"1239",subject:"Appleton, Brian",notes:"",cat:"People"},
+  {neg:"1240",subject:"Anderson, Adean",notes:"",cat:"People"},
+  {neg:"1241",subject:"Anderson, Bill",notes:"",cat:"People"},
+  {neg:"1242",subject:"Adams, Sam",notes:"",cat:"People"},
+  {neg:"1243",subject:"Adams, Doug",notes:"",cat:"People"},
+  {neg:"1244",subject:"Ahern, Nip",notes:"",cat:"People"},
+  {neg:"1489",subject:"Anderson, Jilly",notes:"",cat:"People"},
+  {neg:"1578",subject:"Antonelli — Nanny",notes:"",cat:"People"},
+  {neg:"1599",subject:"Athletic Park",notes:"",cat:"Places"},
+  {neg:"1691",subject:"Anderson, Bella",notes:"",cat:"People"},
+  {neg:"1698",subject:"Anderson, Ralph",notes:"",cat:"People"},
+  {neg:"1715",subject:"Anchor — Stingrays?",notes:"",cat:"Misc"},
+  {neg:"1722",subject:"Atkinson, Harry",notes:"",cat:"People"},
+  {neg:"1736",subject:"Allen, Bob",notes:"Soccer",cat:"Sports"},
+  {neg:"1737",subject:"Athlete of Year",notes:"Jr. 61 — Murray Stewart",cat:"Events"},
+  {neg:"1772",subject:"Amola, Reuben",notes:"",cat:"People"},
+  {neg:"1786",subject:"Aiello, Sam",notes:"",cat:"People"},
+  {neg:"1804",subject:"Amesmann, Al.",notes:"",cat:"People"},
+  {neg:"1809",subject:"Adams, Bill",notes:"Curling",cat:"Sports"},
+  {neg:"1911",subject:"Aircraft — Cessna Jet",notes:"",cat:"Aviation"},
+  {neg:"1988",subject:"Athans, 61",notes:"",cat:"People"},
+  {neg:"2001",subject:"A.T.A.",notes:"Sketch 50/61 Truck",cat:"Events"},
+  {neg:"2006",subject:"UBC",notes:"",cat:"Places"},
+  {neg:"2149",subject:"Anderson, Al.",notes:"",cat:"People"},
+  {neg:"2173",subject:"Arnold, Don",notes:"62 UBC",cat:"People"},
+  {neg:"2193",subject:"Auction — Maynard",notes:"",cat:"Events"},
+  {neg:"2241",subject:"Abercrombie",notes:"Teacher Retirement",cat:"People"},
+  {neg:"2263",subject:"Crowded Airport — 707s",notes:"",cat:"Aviation"},
+  {neg:"2277",subject:"Arrigo, Jerry",notes:"",cat:"People"},
+  {neg:"2280",subject:"Auto Loader",notes:"",cat:"Misc"},
+  {neg:"2338",subject:"Helly at Stadium",notes:"",cat:"Events"},
+  {neg:"2339",subject:"Allas, Marie",notes:"",cat:"People"},
+  {neg:"2374",subject:"Archery",notes:"",cat:"Sports"},
+  {neg:"2376",subject:"Auto Show 62",notes:"",cat:"Events"},
+  {neg:"2383",subject:"Helly at Bayshore",notes:"",cat:"Events"},
+  {neg:"2390",subject:"Helly at W. Van.",notes:"",cat:"Events"},
+  {neg:"2413",subject:"Alligators & Girls",notes:"",cat:"Misc"},
+  {neg:"2415",subject:"Autrey, Gene",notes:"",cat:"People"},
+  {neg:"2422",subject:"Andrews",notes:"",cat:"People"},
+  {neg:"2439",subject:"Horseshoe Bay",notes:"",cat:"Places"},
+  {neg:"2440",subject:"Arcaro, Eddie",notes:"",cat:"People"},
+  {neg:"2443",subject:"Actors",notes:"",cat:"People"},
+  {neg:"2506",subject:"Air — Big Prop",notes:"",cat:"Aviation"},
+  {neg:"2528",subject:"Apparatus — School",notes:"",cat:"Events"},
+  {neg:"2549",subject:"Air — Apartments / Bayshore",notes:"",cat:"Aviation"},
+  {neg:"2559",subject:"Air — Budgie/ite",notes:"",cat:"Aviation"},
+  {neg:"2578",subject:"Aerial — Burnaby Mt, Cauche Inlet, Irving, Imperial, Amphitheatre, Stadium, Hills, Discovery, PNE, NS Docks",notes:"",cat:"Aviation"},
+  {neg:"2584",subject:"Army Show",notes:"",cat:"Events"},
+  {neg:"2589",subject:"Armistice 63",notes:"",cat:"Events"},
+  {neg:"2589b",subject:"Art — Sat. am class 63",notes:"",cat:"Events"},
+  {neg:"2601",subject:"Animals",notes:"",cat:"Misc"},
+  {neg:"2616",subject:"Air",notes:"",cat:"Aviation"},
+];
+
+let sortCol = "neg";
+let sortDir = 1;
+
+function negVal(s) {
+  const m = s.match(/^(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+}
+
+function sortBy(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  render();
+}
+
+function render() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const cf = document.getElementById("catFilter").value;
+
+  let data = raw.filter(r => {
+    const text = (r.subject + " " + r.notes + " " + r.neg).toLowerCase();
+    return (!q || text.includes(q)) && (!cf || r.cat === cf);
+  });
+
+  data.sort((a, b) => {
+    let av, bv;
+    if (sortCol === "neg") { av = negVal(a.neg); bv = negVal(b.neg); }
+    else { av = a[sortCol].toLowerCase(); bv = b[sortCol].toLowerCase(); }
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+
+  ["neg","subject","notes","cat"].forEach(c => {
+    const th = document.getElementById("th-" + c);
+    const arr = document.getElementById("arr-" + c);
+    th.classList.toggle("active", sortCol === c);
+    arr.textContent = sortCol !== c ? "↕" : sortDir === 1 ? "↑" : "↓";
+  });
+
+  const tbody = document.getElementById("tbody");
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty">No entries match your search.</td></tr>`;
+  } else {
+    tbody.innerHTML = data.map(r => `
+      <tr>
+        <td class="neg">${r.neg}</td>
+        <td>${r.subject}</td>
+        <td class="notes">${r.notes}</td>
+        <td><span class="badge cat-${r.cat}">${r.cat}</span></td>
+      </tr>`).join("");
+  }
+  document.getElementById("stat").textContent = `${data.length} of ${raw.length} entries`;
+}
+
+render();
+</script>
+</body>
+</html>
