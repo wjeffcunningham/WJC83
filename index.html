@@ -1,328 +1,633 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WJC83.CA</title>
+<meta name="description" content="W. Jeff Cunningham — criticism, essays, film, and projects.">
 <link rel="icon" href="/assets/favicon.png">
-<link rel="stylesheet" href="/style.css">
 <style>
-:root{
-  --ink:#0a0a0a; --paper:#fafafa; --muted:rgba(0,0,0,.6);
-  --wrap:760px; --radius:18px; --shadow:0 6px 14px rgba(0,0,0,.08);
-  --tile:152px;
+/* ── TOKENS ─────────────────────────────────────── */
+:root {
+  --paper:  #f6f5f2;
+  --ink:    #0a0a0a;
+  --dim:    rgba(10,10,10,.46);
+  --rule:   rgba(10,10,10,.11);
+  --gold:   #8a6500;
+  --col:    648px;
+  --sans:   "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --mono:   "SFMono-Regular", Menlo, Consolas, monospace;
 }
-body{margin:0;font:17px/1.55 "Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;background:var(--paper);color:var(--ink);}
-body.dark{background:#0c0c0c;color:#e9e9e9;--ink:#e9e9e9;--paper:#0c0c0c;--muted:rgba(255,255,255,.66);}
-
-header{max-width:var(--wrap);margin:.9rem auto .35rem;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
-.logo{height:32px;object-fit:contain;}
-.mode-indicator{display:none;width:28px;height:28px;border-radius:999px;border:1px solid rgba(0,0,0,.14);display:grid;place-items:center;background:#111;box-shadow:var(--shadow);font-size:16px;line-height:1;}
-body.dark .mode-indicator{border-color:rgba(255,255,255,.18);}
-.mode-indicator span{transform:translateY(1px);}
-.toggle-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;color:inherit}
-
-.hero-wrap{max-width:var(--wrap);margin:.4rem auto 1.1rem;padding:0 1rem;text-align:center;}
-.hero-frame{border:1px solid rgba(0,0,0,.1);border-radius:16px;background:#fff;box-shadow:var(--shadow);display:inline-block;}
-body.dark .hero-frame{background:#111;border-color:rgba(255,255,255,.14);}
-.hero{display:block;max-width:100%;height:auto;border-radius:14px;}
-
-.apps{max-width:var(--wrap);margin:0 auto 1.6rem;padding:0 1rem;display:grid;gap:1.2rem;grid-template-columns:1fr;justify-items:center;}
-@media(min-width:560px){.apps{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.app{width:100%;max-width:360px;border:1px solid rgba(0,0,0,.08);background:#fff;border-radius:24px;box-shadow:var(--shadow);text-decoration:none;color:inherit;padding:1rem 1rem 1.1rem;display:grid;justify-items:center;align-items:start;gap:.75rem;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;}
-.app:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.12);border-color:rgba(0,0,0,.12);}
-body.dark .app{background:#121212;border-color:rgba(255,255,255,.1);}
-body.dark .app:hover{box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:rgba(255,255,255,.18);}
-.app-icon{width:var(--tile);height:var(--tile);border-radius:22%;object-fit:cover;background:#ddd;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
-.app-name{font-weight:800;font-size:1.12rem;letter-spacing:.02em;}
-.app-tag{font-size:.95rem;opacity:.78;text-align:center;max-width:24ch;}
-
-.feed-grid{max-width:760px;margin:1rem auto;padding:0 1rem;}
-.feed-grid article img{width:100%;border-radius:10px;margin-bottom:.5rem;}
-.feed-loader{padding:2rem;text-align:center;font-size:1.1rem;opacity:.7;}
-.feed-pagination{display:flex;justify-content:center;gap:.75rem;margin:1rem 0;}
-.feed-pagination button{padding:.4rem .8rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;background:#fff;cursor:pointer;}
-.feed-pagination button:hover{background:rgba(0,0,0,.05);}
-
-/* tiny polish for the toggle */
-.toggle-btn svg{transition:transform .15s ease,opacity .15s ease;}
-.toggle-btn:hover svg{transform:scale(1.05);opacity:.85;}
-
-.sublist {
-  list-style:none;
-  margin:.4rem 0 0;
-  padding:0;
-  font-size:.9rem;
-  opacity:.9;
+body.night {
+  --paper: #0e0d0b;
+  --ink:   #e4e2dc;
+  --dim:   rgba(228,226,220,.44);
+  --rule:  rgba(228,226,220,.1);
+  --gold:  #c09900;
 }
-.sublist li{margin:.2rem 0;}
-.sublist a{text-decoration:none;font-weight:600;color:inherit;}
-.sublist a:hover{text-decoration:underline;}
-.sublist .meta{margin-left:.4rem;font-size:.8rem;opacity:.7;}
-article.tier-1 .sublist{background:rgba(0,0,0,.03);border-radius:8px;padding:.4rem .7rem;margin-top:.5rem;}
-body.dark article.tier-1 .sublist{background:rgba(255,255,255,.05);}
+
+/* ── RESET ──────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  transition: background .2s, color .2s;
+}
+a { color:inherit; text-decoration:none; }
+img { display:block; }
+
+/* ── MASTHEAD ───────────────────────────────────── */
+.mast {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.wmark {
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.wmark a { text-decoration:none; }
+
+.mast-nav {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: .2rem;
+}
+.mast-nav a,
+.mast-nav span {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+.mast-nav a {
+  color: var(--dim);
+  padding: .1rem .3rem;
+  transition: color .1s;
+}
+.mast-nav a:hover { color: var(--ink); }
+.mast-nav .sep { color: var(--rule); padding: 0 .05rem; user-select:none; }
+.mast-nav .sub {
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 99px;
+  padding: .22rem .65rem;
+  margin-left: .2rem;
+  transition: background .12s, border-color .12s;
+}
+.mast-nav .sub:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ── HERO ───────────────────────────────────────── */
+.hero-wrap {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Portrait 3:4 — show full, uncropped.
+   max-height keeps it within the viewport on tall screens.
+   On mobile we let it go full width at natural height. */
+.hero-img {
+  max-height: 76vh;
+  width: auto;
+  max-width: 100%;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.hero-img.ready { opacity:1; }
+.hero-cap {
+  margin-top: .5rem;
+  font-size: 10px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── FEED CONTROLS ──────────────────────────────── */
+.feed-controls {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule);
+  height: 2.4rem;
+}
+
+/* segmented button group */
+.ctrl-group {
+  display: flex;
+  gap: 0;
+}
+.ctrl-btn {
+  appearance: none;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: .22rem .6rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: background .1s, color .1s, border-color .1s;
+  white-space: nowrap;
+}
+.ctrl-btn + .ctrl-btn { border-left: none; }
+.ctrl-btn:first-child { border-radius: 3px 0 0 3px; }
+.ctrl-btn:last-child  { border-radius: 0 3px 3px 0; }
+.ctrl-btn.on {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.ctrl-btn.on + .ctrl-btn { border-left: 1px solid var(--rule); }
+
+/* ── FEED ───────────────────────────────────────── */
+.feed {
+  max-width: var(--col);
+  margin: 0 auto 4rem;
+  padding: 0 1.25rem;
+}
+
+/* section label */
+.sec-head {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 1.25rem 0 .45rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+
+/* ─── FEATURE VIEW items ──────────────────────── */
+
+/* tier-5 row (notes, quick posts) */
+.fi-t5 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .52rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: opacity .1s;
+}
+.fi-t5:last-child { border-bottom:none; }
+.fi-t5:hover { opacity:.72; }
+.fi-t5-left { display:flex; align-items:baseline; gap:.48rem; min-width:0; }
+.t5-dot { color:var(--gold); font-size:.6em; flex-shrink:0; position:relative; top:-.06em; }
+.fi-t5-title { font-size:.9rem; font-weight:600; line-height:1.3; }
+.fi-t5-date  { font-family:var(--mono); font-size:10px; color:var(--dim); white-space:nowrap; flex-shrink:0; }
+
+/* standard item (tier 3–4): thumb + body */
+.fi-std {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: .85rem;
+  padding: .75rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.fi-std.bare { grid-template-columns: 1fr; }
+.fi-std:last-child { border-bottom:none; }
+.fi-std:hover .fi-title { text-decoration:underline; text-decoration-thickness:1px; }
+
+.fi-thumb {
+  width: 68px; height: 51px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #bbb;
+  flex-shrink: 0;
+}
+
+/* tier 1–2: same grid but with a left accent rule */
+.fi-major {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: .85rem;
+  padding: .75rem 0 .75rem .75rem;
+  border-bottom: 1px solid var(--rule);
+  border-left: 2px solid var(--rule);
+  margin-left: -.75rem; /* pull left edge into column */
+  align-items: start;
+  transition: border-left-color .15s;
+}
+.fi-major:last-child { border-bottom:none; }
+.fi-major:hover { border-left-color: var(--ink); }
+.fi-major:hover .fi-title { text-decoration:underline; text-decoration-thickness:1px; }
+.fi-major.bare { grid-template-columns: 1fr; }
+
+.fi-body {}
+.fi-cat  { font-family:var(--mono); font-size:10px; color:var(--dim); margin-bottom:.18rem; letter-spacing:.02em; }
+.fi-title { font-size:.9rem; font-weight:700; line-height:1.25; margin-bottom:.22rem; }
+.fi-blurb { font-size:.8rem; color:var(--dim); line-height:1.45; }
+.fi-tags  { display:flex; flex-wrap:wrap; gap:.25rem; margin-top:.3rem; }
+.fi-tag   {
+  font-size:9px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--dim); border:1px solid var(--rule); border-radius:99px; padding:.06rem .35rem;
+}
+
+/* ─── LIST VIEW items ──────────────────────────── */
+.li-row {
+  display: grid;
+  /* title | category | date */
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: .6rem 1rem;
+  padding: .38rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: opacity .1s;
+}
+.li-row:last-child { border-bottom:none; }
+.li-row:hover { opacity:.72; }
+.li-row:hover .li-title { text-decoration:underline; text-decoration-thickness:1px; }
+
+.li-left  { display:flex; align-items:baseline; gap:.45rem; min-width:0; }
+.li-title { font-size:.88rem; font-weight:600; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.li-cat   { font-family:var(--mono); font-size:9.5px; color:var(--dim); white-space:nowrap; letter-spacing:.03em; }
+.li-date  { font-family:var(--mono); font-size:9.5px; color:var(--dim); white-space:nowrap; }
+
+/* ── LOADING ───────────────────────────────────── */
+.loading { padding:2.5rem 0; font-size:.82rem; color:var(--dim); }
+
+/* ── FOOTER ───────────────────────────────────── */
+.foot {
+  max-width: var(--col);
+  margin: 0 auto;
+  padding: 1rem 1.25rem 3rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.foot-bio { font-size:.78rem; color:var(--dim); line-height:1.55; max-width:40ch; }
+.foot-sub {
+  font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  text-decoration:none; color:var(--ink); border:1px solid var(--rule);
+  border-radius:99px; padding:.35rem .9rem; white-space:nowrap;
+  transition:background .12s, border-color .12s;
+}
+.foot-sub:hover { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+
+/* ── MOBILE ───────────────────────────────────── */
+@media (max-width: 500px) {
+  .mast { padding:.95rem 1rem .85rem; gap:.85rem; }
+  .hero-wrap { padding:1.4rem 1rem 1.1rem; }
+  .hero-img  { max-height:none; width:100%; }
+  .feed-controls, .feed, .foot { padding-left:1rem; padding-right:1rem; }
+  .fi-major { margin-left:-.5rem; padding-left:.5rem; }
+  /* list view: drop category column on narrow screens */
+  .li-row { grid-template-columns:1fr auto; }
+  .li-cat  { display:none; }
+}
 </style>
 </head>
 <body>
 
-<header>
-  <img class="logo" src="/assets/logo_wjc83.png" alt="WJC83">
-  <div id="modeDot" class="mode-indicator" aria-hidden="true"><span>🦉</span></div>
-  <button id="modeToggle" class="toggle-btn" aria-label="Toggle Feed/Home">
-    <!-- only ONE shows at a time -->
-    <svg id="iconFeed" viewBox="0 0 24 24" width="26" height="26"><path d="M4 5h16M4 11h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    <svg id="iconHome" viewBox="0 0 24 24" width="26" height="26" hidden><path d="M3 10L12 3l9 7v11H3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
+<!-- ══ MASTHEAD ═══════════════════════════════════════ -->
+<header class="mast">
+  <div class="wmark"><a href="/">WJC83.CA</a></div>
+  <nav class="mast-nav" aria-label="Sections">
+    <a href="/ijpauc/">IJPAUC?</a>
+    <span class="sep">·</span>
+    <a href="/vvip25/">VVIP25</a>
+    <span class="sep">·</span>
+    <a href="/notes/">Notes</a>
+    <span class="sep">·</span>
+    <a href="/archive/">Archive</a>
+    <span class="sep">·</span>
+    <a href="https://wjc83.substack.com/subscribe" target="_blank" rel="noopener" class="sub">Subscribe</a>
+  </nav>
 </header>
 
-<div class="hero-wrap">
-  <figure class="hero-figure">
-    <div class="hero-frame">
-      <img id="heroImg" class="hero" src="/assets/hero.jpeg" alt="Hero" decoding="async" />
-    </div>
-    <figcaption><i>Photo by WJC, “The 7 Seas”</i></figcaption>
-  </figure>
+<!-- ══ HERO ═══════════════════════════════════════════ -->
+<section class="hero-wrap">
+  <img id="heroImg" class="hero-img" src="/assets/hero.jpeg" alt="Photo by WJC">
+  <p class="hero-cap" id="heroCap">Photo by WJC</p>
+</section>
+
+<!-- ══ FEED CONTROLS ══════════════════════════════════ -->
+<div class="feed-controls" id="feedControls">
+  <div class="ctrl-group" role="group" aria-label="View">
+    <button class="ctrl-btn on" data-view="feature">Feature</button>
+    <button class="ctrl-btn"   data-view="list">List</button>
+  </div>
+  <div class="ctrl-group" role="group" aria-label="Sort">
+    <button class="ctrl-btn on" data-sort="date">Date</button>
+    <button class="ctrl-btn"   data-sort="type">Type</button>
+  </div>
 </div>
 
-<!-- HOME / APPS -->
-<main class="apps" id="apps">
-  <a href="/ijpauc/" class="app">
-    <img src="/assets/thumbs/ijpa.png" alt="" class="app-icon">
-    <div class="app-name">IJPAUC?</div>
-    <div class="app-tag">Film history & moral inquiry</div>
-  </a>
-  <a href="/vvip25/" class="app">
-    <img src="/assets/thumbs/vvip25.png" alt="" class="app-icon">
-    <div class="app-name">VVIP25</div>
-    <div class="app-tag">Music & video project</div>
-  </a>
-  <a href="/notes/" class="app">
-    <img src="/assets/thumbs/notes.png" alt="" class="app-icon">
-    <div class="app-name">NOTES</div>
-    <div class="app-tag">Plain-text dropbox</div>
-  </a>
-  <a href="/archive/" class="app">
-    <img src="/assets/thumbs/archive.png" alt="" class="app-icon">
-    <div class="app-name">Archive</div>
-    <div class="app-tag">Essays, criticism, technical writing</div>
-  </a>
+<!-- ══ FEED ═══════════════════════════════════════════ -->
+<main class="feed" id="feed">
+  <p class="loading">Loading…</p>
 </main>
 
-<!-- FEED -->
-<main id="feed" class="feed-grid" hidden></main>
-<div id="feedPagination" class="feed-pagination" hidden></div>
-
-<footer id="foot">
-  <div class="foot">
-    <div class="bio">
-      <strong>Author Bio:</strong> W. Jeff Cunningham is a Vancouver-based writer whose work spans Magic: The Gathering journalism, long-form essays, academic research, and creative projects from the mid to late twentieth century.
-    </div>
-    <a href="https://wjc83.substack.com/subscribe" class="btn">Subscribe</a>
-  </div>
+<!-- ══ FOOTER ═════════════════════════════════════════ -->
+<footer class="foot">
+  <p class="foot-bio">W. Jeff Cunningham is a Vancouver-based writer and media artist. His work spans criticism, essays, academic philosophy, film, and projects across music and games.</p>
+  <a href="https://wjc83.substack.com/subscribe" target="_blank" rel="noopener" class="foot-sub">Subscribe ↗</a>
 </footer>
 
 <script>
-/* === NIGHT THEME === */
-function applyScheduledTheme(){
-  const h=new Date().getHours(),isNight=(h>=0&&h<4);
-  document.body.classList.toggle('dark',isNight);
-  const dot=document.getElementById('modeDot'); if(dot) dot.style.display=isNight?'grid':'none';
+/* ══════════════════════════════════════════════════════
+   WJC83.CA — index
+   ══════════════════════════════════════════════════════ */
+
+/* ── Night mode: auto midnight–5am ──────────────────── */
+(function () {
+  const apply = () => document.body.classList.toggle('night', new Date().getHours() < 5);
+  apply();
+  setInterval(apply, 60_000);
+})();
+
+/* ── Hero: deterministic daily rotation ─────────────── */
+(function () {
+  // Add images here as you upload them. src path must be absolute.
+  // To pull from Cloudflare: replace with fetch('/api/hero') and await it.
+  const pool = [
+    { src: '/assets/hero.jpeg',  cap: 'Photo by WJC, "The 7 Seas"' },
+    { src: '/assets/hero1.jpeg', cap: 'Photo by WJC' },
+  ];
+  const seed = [...new Date().toDateString()].reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0);
+  const { src, cap } = pool[Math.abs(seed) % pool.length];
+  const img = document.getElementById('heroImg');
+  img.src = src;
+  document.getElementById('heroCap').textContent = cap;
+  const mark = () => img.classList.add('ready');
+  img.complete ? mark() : (img.onload = img.onerror = mark);
+})();
+
+/* ── Utilities ───────────────────────────────────────── */
+const esc = s => String(s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function fmtYear(s) {
+  if (!s) return '';
+  const d = new Date(s.length === 10 ? s + 'T12:00:00' : s);
+  return isNaN(d) ? '' : String(d.getFullYear());
 }
-applyScheduledTheme(); setInterval(applyScheduledTheme,60_000);
 
-/* === HERO (simple rotate) === */
-(()=>{const h=['/assets/hero.jpeg','/assets/hero1.jpeg'];const el=document.getElementById('heroImg');el.src=h[Math.floor(Math.random()*h.length)];})();
+function fmtMon(s) {
+  if (!s) return '';
+  const d = new Date(s.length === 10 ? s + 'T12:00:00' : s);
+  return isNaN(d) ? '' : d.toLocaleDateString('en-CA', { year:'numeric', month:'short' });
+}
 
-/* === TOGGLE BEHAVIOR === */
-const btn=document.getElementById('modeToggle');
-const iconFeed=document.getElementById('iconFeed');
-const iconHome=document.getElementById('iconHome');
-const apps=document.getElementById('apps');
-const hero=document.querySelector('.hero-wrap');
-const foot=document.getElementById('foot');
-const feed=document.getElementById('feed');
-const pager=document.getElementById('feedPagination');
-let feedLoaded=false;
+const CAT_LABEL = {
+  academic:  'Academic',
+  criticism: 'Criticism',
+  video:     'Film',
+  technical: 'Technical',
+  notes:     'Notes',
+  magic:     'Magic',
+};
 
-btn.addEventListener('click',async()=>{
-  const feedVisible=!feed.hidden;
-  if(feedVisible){
-    feed.hidden=true;pager.hidden=true;feed.innerHTML="";pager.innerHTML="";
-    apps.hidden=false;apps.style.display="";hero.hidden=false;foot.hidden=false;
-    iconHome.hidden=true;iconFeed.hidden=false;
-  }else{
-    apps.hidden=true;apps.style.display="none";hero.hidden=true;foot.hidden=true;
-    feed.hidden=false;pager.hidden=false;iconFeed.hidden=true;iconHome.hidden=false;
-    if(!feedLoaded){await loadFeed();feedLoaded=true;}
-    const cached=sessionStorage.getItem('feedData');
-    if(cached)renderFeed(JSON.parse(cached),1);
-  }
-});
+function catLabel(c) { return CAT_LABEL[c] || c; }
 
-/* === VVIP25 live videos via YouTube Worker === */
-async function fetchVVIP25Videos(){
-  try{
-    const API_BASE=(location.hostname.includes('localhost')||location.hostname.startsWith('127.'))
-      ?'https://wjc83.ca/api/yt':'/api/yt';
-    const CHANNEL_ID='UCRQMQeiTlrzyA-eONIXDq1g';
-    const uploadsData=await fetch(`${API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}`).then(r=>r.json());
-    const uploadsId=uploadsData?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
-    if(!uploadsId)return[];
-    const data=await fetch(`${API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${uploadsId}&maxResults=50`).then(r=>r.json());
-    const items=(data.items||[]).map(it=>({
-      title:it.snippet?.title,
-      videoId:it.contentDetails?.videoId,
-      publishedAt:it.contentDetails?.videoPublishedAt
+/* ── State ───────────────────────────────────────────── */
+let STATE = { view: 'feature', sort: 'date' };
+let ITEMS = [];
+
+/* ── Boot ────────────────────────────────────────────── */
+async function boot() {
+  const [arch, notes] = await Promise.all([
+    fetch('/archive/manifest.json', { cache:'no-store' })
+      .then(r => r.json()).catch(() => ({ items:[] })),
+    fetch('/notes/notes_index.json', { cache:'no-store' })
+      .then(r => r.json()).catch(() => []),
+  ]);
+
+  /* normalise archive items */
+  const archItems = (arch.items ?? [])
+    .filter(a => a.title && a.tier && a.type !== 'folder')
+    .map(a => ({
+      title:    a.title,
+      date:     a.date ?? '',
+      blurb:    a.blurb ?? '',
+      tier:     parseInt(String(a.tier)) || 3,
+      category: a.category ?? a.type ?? 'misc',
+      thumb:    a.thumbnail ? '/' + a.thumbnail.replace(/^\//, '') : '',
+      href:     resolveHref(a),
+      ext:      !!a.external,
+      tags:     Array.isArray(a.tags) ? a.tags : [],
     }));
-    const ids=items.map(v=>v.videoId).join(',');
-    const det=await fetch(`${API_BASE}/videos?part=contentDetails,statistics&id=${ids}`).then(r=>r.json());
-    const map=new Map(det.items.map(x=>[x.id,x]));
-    const vids=items.map(v=>{
-      const d=map.get(v.videoId);
-      const dur=d?.contentDetails?.duration||'PT0S';
-      const m=dur.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-      const s=(m?((+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0)):0);
-      return{
-        title:v.title,
-        external:`https://www.youtube.com/watch?v=${v.videoId}`,
-        date:v.publishedAt,
-        seconds:s,
-        duration:dur,
-        thumbnail:`https://i.ytimg.com/vi/${v.videoId}/hqdefault.jpg`
-      };
-    })
-    .filter(v=>v.seconds>60)  // ignore Shorts
-    .sort((a,b)=>new Date(b.date)-new Date(a.date))
-    .slice(0,3);
-    return vids;
-  }catch(e){console.warn('VVIP25 API error',e);return[];}
-}
 
-/* === FEED LOADER (spec rules) === */
-async function loadFeed(){
-  const feedEl=document.getElementById('feed');
-  feedEl.innerHTML='<div class="feed-loader">✨ Gathering archives...</div>';
-  const cache=sessionStorage.getItem('feedData');
-  if(cache){renderFeed(JSON.parse(cache),1);return;}
-
-  const items=[];
-
-  // IJPAUC pinned
-  items.push({title:'IJPAUC?',date:'',blurb:'Film history & moral inquiry.',tier:1,
-    thumbnail:'/assets/thumbs/ijpa.png',path:'/ijpauc/',external:''});
-
-  // VVIP25 pinned + live vids
-  const vvipSubs=await fetchVVIP25Videos();
-  items.push({
-    title:'VVIP25',
-    date:vvipSubs[0]?.date||'',
-    blurb:'Music & video project.',
-    tier:1,
-    thumbnail:'/assets/thumbs/vvip25.png',
-    path:'/vvip25/',
-    subitems:vvipSubs
+  /* normalise notes — tier 5 */
+  const noteList = Array.isArray(notes) ? notes : (notes.items ?? []);
+  const noteItems = noteList.map(n => {
+    const slug = n.slug ?? (n.title ?? '').toLowerCase().replace(/[^\w]+/g,'-').replace(/^-|-$/g,'');
+    return {
+      title:    n.title ?? slug,
+      date:     n.modified ?? n.date ?? '',
+      blurb:    '',
+      tier:     5,
+      category: 'notes',
+      thumb:    '',
+      href:     `/notes/${slug}.html`,
+      ext:      false,
+      tags:     n.tags ?? [],
+    };
   });
 
-  // NOTES — Tier 2
-  try{
-    const notes=await fetch('/notes/notes_index.json',{cache:'no-store'}).then(r=>r.json());
-    const list=Array.isArray(notes)?notes:(notes.items||notes.notes||[]);
-    for(const n of(list||[])){
-      const slug=n.slug||(n.filename||'').replace(/\.[^.]+$/,'')||(n.title||'').toLowerCase().replace(/\s+/g,'-');
-      items.push({title:n.title||slug||'Note',date:n.date||'',blurb:n.blurb||'',tier:2,
-        thumbnail:n.thumbnail||'/assets/thumbs/notes.png',path:n.path_html||`/notes/${slug}.html`,external:n.external||''});
-    }
-  }catch(e){console.warn('notes load failed',e);}
-
-  // ARCHIVE (Academic & Criticism)
-  try{
-    const arch=await fetch('/archive/manifest.json',{cache:'no-store'}).then(r=>r.json());
-    const list=arch.items||[];
-    for(const a of list){
-      const p=(a.path_html||a.path||a.url||'')+'';
-      if(/\/writing\/magic\//i.test(p))continue;
-      items.push({title:a.title||'Untitled',date:a.date||'',blurb:a.blurb||'',
-        tier:Number(String(a.tier||'').replace(/\D/g,''))||3,
-        thumbnail:a.thumbnail||'',path:a.path_html||a.path||a.url||'',external:a.external||''});
-    }
-  }catch(e){console.warn('archive load failed',e);}
-
-  // MAGIC (folders + Tier ≤3)
-  try{
-    const magic=await fetch('/archive/writing/magic/manifest.json',{cache:'no-store'}).then(r=>r.json());
-    const kids=magic.children||[];
-    for(const c of kids){
-      items.push({title:c.label,date:'',blurb:c.blurb||'',tier:4,
-        thumbnail:c.thumbnail||'',path:c.index||'',external:''});
-    }
-    await Promise.all(kids.map(async k=>{
-      try{
-        const sub=await fetch(`/archive/writing/magic/${k.key}/manifest.json`).then(r=>r.json());
-        const arr=sub.items||[];
-        arr.filter(it=>{
-          const t=Number(String(it.tier||'').replace(/\D/g,''))||3;
-          return t<=3;
-        }).forEach(it=>{
-          items.push({title:it.title||'Untitled',date:it.date||'',blurb:it.blurb||'',
-            tier:Number(String(it.tier||'').replace(/\D/g,''))||3,
-            thumbnail:it.thumbnail||'',path:`/archive/writing/magic/${k.key}/`+(it.path_html||it.path||it.url||''),external:it.external||''});
-        });
-      }catch(e){console.warn('magic sub load failed',k.key,e);}
-    }));
-  }catch(e){console.warn('magic tree load failed',e);}
-
-  // sort
-  const pins=items.filter(x=>x.tier===1);
-  const rest=items.filter(x=>x.tier!==1).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-  const final=[...pins,...rest];
-
-  sessionStorage.setItem('feedData',JSON.stringify(final));
-  renderFeed(final,1);
+  ITEMS = [...archItems, ...noteItems];
+  render();
 }
 
-/* === RENDER + PAGINATION === */
-function renderFeed(items,page=1){
-  const feedEl=document.getElementById('feed');
-  const pager=document.getElementById('feedPagination');
-  const perPage=50;
-  const totalPages=Math.ceil(items.length/perPage);
+function resolveHref(a) {
+  if (a.external) return a.external;
+  const raw = a.path_html ?? a.path ?? a.url ?? '';
+  if (!raw) return '#';
+  // already absolute or external
+  if (raw.startsWith('http') || raw.startsWith('/')) return raw;
+  return '/' + raw;
+}
 
-  function show(n){
-    page=Math.max(1,Math.min(totalPages||1,n));
-    const start=(page-1)*perPage,end=start+perPage;
-    const slice=items.slice(start,end);
+/* ── Controls ────────────────────────────────────────── */
+document.getElementById('feedControls').addEventListener('click', e => {
+  const btn = e.target.closest('.ctrl-btn');
+  if (!btn) return;
 
-    feedEl.innerHTML=slice.map(it=>{
-      let subHTML='';
-      if(Array.isArray(it.subitems)&&it.subitems.length){
-        const subs=it.subitems.map(s=>
-          `<li><a href="${s.external}" target="_blank">${s.title}</a>
-           <span class="meta">${new Date(s.date).toLocaleDateString(undefined,{month:'short',day:'numeric'})}</span></li>`).join('');
-        subHTML=`<ul class="sublist">${subs}</ul>`;
-      }
-      return `
-        <article class="tier-${it.tier}">
-          ${it.thumbnail?`<img src="${it.thumbnail}" alt="">`:''}
-          <h3><a href="${it.path||it.external}" target="_blank" rel="noopener">${it.title}</a>${it.tier===1?' ⭐':''}</h3>
-          ${it.date?`<p class="meta">${it.date}</p>`:''}
-          ${it.blurb?`<p>${it.blurb}</p>`:''}
-          ${subHTML}
-        </article>`;
-    }).join('')||'<p>No feed items found.</p>';
+  if ('view' in btn.dataset) {
+    STATE.view = btn.dataset.view;
+    btn.closest('.ctrl-group').querySelectorAll('.ctrl-btn')
+      .forEach(b => b.classList.toggle('on', b === btn));
+  }
+  if ('sort' in btn.dataset) {
+    STATE.sort = btn.dataset.sort;
+    btn.closest('.ctrl-group').querySelectorAll('.ctrl-btn')
+      .forEach(b => b.classList.toggle('on', b === btn));
+  }
 
-    pager.innerHTML='';
-    if(totalPages>1){
-      const prev=document.createElement('button');
-      prev.textContent='← Prev';prev.disabled=(page===1);prev.onclick=()=>show(page-1);
-      const next=document.createElement('button');
-      next.textContent='Next →';next.disabled=(page===totalPages);next.onclick=()=>show(page+1);
-      const count=document.createElement('span');
-      count.textContent=`Page ${page} of ${totalPages}`;
-      pager.append(prev,count,next);
+  render();
+});
+
+/* ── Render ──────────────────────────────────────────── */
+function render() {
+  const feed = document.getElementById('feed');
+
+  if (STATE.sort === 'date') {
+    renderByDate(feed);
+  } else {
+    renderByType(feed);
+  }
+}
+
+/* ── Render: by date ─────────────────────────────────── */
+function renderByDate(feed) {
+  // Sort: newest first; tier-5 items always float to top in feature view
+  const sorted = [...ITEMS].sort((a, b) => b.date.localeCompare(a.date));
+
+  if (STATE.view === 'feature') {
+    const t5  = sorted.filter(it => it.tier >= 5);
+    const mid = sorted.filter(it => it.tier >= 3 && it.tier <= 4);
+    const maj = sorted.filter(it => it.tier <= 2);
+
+    let html = '';
+    if (t5.length)  html += sectionHead('Latest') + t5.map(featureT5).join('');
+    if (mid.length) html += sectionHead('Archive') + mid.map(featureStd).join('');
+    if (maj.length) html += sectionHead('Major Works') + maj.map(featureMajor).join('');
+    if (!html)      html  = '<p class="loading">Nothing here yet.</p>';
+
+    feed.innerHTML = html;
+
+  } else {
+    // list view: flat, all tiers together
+    let html = '';
+    html += sorted.map(it => listRow(it)).join('');
+    if (!html) html = '<p class="loading">Nothing here yet.</p>';
+    feed.innerHTML = html;
+  }
+}
+
+/* ── Render: by type ─────────────────────────────────── */
+function renderByType(feed) {
+  // Group by category, sections in a sensible order
+  const ORDER = ['notes','criticism','academic','video','technical','magic'];
+  const groups = {};
+  ITEMS.forEach(it => {
+    const c = it.category;
+    if (!groups[c]) groups[c] = [];
+    groups[c].push(it);
+  });
+  // Sort within each group newest first
+  Object.values(groups).forEach(g => g.sort((a,b) => b.date.localeCompare(a.date)));
+
+  // Build section order: known first, then alphabetical remainder
+  const keys = [
+    ...ORDER.filter(k => groups[k]),
+    ...Object.keys(groups).filter(k => !ORDER.includes(k)).sort(),
+  ];
+
+  let html = '';
+  for (const k of keys) {
+    const items = groups[k];
+    html += sectionHead(catLabel(k));
+
+    if (STATE.view === 'feature') {
+      const t5  = items.filter(it => it.tier >= 5);
+      const mid = items.filter(it => it.tier >= 3 && it.tier <= 4);
+      const maj = items.filter(it => it.tier <= 2);
+      html += t5.map(featureT5).join('') + mid.map(featureStd).join('') + maj.map(featureMajor).join('');
+    } else {
+      html += items.map(it => listRow(it)).join('');
     }
   }
-  show(1);
+
+  if (!html) html = '<p class="loading">Nothing here yet.</p>';
+  feed.innerHTML = html;
 }
+
+/* ── Builders ────────────────────────────────────────── */
+function sectionHead(label) {
+  return `<div class="sec-head">${esc(label)}</div>`;
+}
+
+function link(it) {
+  return `href="${esc(it.href)}"${it.ext ? ' target="_blank" rel="noopener"' : ''}`;
+}
+
+/* Feature: tier 5 */
+function featureT5(it) {
+  return `<a class="fi-t5" ${link(it)}>
+    <span class="fi-t5-left">
+      <span class="t5-dot" aria-hidden="true">◆</span>
+      <span class="fi-t5-title">${it.title}</span>
+    </span>
+    <span class="fi-t5-date">${fmtMon(it.date)}</span>
+  </a>`;
+}
+
+/* Feature: tier 3–4 standard */
+function featureStd(it) {
+  const bare = !it.thumb;
+  return `<a class="fi-std${bare ? ' bare' : ''}" ${link(it)}>
+    ${!bare ? `<img class="fi-thumb" src="${esc(it.thumb)}" alt="" loading="lazy">` : ''}
+    <div class="fi-body">
+      <div class="fi-cat">${catLabel(it.category)} ${it.date ? '· ' + fmtYear(it.date) : ''}</div>
+      <div class="fi-title">${it.title}</div>
+      ${it.blurb ? `<div class="fi-blurb">${esc(it.blurb)}</div>` : ''}
+    </div>
+  </a>`;
+}
+
+/* Feature: tier 1–2 major */
+function featureMajor(it) {
+  const bare = !it.thumb;
+  return `<a class="fi-major${bare ? ' bare' : ''}" ${link(it)}>
+    ${!bare ? `<img class="fi-thumb" src="${esc(it.thumb)}" alt="" loading="lazy">` : ''}
+    <div class="fi-body">
+      <div class="fi-cat">${catLabel(it.category)} ${it.date ? '· ' + fmtYear(it.date) : ''}</div>
+      <div class="fi-title">${it.title}</div>
+      ${it.blurb ? `<div class="fi-blurb">${esc(it.blurb)}</div>` : ''}
+    </div>
+  </a>`;
+}
+
+/* List row: all tiers */
+function listRow(it) {
+  const dot = it.tier >= 5 ? `<span class="t5-dot" aria-hidden="true">◆</span>` : '';
+  return `<a class="li-row" ${link(it)}>
+    <span class="li-left">
+      ${dot}
+      <span class="li-title">${it.title}</span>
+    </span>
+    <span class="li-cat">${catLabel(it.category)}</span>
+    <span class="li-date">${fmtMon(it.date)}</span>
+  </a>`;
+}
+
+/* ── Go ──────────────────────────────────────────────── */
+boot();
 </script>
 </body>
 </html>
