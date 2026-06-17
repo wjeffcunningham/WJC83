@@ -100,10 +100,10 @@ td.scan-cell input { cursor: pointer; accent-color: var(--scanned); width: 15px;
 <div class="toolbar">
   <div class="search-wrap">
     <span class="icon">&#128269;</span>
-    <input type="text" id="sq" placeholder="Search name, subject, packet #&hellip;" oninput="render()">
+    <input type="text" id="sq" placeholder="Search name, subject, neg #&hellip;" oninput="render()">
   </div>
   <div class="jump-wrap">
-    <label for="jmp">Jump to packet</label>
+    <label for="jmp">Jump to neg</label>
     <input type="text" id="jmp" placeholder="e.g. 1042" onkeydown="if(event.key==='Enter')jumpTo(this.value)">
   </div>
   <div class="tag-filters" id="tagfilters"></div>
@@ -116,7 +116,7 @@ td.scan-cell input { cursor: pointer; accent-color: var(--scanned); width: 15px;
   <table id="maintable">
     <thead>
       <tr>
-        <th onclick="sb('neg')" id="th-neg">Packet #</th>
+        <th onclick="sb('packet')" id="th-neg">Packet #</th>
         <th onclick="sb('subject')" id="th-subject">Subject / Name (verbatim)</th>
         <th onclick="sb('notes')" id="th-notes">Cross-ref / Notes</th>
         <th onclick="sb('cat')" id="th-cat">Category</th>
@@ -305,12 +305,12 @@ function jumpTo(val) {
       return;
     }
   }
-  toast('Packet ' + val + ' not found in current view');
+  toast('Neg ' + val + ' not found in current view');
 }
 
 function exportCSV() {
   const f = sorted(filtered());
-  const lines = ['"Packet #","Subject / Name (verbatim)","Notes","Category","Scanned"'];
+  const lines = ['"Neg #","Subject / Name (verbatim)","Notes","Category","Scanned"'];
   f.forEach(function(r) {
     lines.push([r.neg, r.subject, r.notes, r.cat, scanned.has(r._id) ? 'Yes' : 'No'].map(function(v) {
       return '"' + (v || '').replace(/"/g, '""') + '"';
