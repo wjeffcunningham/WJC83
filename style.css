@@ -52,6 +52,7 @@ p { margin: 0 0 14px; }
 .work-group { margin: 0 0 30px; }
 .work-list, .project-list { list-style: none; margin: 0; padding: 0; }
 .work-list li { display: flex; gap: 14px; justify-content: space-between; padding: 8px 0; border-top: 1px solid var(--line); }
+.work-list li > a { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .work-list li:last-child { border-bottom: 1px solid var(--line); }
 .work-list span { flex: 0 0 auto; color: var(--quiet); font: 13px Arial, Helvetica, sans-serif; padding-top: 4px; }
 .more { margin: 8px 0 0; font: 14px Arial, Helvetica, sans-serif; }

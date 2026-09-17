@@ -1,237 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VVIP25 | WJC83.CA</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VVIP25 | W. Jeff Cunningham</title>
+  <link rel="icon" href="/favicon.ico?v=20260916-2" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260916-2">
   <link rel="stylesheet" href="../style.css">
   <style>
-  /* Page wrap */
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 1rem 2rem; }
-
-  /* Header/title – remove big default gaps */
-  .site-header { text-align: center; }
-  .site-title { margin: 12px 0 14px; line-height: 1; }
-
-  /* ===== HERO (framed image + caption) ===== */
-  .hero-figure{
-    display: block;
-    max-width: 100%;
-    margin: 0 auto 18px;
-    text-align: center;
-  }
-  .hero-frame{
-    display: inline-block;
-    border: 1px solid rgba(0,0,0,.1);
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(0,0,0,.10);
-    overflow: hidden;
-  }
-  body.dark .hero-frame{
-    background: #121212;
-    border-color: rgba(255,255,255,.16);
-  }
-  .hero-img{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    max-height: 60vh;
-    object-fit: contain;
-  }
-  .hero-figure figcaption{
-    margin-top: .55rem;
-    font-size: .95rem;
-    opacity: .8;
-  }
-
-  /* Description + links */
-  .desc { margin: 12px 0 18px; font-size: 1rem; line-height: 1.5; }
-  .links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-start; margin: 10px 0 20px; }
-  .links a { text-decoration:none; font-weight:600; }
-
-  /* Feed */
-  .section { margin: 28px 0; }
-  .section h2 { margin:.2rem 0 1rem; font-size:1.1rem; letter-spacing:.04em; text-align:center; }
-  .grid { display:grid; gap:1rem; }
-  @media(min-width:640px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr));} }
-  .item { display:grid; grid-template-columns:140px 1fr; gap:.75rem;
-          border:1px solid rgba(0,0,0,.08); border-radius:12px;
-          background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.06); padding:.6rem; text-decoration:none; color:inherit; }
-  body.dark .item { background:#121212; border-color:rgba(255,255,255,.12); }
-  .thumb { width:100%; aspect-ratio:16/9; border-radius:8px; object-fit:cover; background:#ddd; }
-  .title { font-weight:700; margin:.1rem 0 .2rem; }
-  .meta { font-size:.88rem; opacity:.75; }
-  .stats { margin-top:.3rem; font-size:.85rem; opacity:.75; }
-  .tags { margin-top:.3rem; display:flex; flex-wrap:wrap; gap:.3rem; }
-  .tag { font-size:.75rem; border:1px solid rgba(0,0,0,.1); padding:.1rem .4rem; border-radius:999px; opacity:.85; }
-  body.dark .tag { border-color:rgba(255,255,255,.2); }
+    .project-page { max-width: 700px; }
+    .project-page figure { margin: 0 0 24px; }
+    .project-page img { display: block; width: min(100%, 500px); height: auto; }
+    .project-page figcaption { margin-top: 5px; color: var(--quiet); font: 12px Arial, Helvetica, sans-serif; }
+    .project-page .visit { font-family: Arial, Helvetica, sans-serif; font-weight: 700; }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <h1 class="site-title">VVIP25</h1>
+    <a class="site-name" href="../">W. Jeff Cunningham</a>
   </header>
-
-  <main class="wrap">
-    <figure class="hero-figure">
-      <div class="hero-frame">
-        <img class="hero-img" src="../assets/vvip25-hero.jpg" alt="VVIP25 hero image">
-      </div>
+  <main class="project-page">
+    <h1>VVIP25</h1>
+    <figure>
+      <img src="../assets/vvip25-hero.jpg" alt="VVIP25 artwork">
       <figcaption><i>Art by SF Cook</i></figcaption>
     </figure>
-
-    <div class="desc">
-      <p><strong>VVIP25</strong> is a Vancouver-based music and video project (2024–present).</p>
-    </div>
-
-    <section class="links">
-      <a href="https://youtu.be/ofOgeY0uuxA?si=6Sk4_cngM4jZPoe1" target="_blank" rel="noopener">▶ Watch Trailer</a>
-      <a href="https://www.vvipmedia.net" target="_blank" rel="noopener">Visit Site</a>
-      <a href="https://www.youtube.com/@VVVVIIPP25" target="_blank" rel="noopener">YouTube Channel</a>
-    </section>
-
-    <!-- Releases feed -->
-    <section id="videosSec" class="section" hidden>
-      <h2>Videos</h2>
-      <div id="videosGrid" class="grid"></div>
-    </section>
-
-    <section id="shortsSec" class="section" hidden>
-      <h2>Shorts</h2>
-      <div id="shortsGrid" class="grid"></div>
-    </section>
+    <p>Vancouver-based music and video project.</p>
+    <p class="visit"><a href="https://www.vvipmedia.net" target="_blank" rel="noopener">Visit site →</a></p>
   </main>
-
-  <script>
-    /* ======= CONFIG ======= */
-    const CHANNEL_ID = "UCRQMQeiTlrzyA-eONIXDq1g";
-    const MAX_FETCH = 50;
-    const SHORTS_MAX_SECONDS = 60;
-    const EXCLUDE_IDS = [];
-
-    // Use Worker on prod; on localhost call your prod Worker domain
-    const API_BASE = (location.hostname.includes('localhost') || location.hostname.startsWith('127.'))
-      ? 'https://wjc83.ca/api/yt'
-      : '/api/yt';
-
-    /* ======= HELPERS ======= */
-    const YT_THUMB = id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-    const YT_URL   = id => `https://www.youtube.com/watch?v=${id}`;
-    const fmtDate  = iso => new Date(iso).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-
-    function iso8601ToSeconds(iso){
-      const m = iso?.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-      if(!m) return 0;
-      const h = +m[1]||0, min = +m[2]||0, s = +m[3]||0;
-      return h*3600 + min*60 + s;
-    }
-
-    async function fetchJSON(url){
-      const res = await fetch(url + `?v=${Date.now()}`); // cache bust
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      return await res.json();
-    }
-
-    function render(list, mount){
-      const frag = document.createDocumentFragment();
-      list.forEach(v=>{
-        const a = document.createElement('a');
-        a.className = 'item';
-        a.href = YT_URL(v.videoId);
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.innerHTML = `
-          <img class="thumb" src="${v.thumb}" alt="">
-          <div>
-            <div class="title">${v.title}</div>
-            <div class="meta">${fmtDate(v.publishedAt)} · ${v.durationLabel || ''}</div>
-            ${v.tags?.length ? `<div class="tags">${v.tags.slice(0,6).map(t=>`<span class="tag">#${t}</span>`).join('')}</div>` : ''}
-            ${v.views || v.likes ? `<div class="stats">
-              ${v.views ? v.views.toLocaleString() + ' views' : ''}
-              ${v.likes ? (v.views ? ' · ' : '') + v.likes.toLocaleString() + ' likes' : ''}
-            </div>` : ''}
-          </div>
-        `;
-        frag.appendChild(a);
-      });
-      mount.replaceChildren(frag);
-    }
-
-    /* ======= YOUTUBE API VIA WORKER ======= */
-    async function getUploadsPlaylistId(){
-      const data = await fetchJSON(`${API_BASE}/channels?part=contentDetails&id=${CHANNEL_ID}`);
-      return data?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads || null;
-    }
-
-    async function getAllPlaylistItems(playlistId, maxCount=MAX_FETCH){
-      let items = [], pageToken = '';
-      while(items.length < maxCount){
-        const params = new URLSearchParams({
-          part: 'snippet,contentDetails',
-          playlistId,
-          maxResults: '50'
-        });
-        if(pageToken) params.set('pageToken', pageToken);
-        const data = await fetchJSON(`${API_BASE}/playlistItems?${params.toString()}`);
-        const chunk = (data.items || []).map(it => ({
-          videoId: it.contentDetails?.videoId,
-          publishedAt: it.contentDetails?.videoPublishedAt,
-          title: it.snippet?.title || '',
-          tags: it.snippet?.tags || [],
-          thumb: it.snippet?.thumbnails?.medium?.url || (it.contentDetails?.videoId ? YT_THUMB(it.contentDetails.videoId) : '')
-        }));
-        items = items.concat(chunk);
-        if(!data.nextPageToken || items.length >= maxCount) break;
-        pageToken = data.nextPageToken;
-      }
-      return items.slice(0, maxCount);
-    }
-
-    async function hydrateWithDetails(videos){
-      const out = [];
-      for(let i=0; i<videos.length; i+=50){
-        const slice = videos.slice(i, i+50);
-        const ids = slice.map(v => v.videoId).join(',');
-        const data = await fetchJSON(`${API_BASE}/videos?part=contentDetails,statistics&id=${ids}`);
-        const map = new Map((data.items||[]).map(x => [x.id, x]));
-        slice.forEach(v=>{
-          const d = map.get(v.videoId);
-          if(d){
-            const dur = d.contentDetails?.duration || 'PT0S';
-            const secs = iso8601ToSeconds(dur);
-            v.seconds = secs;
-            v.durationLabel = dur.replace('PT','').replace('H',':').replace('M',':').replace('S','')
-              .replace(/(^:)|(:$)/g,'').split(':')
-              .map((t,i,arr)=> (i>0 && t.length===1 && arr.length>1 ? '0'+t : t)).join(':');
-            v.views = Number(d.statistics?.viewCount||0);
-            v.likes = Number(d.statistics?.likeCount||0);
-          }
-          out.push(v);
-        });
-      }
-      return out;
-    }
-
-    (async function init(){
-      try{
-        const uploadsId = await getUploadsPlaylistId();
-        if(!uploadsId) return;
-
-        let items = await getAllPlaylistItems(uploadsId, MAX_FETCH);
-        items = items.filter(v => v.videoId && !EXCLUDE_IDS.includes(v.videoId));
-        items = await hydrateWithDetails(items);
-        items.sort((a,b)=> new Date(b.publishedAt) - new Date(a.publishedAt));
-
-        const shorts = items.filter(v => v.seconds > 0 && v.seconds <= SHORTS_MAX_SECONDS);
-        const longs  = items.filter(v => !shorts.includes(v));
-
-        if(longs.length){ document.getElementById('videosSec').hidden = false; render(longs, document.getElementById('videosGrid')); }
-        if(shorts.length){ document.getElementById('shortsSec').hidden = false; render(shorts, document.getElementById('shortsGrid')); }
-      }catch(err){
-        console.error('YouTube feed error:', err);
-      }
-    })();
-  </script>
 </body>
 </html>

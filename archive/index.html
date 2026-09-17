@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Archive | WJC83.CA</title>
+  <link rel="icon" href="/favicon.ico?v=20260916-2" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260916-2">
   <link rel="stylesheet" href="../style.css">
   <style>
     .wrap { max-width: 900px; margin: 1.25rem auto 3rem; padding: 0 1rem; text-align: left; }
@@ -130,7 +132,7 @@
         <div id="bucket-writing"></div>
       </details>
 
-      <details data-bucket="movies">
+      <details id="movies" data-bucket="movies">
         <summary>
           <span class="title">Movies</span>
           <span class="meta"><span class="count" id="count-movies">—</span></span>
@@ -146,6 +148,8 @@ if (window.__ARCHIVE_APP_RAN__) {
   console.debug('Archive app already ran, skipping.');
 } else {
   window.__ARCHIVE_APP_RAN__ = true;
+
+  if (location.hash === '#movies') document.getElementById('movies').open = true;
 
   const ROOT_MANIFEST = 'manifest.json?v=11';
   const $ = (s,c=document)=>c.querySelector(s);
