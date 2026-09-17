@@ -55,6 +55,12 @@ p { margin: 0 0 14px; }
 .work-list li > a { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .work-list li:last-child { border-bottom: 1px solid var(--line); }
 .work-list span { flex: 0 0 auto; color: var(--quiet); font: 13px Arial, Helvetica, sans-serif; padding-top: 4px; }
+.work-item-with-versions { display: block !important; }
+.work-item-heading { display: flex; gap: 14px; justify-content: space-between; }
+.work-item-heading > a { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.version-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.version-links a { padding: 2px 7px; border: 1px solid var(--line); font: 12px Arial, Helvetica, sans-serif; text-decoration: none; }
+.version-links a:hover { background: var(--ink); color: var(--paper); }
 .more { margin: 8px 0 0; font: 14px Arial, Helvetica, sans-serif; }
 
 .project-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
