@@ -1,6 +1,6 @@
 This favicon was generated using the following font:
 
-- Font Title: Kalam
+- Font Title: Laila
 - Font Author: undefined
-- Font Source: https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMuhWMibDszkB.ttf
+- Font Source: https://fonts.gstatic.com/s/laila/v20/LYjMdG_8nE8jDIRdiidIrEIu.ttf
 - Font License: undefined)
