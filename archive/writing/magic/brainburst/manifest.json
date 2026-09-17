@@ -36,18 +36,17 @@
       "status": "linked"
     },
 
-    /* ====== Local PDFs you showed in the screenshot ====== */
     {
       "id": "2003-04-18-ug-madness-vs-rg-beats",
       "title": "UG Madness: Matchup Analysis vs. RG Beats",
       "author": "Jeff Cunningham",
       "date": "2003-04-18",
       "type": "Strategy",
-      "filename": "Brainburst.co…. RG Beats.pdf",
+      "filename": "Brainburst.com Magic the Gathering Resource - UG Madness_ Matchup Analysis vs. RG Beats.pdf",
       "external": "https://web.archive.org/web/20030606230121/http://www.brainburst.com/db/article.asp?ID=2933",
       "tags": ["Type II","UG Madness","RG Beats","matchup"],
       "status": "local+linked",
-      "notes": "Filename kept as-is; spaces/ellipsis OK."
+      "notes": "Local PDF mirror."
     },
     {
       "id": "2003-10-17-rise-and-fall-of-mt-cleverest",
@@ -71,7 +70,6 @@
       "status": "local"
     },
 
-    /* ====== More links + planned HTML reconstructions ====== */
     {
       "id": "2003-04-08-pro-tour-venice-this-is-awkward",
       "title": "Pro Tour Venice: This Is Awkward (55th)",
@@ -108,7 +106,6 @@
       "author": "Jeff Cunningham",
       "date": "2005-02-02",
       "type": "Strategy",
-      "html": "UG Madness — Extended (BoK).html",
       "external": "https://web.archive.org/web/20050207000809/http://www.brainburst.com/db/article.asp?id=4903",
       "tags": ["Extended","UG Madness","deck tech"],
       "status": "todo"
@@ -119,7 +116,6 @@
       "author": "Jeff Cunningham",
       "date": "2005-02-21",
       "type": "Report",
-      "html": "There and BoK — The Epic Report.html",
       "external": "https://web.archive.org/web/20050313191701/http://www.brainburst.com/db/article.asp?id=4968",
       "tags": ["Pro Tour","Nagoya","Limited","report"],
       "status": "todo"

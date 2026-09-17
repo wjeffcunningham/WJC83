@@ -1,633 +1,88 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WJC83.CA</title>
-<meta name="description" content="W. Jeff Cunningham — criticism, essays, film, and projects.">
-<link rel="icon" href="/assets/favicon.png">
-<style>
-/* ── TOKENS ─────────────────────────────────────── */
-:root {
-  --paper:  #f6f5f2;
-  --ink:    #0a0a0a;
-  --dim:    rgba(10,10,10,.46);
-  --rule:   rgba(10,10,10,.11);
-  --gold:   #8a6500;
-  --col:    648px;
-  --sans:   "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-  --mono:   "SFMono-Regular", Menlo, Consolas, monospace;
-}
-body.night {
-  --paper: #0e0d0b;
-  --ink:   #e4e2dc;
-  --dim:   rgba(228,226,220,.44);
-  --rule:  rgba(228,226,220,.1);
-  --gold:  #c09900;
-}
-
-/* ── RESET ──────────────────────────────────────── */
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; }
-body {
-  font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.6;
-  background: var(--paper);
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  transition: background .2s, color .2s;
-}
-a { color:inherit; text-decoration:none; }
-img { display:block; }
-
-/* ── MASTHEAD ───────────────────────────────────── */
-.mast {
-  max-width: var(--col);
-  margin: 0 auto;
-  padding: 1.25rem 1.25rem 1rem;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1.5rem;
-  border-bottom: 1px solid var(--rule);
-}
-.wmark {
-  font-size: 12.5px;
-  font-weight: 800;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.wmark a { text-decoration:none; }
-
-.mast-nav {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  row-gap: .2rem;
-}
-.mast-nav a,
-.mast-nav span {
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  line-height: 1;
-  white-space: nowrap;
-}
-.mast-nav a {
-  color: var(--dim);
-  padding: .1rem .3rem;
-  transition: color .1s;
-}
-.mast-nav a:hover { color: var(--ink); }
-.mast-nav .sep { color: var(--rule); padding: 0 .05rem; user-select:none; }
-.mast-nav .sub {
-  color: var(--ink);
-  border: 1px solid var(--rule);
-  border-radius: 99px;
-  padding: .22rem .65rem;
-  margin-left: .2rem;
-  transition: background .12s, border-color .12s;
-}
-.mast-nav .sub:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-
-/* ── HERO ───────────────────────────────────────── */
-.hero-wrap {
-  max-width: var(--col);
-  margin: 0 auto;
-  padding: 1.75rem 1.25rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-/* Portrait 3:4 — show full, uncropped.
-   max-height keeps it within the viewport on tall screens.
-   On mobile we let it go full width at natural height. */
-.hero-img {
-  max-height: 76vh;
-  width: auto;
-  max-width: 100%;
-  opacity: 0;
-  transition: opacity .5s ease;
-}
-.hero-img.ready { opacity:1; }
-.hero-cap {
-  margin-top: .5rem;
-  font-size: 10px;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-  color: var(--dim);
-  font-style: italic;
-  text-align: center;
-}
-
-/* ── FEED CONTROLS ──────────────────────────────── */
-.feed-controls {
-  max-width: var(--col);
-  margin: 0 auto;
-  padding: 0 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--rule);
-  height: 2.4rem;
-}
-
-/* segmented button group */
-.ctrl-group {
-  display: flex;
-  gap: 0;
-}
-.ctrl-btn {
-  appearance: none;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--dim);
-  background: transparent;
-  border: 1px solid var(--rule);
-  padding: .22rem .6rem;
-  cursor: pointer;
-  line-height: 1;
-  transition: background .1s, color .1s, border-color .1s;
-  white-space: nowrap;
-}
-.ctrl-btn + .ctrl-btn { border-left: none; }
-.ctrl-btn:first-child { border-radius: 3px 0 0 3px; }
-.ctrl-btn:last-child  { border-radius: 0 3px 3px 0; }
-.ctrl-btn.on {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.ctrl-btn.on + .ctrl-btn { border-left: 1px solid var(--rule); }
-
-/* ── FEED ───────────────────────────────────────── */
-.feed {
-  max-width: var(--col);
-  margin: 0 auto 4rem;
-  padding: 0 1.25rem;
-}
-
-/* section label */
-.sec-head {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--dim);
-  padding: 1.25rem 0 .45rem;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 0;
-}
-
-/* ─── FEATURE VIEW items ──────────────────────── */
-
-/* tier-5 row (notes, quick posts) */
-.fi-t5 {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: .52rem 0;
-  border-bottom: 1px solid var(--rule);
-  transition: opacity .1s;
-}
-.fi-t5:last-child { border-bottom:none; }
-.fi-t5:hover { opacity:.72; }
-.fi-t5-left { display:flex; align-items:baseline; gap:.48rem; min-width:0; }
-.t5-dot { color:var(--gold); font-size:.6em; flex-shrink:0; position:relative; top:-.06em; }
-.fi-t5-title { font-size:.9rem; font-weight:600; line-height:1.3; }
-.fi-t5-date  { font-family:var(--mono); font-size:10px; color:var(--dim); white-space:nowrap; flex-shrink:0; }
-
-/* standard item (tier 3–4): thumb + body */
-.fi-std {
-  display: grid;
-  grid-template-columns: 68px 1fr;
-  gap: .85rem;
-  padding: .75rem 0;
-  border-bottom: 1px solid var(--rule);
-  align-items: start;
-}
-.fi-std.bare { grid-template-columns: 1fr; }
-.fi-std:last-child { border-bottom:none; }
-.fi-std:hover .fi-title { text-decoration:underline; text-decoration-thickness:1px; }
-
-.fi-thumb {
-  width: 68px; height: 51px;
-  object-fit: cover;
-  border-radius: 3px;
-  background: #bbb;
-  flex-shrink: 0;
-}
-
-/* tier 1–2: same grid but with a left accent rule */
-.fi-major {
-  display: grid;
-  grid-template-columns: 68px 1fr;
-  gap: .85rem;
-  padding: .75rem 0 .75rem .75rem;
-  border-bottom: 1px solid var(--rule);
-  border-left: 2px solid var(--rule);
-  margin-left: -.75rem; /* pull left edge into column */
-  align-items: start;
-  transition: border-left-color .15s;
-}
-.fi-major:last-child { border-bottom:none; }
-.fi-major:hover { border-left-color: var(--ink); }
-.fi-major:hover .fi-title { text-decoration:underline; text-decoration-thickness:1px; }
-.fi-major.bare { grid-template-columns: 1fr; }
-
-.fi-body {}
-.fi-cat  { font-family:var(--mono); font-size:10px; color:var(--dim); margin-bottom:.18rem; letter-spacing:.02em; }
-.fi-title { font-size:.9rem; font-weight:700; line-height:1.25; margin-bottom:.22rem; }
-.fi-blurb { font-size:.8rem; color:var(--dim); line-height:1.45; }
-.fi-tags  { display:flex; flex-wrap:wrap; gap:.25rem; margin-top:.3rem; }
-.fi-tag   {
-  font-size:9px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
-  color:var(--dim); border:1px solid var(--rule); border-radius:99px; padding:.06rem .35rem;
-}
-
-/* ─── LIST VIEW items ──────────────────────────── */
-.li-row {
-  display: grid;
-  /* title | category | date */
-  grid-template-columns: 1fr auto auto;
-  align-items: baseline;
-  gap: .6rem 1rem;
-  padding: .38rem 0;
-  border-bottom: 1px solid var(--rule);
-  transition: opacity .1s;
-}
-.li-row:last-child { border-bottom:none; }
-.li-row:hover { opacity:.72; }
-.li-row:hover .li-title { text-decoration:underline; text-decoration-thickness:1px; }
-
-.li-left  { display:flex; align-items:baseline; gap:.45rem; min-width:0; }
-.li-title { font-size:.88rem; font-weight:600; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.li-cat   { font-family:var(--mono); font-size:9.5px; color:var(--dim); white-space:nowrap; letter-spacing:.03em; }
-.li-date  { font-family:var(--mono); font-size:9.5px; color:var(--dim); white-space:nowrap; }
-
-/* ── LOADING ───────────────────────────────────── */
-.loading { padding:2.5rem 0; font-size:.82rem; color:var(--dim); }
-
-/* ── FOOTER ───────────────────────────────────── */
-.foot {
-  max-width: var(--col);
-  margin: 0 auto;
-  padding: 1rem 1.25rem 3rem;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: .75rem;
-}
-.foot-bio { font-size:.78rem; color:var(--dim); line-height:1.55; max-width:40ch; }
-.foot-sub {
-  font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-  text-decoration:none; color:var(--ink); border:1px solid var(--rule);
-  border-radius:99px; padding:.35rem .9rem; white-space:nowrap;
-  transition:background .12s, border-color .12s;
-}
-.foot-sub:hover { background:var(--ink); color:var(--paper); border-color:var(--ink); }
-
-/* ── MOBILE ───────────────────────────────────── */
-@media (max-width: 500px) {
-  .mast { padding:.95rem 1rem .85rem; gap:.85rem; }
-  .hero-wrap { padding:1.4rem 1rem 1.1rem; }
-  .hero-img  { max-height:none; width:100%; }
-  .feed-controls, .feed, .foot { padding-left:1rem; padding-right:1rem; }
-  .fi-major { margin-left:-.5rem; padding-left:.5rem; }
-  /* list view: drop category column on narrow screens */
-  .li-row { grid-template-columns:1fr auto; }
-  .li-cat  { display:none; }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="W. Jeff Cunningham — writing, films, and other projects.">
+  <title>W. Jeff Cunningham</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="site-header">
+    <a class="site-name" href="./">W. Jeff Cunningham</a>
+    <nav aria-label="Main navigation">
+      <a href="#writing">Writing</a>
+      <a href="#projects">Projects</a>
+      <a href="archive/">Full archive</a>
+    </nav>
+  </header>
 
-<!-- ══ MASTHEAD ═══════════════════════════════════════ -->
-<header class="mast">
-  <div class="wmark"><a href="/">WJC83.CA</a></div>
-  <nav class="mast-nav" aria-label="Sections">
-    <a href="/ijpauc/">IJPAUC?</a>
-    <span class="sep">·</span>
-    <a href="/vvip25/">VVIP25</a>
-    <span class="sep">·</span>
-    <a href="/notes/">Notes</a>
-    <span class="sep">·</span>
-    <a href="/archive/">Archive</a>
-    <span class="sep">·</span>
-    <a href="https://wjc83.substack.com/subscribe" target="_blank" rel="noopener" class="sub">Subscribe</a>
-  </nav>
-</header>
+  <main>
+    <section class="intro">
+      <div class="intro-copy">
+        <h1>Writing, and other things.</h1>
+        <p>I’m a Vancouver-based writer and media artist.</p>
+      </div>
+      <figure class="home-photo">
+        <img src="assets/hero.jpeg" alt="Street photograph">
+        <figcaption>Photo by WJC, <i>The 7 Seas</i></figcaption>
+      </figure>
+    </section>
 
-<!-- ══ HERO ═══════════════════════════════════════════ -->
-<section class="hero-wrap">
-  <img id="heroImg" class="hero-img" src="/assets/hero.jpeg" alt="Photo by WJC">
-  <p class="hero-cap" id="heroCap">Photo by WJC</p>
-</section>
+    <section id="writing" aria-labelledby="writing-heading">
+      <h2 id="writing-heading">Writing</h2>
 
-<!-- ══ FEED CONTROLS ══════════════════════════════════ -->
-<div class="feed-controls" id="feedControls">
-  <div class="ctrl-group" role="group" aria-label="View">
-    <button class="ctrl-btn on" data-view="feature">Feature</button>
-    <button class="ctrl-btn"   data-view="list">List</button>
-  </div>
-  <div class="ctrl-group" role="group" aria-label="Sort">
-    <button class="ctrl-btn on" data-sort="date">Date</button>
-    <button class="ctrl-btn"   data-sort="type">Type</button>
-  </div>
-</div>
+      <div class="work-group">
+        <h3>Essays &amp; criticism</h3>
+        <ul class="work-list">
+          <li><a href="archive/writing/criticism/2018-07-18-digital-exile.html">Digital Exile: How I Got Banned For Life From Airbnb</a> <span>2018</span></li>
+          <li><a href="archive/writing/criticism/2020-02-11-extinction.pdf">Extinction: Amazon and the End of the American Entrepreneur</a> <span>2020</span></li>
+        </ul>
+        <p class="more"><a href="archive/writing/criticism/">More criticism →</a></p>
+      </div>
 
-<!-- ══ FEED ═══════════════════════════════════════════ -->
-<main class="feed" id="feed">
-  <p class="loading">Loading…</p>
-</main>
+      <div class="work-group">
+        <h3>Academic writing</h3>
+        <ul class="work-list">
+          <li><a href="archive/writing/academic/2016-12-17-thesis.pdf">On the Implications for Aristotle’s <i>Poetics</i> of the Possible Correspondence Between Hamartia and Hamartema</a> <span>2016</span></li>
+          <li><a href="archive/writing/academic/2017-05-29-plato-and-the-platonic-tradition.pdf">On the Variable Perception of Time in Proclus and Aristotle</a> <span>2017</span></li>
+        </ul>
+        <p class="more"><a href="archive/writing/academic/">All academic writing →</a></p>
+      </div>
 
-<!-- ══ FOOTER ═════════════════════════════════════════ -->
-<footer class="foot">
-  <p class="foot-bio">W. Jeff Cunningham is a Vancouver-based writer and media artist. His work spans criticism, essays, academic philosophy, film, and projects across music and games.</p>
-  <a href="https://wjc83.substack.com/subscribe" target="_blank" rel="noopener" class="foot-sub">Subscribe ↗</a>
-</footer>
+      <div class="work-group">
+        <h3>Magic: The Gathering</h3>
+        <p>A long-running archive of strategy, tournament coverage, and columns, from The Dojo through TCGplayer.</p>
+        <p class="more"><a href="archive/writing/magic/">Browse the Magic archive →</a></p>
+      </div>
+    </section>
 
-<script>
-/* ══════════════════════════════════════════════════════
-   WJC83.CA — index
-   ══════════════════════════════════════════════════════ */
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <ul class="project-list">
+        <li>
+          <a class="project-image" href="ijpauc/"><img src="assets/ijpauc-hero.jpg" alt="IJPAUC? artwork: a dinosaur skull"></a>
+          <a href="ijpauc/"><strong>IJPAUC?</strong></a>
+          <p>Music and media project.</p>
+        </li>
+        <li>
+          <a class="project-image" href="vvip25/"><img src="assets/vvip25-hero.jpg" alt="Blue ink artwork for VVIP25"></a>
+          <a href="vvip25/"><strong>VVIP25</strong></a>
+          <p>A project from 2025.</p>
+        </li>
+        <li>
+          <a class="project-image" href="archive/#movies"><img src="assets/thumbs/construction.jpg" alt="Film still of a weathered metal chair"></a>
+          <a href="archive/#movies"><strong>Films &amp; video</strong></a>
+          <p>Short films, camcorder footage, and other moving-image work.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
 
-/* ── Night mode: auto midnight–5am ──────────────────── */
-(function () {
-  const apply = () => document.body.classList.toggle('night', new Date().getHours() < 5);
-  apply();
-  setInterval(apply, 60_000);
-})();
-
-/* ── Hero: deterministic daily rotation ─────────────── */
-(function () {
-  // Add images here as you upload them. src path must be absolute.
-  // To pull from Cloudflare: replace with fetch('/api/hero') and await it.
-  const pool = [
-    { src: '/assets/hero.jpeg',  cap: 'Photo by WJC, "The 7 Seas"' },
-    { src: '/assets/hero1.jpeg', cap: 'Photo by WJC' },
-  ];
-  const seed = [...new Date().toDateString()].reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0);
-  const { src, cap } = pool[Math.abs(seed) % pool.length];
-  const img = document.getElementById('heroImg');
-  img.src = src;
-  document.getElementById('heroCap').textContent = cap;
-  const mark = () => img.classList.add('ready');
-  img.complete ? mark() : (img.onload = img.onerror = mark);
-})();
-
-/* ── Utilities ───────────────────────────────────────── */
-const esc = s => String(s)
-  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
-function fmtYear(s) {
-  if (!s) return '';
-  const d = new Date(s.length === 10 ? s + 'T12:00:00' : s);
-  return isNaN(d) ? '' : String(d.getFullYear());
-}
-
-function fmtMon(s) {
-  if (!s) return '';
-  const d = new Date(s.length === 10 ? s + 'T12:00:00' : s);
-  return isNaN(d) ? '' : d.toLocaleDateString('en-CA', { year:'numeric', month:'short' });
-}
-
-const CAT_LABEL = {
-  academic:  'Academic',
-  criticism: 'Criticism',
-  video:     'Film',
-  technical: 'Technical',
-  notes:     'Notes',
-  magic:     'Magic',
-};
-
-function catLabel(c) { return CAT_LABEL[c] || c; }
-
-/* ── State ───────────────────────────────────────────── */
-let STATE = { view: 'feature', sort: 'date' };
-let ITEMS = [];
-
-/* ── Boot ────────────────────────────────────────────── */
-async function boot() {
-  const [arch, notes] = await Promise.all([
-    fetch('/archive/manifest.json', { cache:'no-store' })
-      .then(r => r.json()).catch(() => ({ items:[] })),
-    fetch('/notes/notes_index.json', { cache:'no-store' })
-      .then(r => r.json()).catch(() => []),
-  ]);
-
-  /* normalise archive items */
-  const archItems = (arch.items ?? [])
-    .filter(a => a.title && a.tier && a.type !== 'folder')
-    .map(a => ({
-      title:    a.title,
-      date:     a.date ?? '',
-      blurb:    a.blurb ?? '',
-      tier:     parseInt(String(a.tier)) || 3,
-      category: a.category ?? a.type ?? 'misc',
-      thumb:    a.thumbnail ? '/' + a.thumbnail.replace(/^\//, '') : '',
-      href:     resolveHref(a),
-      ext:      !!a.external,
-      tags:     Array.isArray(a.tags) ? a.tags : [],
-    }));
-
-  /* normalise notes — tier 5 */
-  const noteList = Array.isArray(notes) ? notes : (notes.items ?? []);
-  const noteItems = noteList.map(n => {
-    const slug = n.slug ?? (n.title ?? '').toLowerCase().replace(/[^\w]+/g,'-').replace(/^-|-$/g,'');
-    return {
-      title:    n.title ?? slug,
-      date:     n.modified ?? n.date ?? '',
-      blurb:    '',
-      tier:     5,
-      category: 'notes',
-      thumb:    '',
-      href:     `/notes/${slug}.html`,
-      ext:      false,
-      tags:     n.tags ?? [],
-    };
-  });
-
-  ITEMS = [...archItems, ...noteItems];
-  render();
-}
-
-function resolveHref(a) {
-  if (a.external) return a.external;
-  const raw = a.path_html ?? a.path ?? a.url ?? '';
-  if (!raw) return '#';
-  // already absolute or external
-  if (raw.startsWith('http') || raw.startsWith('/')) return raw;
-  return '/' + raw;
-}
-
-/* ── Controls ────────────────────────────────────────── */
-document.getElementById('feedControls').addEventListener('click', e => {
-  const btn = e.target.closest('.ctrl-btn');
-  if (!btn) return;
-
-  if ('view' in btn.dataset) {
-    STATE.view = btn.dataset.view;
-    btn.closest('.ctrl-group').querySelectorAll('.ctrl-btn')
-      .forEach(b => b.classList.toggle('on', b === btn));
-  }
-  if ('sort' in btn.dataset) {
-    STATE.sort = btn.dataset.sort;
-    btn.closest('.ctrl-group').querySelectorAll('.ctrl-btn')
-      .forEach(b => b.classList.toggle('on', b === btn));
-  }
-
-  render();
-});
-
-/* ── Render ──────────────────────────────────────────── */
-function render() {
-  const feed = document.getElementById('feed');
-
-  if (STATE.sort === 'date') {
-    renderByDate(feed);
-  } else {
-    renderByType(feed);
-  }
-}
-
-/* ── Render: by date ─────────────────────────────────── */
-function renderByDate(feed) {
-  // Sort: newest first; tier-5 items always float to top in feature view
-  const sorted = [...ITEMS].sort((a, b) => b.date.localeCompare(a.date));
-
-  if (STATE.view === 'feature') {
-    const t5  = sorted.filter(it => it.tier >= 5);
-    const mid = sorted.filter(it => it.tier >= 3 && it.tier <= 4);
-    const maj = sorted.filter(it => it.tier <= 2);
-
-    let html = '';
-    if (t5.length)  html += sectionHead('Latest') + t5.map(featureT5).join('');
-    if (mid.length) html += sectionHead('Archive') + mid.map(featureStd).join('');
-    if (maj.length) html += sectionHead('Major Works') + maj.map(featureMajor).join('');
-    if (!html)      html  = '<p class="loading">Nothing here yet.</p>';
-
-    feed.innerHTML = html;
-
-  } else {
-    // list view: flat, all tiers together
-    let html = '';
-    html += sorted.map(it => listRow(it)).join('');
-    if (!html) html = '<p class="loading">Nothing here yet.</p>';
-    feed.innerHTML = html;
-  }
-}
-
-/* ── Render: by type ─────────────────────────────────── */
-function renderByType(feed) {
-  // Group by category, sections in a sensible order
-  const ORDER = ['notes','criticism','academic','video','technical','magic'];
-  const groups = {};
-  ITEMS.forEach(it => {
-    const c = it.category;
-    if (!groups[c]) groups[c] = [];
-    groups[c].push(it);
-  });
-  // Sort within each group newest first
-  Object.values(groups).forEach(g => g.sort((a,b) => b.date.localeCompare(a.date)));
-
-  // Build section order: known first, then alphabetical remainder
-  const keys = [
-    ...ORDER.filter(k => groups[k]),
-    ...Object.keys(groups).filter(k => !ORDER.includes(k)).sort(),
-  ];
-
-  let html = '';
-  for (const k of keys) {
-    const items = groups[k];
-    html += sectionHead(catLabel(k));
-
-    if (STATE.view === 'feature') {
-      const t5  = items.filter(it => it.tier >= 5);
-      const mid = items.filter(it => it.tier >= 3 && it.tier <= 4);
-      const maj = items.filter(it => it.tier <= 2);
-      html += t5.map(featureT5).join('') + mid.map(featureStd).join('') + maj.map(featureMajor).join('');
-    } else {
-      html += items.map(it => listRow(it)).join('');
-    }
-  }
-
-  if (!html) html = '<p class="loading">Nothing here yet.</p>';
-  feed.innerHTML = html;
-}
-
-/* ── Builders ────────────────────────────────────────── */
-function sectionHead(label) {
-  return `<div class="sec-head">${esc(label)}</div>`;
-}
-
-function link(it) {
-  return `href="${esc(it.href)}"${it.ext ? ' target="_blank" rel="noopener"' : ''}`;
-}
-
-/* Feature: tier 5 */
-function featureT5(it) {
-  return `<a class="fi-t5" ${link(it)}>
-    <span class="fi-t5-left">
-      <span class="t5-dot" aria-hidden="true">◆</span>
-      <span class="fi-t5-title">${it.title}</span>
-    </span>
-    <span class="fi-t5-date">${fmtMon(it.date)}</span>
-  </a>`;
-}
-
-/* Feature: tier 3–4 standard */
-function featureStd(it) {
-  const bare = !it.thumb;
-  return `<a class="fi-std${bare ? ' bare' : ''}" ${link(it)}>
-    ${!bare ? `<img class="fi-thumb" src="${esc(it.thumb)}" alt="" loading="lazy">` : ''}
-    <div class="fi-body">
-      <div class="fi-cat">${catLabel(it.category)} ${it.date ? '· ' + fmtYear(it.date) : ''}</div>
-      <div class="fi-title">${it.title}</div>
-      ${it.blurb ? `<div class="fi-blurb">${esc(it.blurb)}</div>` : ''}
-    </div>
-  </a>`;
-}
-
-/* Feature: tier 1–2 major */
-function featureMajor(it) {
-  const bare = !it.thumb;
-  return `<a class="fi-major${bare ? ' bare' : ''}" ${link(it)}>
-    ${!bare ? `<img class="fi-thumb" src="${esc(it.thumb)}" alt="" loading="lazy">` : ''}
-    <div class="fi-body">
-      <div class="fi-cat">${catLabel(it.category)} ${it.date ? '· ' + fmtYear(it.date) : ''}</div>
-      <div class="fi-title">${it.title}</div>
-      ${it.blurb ? `<div class="fi-blurb">${esc(it.blurb)}</div>` : ''}
-    </div>
-  </a>`;
-}
-
-/* List row: all tiers */
-function listRow(it) {
-  const dot = it.tier >= 5 ? `<span class="t5-dot" aria-hidden="true">◆</span>` : '';
-  return `<a class="li-row" ${link(it)}>
-    <span class="li-left">
-      ${dot}
-      <span class="li-title">${it.title}</span>
-    </span>
-    <span class="li-cat">${catLabel(it.category)}</span>
-    <span class="li-date">${fmtMon(it.date)}</span>
-  </a>`;
-}
-
-/* ── Go ──────────────────────────────────────────────── */
-boot();
-</script>
+  <footer>
+    <p>W. Jeff Cunningham · Vancouver, BC</p>
+    <p><a href="https://wjc83.substack.com/subscribe">Subscribe</a></p>
+  </footer>
 </body>
 </html>

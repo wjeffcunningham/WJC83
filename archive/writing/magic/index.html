@@ -1,229 +1,40 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Magic Archive | WJC83</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Writing | W. Jeff Cunningham</title>
   <link rel="stylesheet" href="../../../style.css">
   <style>
-    body{text-align:left}
-    .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
-    .msg{padding:.65rem .9rem;border:1px solid rgba(0,0,0,.12);border-radius:8px;margin:.5rem 0}
-    .ok{background:rgba(0,255,0,.06)} .err{background:rgba(255,0,0,.06)}
-
-    /* Hero header */
-    header.hero{position:relative;margin:0 0 1rem;border-radius:12px;overflow:hidden}
-    header.hero img.hero-img{width:100%;height:auto;display:block}
-    header.hero .hero-inner{
-      position:absolute;inset:auto 0 0 0;
-      padding:1rem 1.25rem;
-      color:#fff;
-      text-shadow:0 2px 8px rgba(0,0,0,.45);
-      font-weight:700;
-      font-size:clamp(1.25rem,2.5vw,2rem);
-    }
-
-    /* Archive blocks */
-    details.archive-block{margin:1.25rem 0 1.75rem;border:1px solid rgba(0,0,0,.08);border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.03);overflow:hidden}
-    details > summary{list-style:none;cursor:pointer;padding:.8rem 1rem;display:flex;gap:1rem;align-items:flex-start}
-    details > summary::-webkit-details-marker{display:none}
-
-    /* Thumb fix: contain inside a framed box */
-    .thumb-box{
-      width:120px;height:90px;flex:0 0 auto;
-      display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(0,0,0,.1);border-radius:8px;
-      background:#fafafa;overflow:hidden;
-    }
-    .thumb-img{
-      max-width:100%;max-height:100%;
-      width:auto;height:auto;object-fit:contain;display:block;
-    }
-
-    .archive-info h2{margin:0;font-size:1.15rem}
-    .archive-info p{margin:.25rem 0 .25rem;font-size:.9rem;opacity:.85}
-
-    .feed-items{padding:0 1rem 1rem;border-top:1px dashed rgba(0,0,0,.1)}
-    .feed-item{padding:.5rem 0;border-bottom:1px dashed rgba(0,0,0,.06)}
-    .feed-item:last-child{border-bottom:none}
-    .feed-item .title a{color:var(--ink,#111);font-weight:600;text-decoration:none}
-    .feed-item .title a:hover{text-decoration:underline}
-    .feed-item .meta{font-size:.85rem;opacity:.7}
-
-    .pills{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.25rem}
-    .pills a{font-size:.8rem;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:.1rem .45rem;text-decoration:none;color:var(--ink,#111)}
-    .pills a:hover{text-decoration:underline}
-    .chev{margin-left:auto;opacity:.6}
+    .archive-intro { max-width: 58ch; }
+    .source-list { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--ink); }
+    .source-list li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .source-list a { font-family: Arial, Helvetica, sans-serif; font-weight: 700; }
+    .source-list p { margin: 5px 0 0; }
+    .count { color: var(--quiet); font: 13px Arial, Helvetica, sans-serif; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="hero">
-      <img class="hero-img" src="./magic-archive-header.webp" alt="Magic Archive header image" width="1600" height="500">
-      <div class="hero-inner">
-        <h1>Magic Archive</h1>
-      </div>
-    </header>
+  <header class="site-header">
+    <a class="site-name" href="../../../">W. Jeff Cunningham</a>
+    <nav aria-label="Archive navigation"><a href="../../">Archive</a></nav>
+  </header>
 
-    <p class="msg ok" id="status">Loading…</p>
-    <main id="archives"></main>
-  </div>
+  <main>
+    <section class="archive-intro">
+      <h1>Magic: The Gathering</h1>
+      <p>Strategy, tournament reports, columns, and oddities from 1998 to 2020. Each collection has its own complete list of readable local files and, where available, links to the original publication.</p>
+    </section>
 
-  <script>
-  const ROOT = './';
-  const ROOT_MANIFEST = ROOT + 'manifest.json?v=1';
-  const $ = (s,c=document)=>c.querySelector(s);
-  const statusEl = $('#status');
-  const container = $('#archives');
-
-  const isAbs = s => /^https?:\/\//i.test(s)||/^\/\//.test(s)||s?.startsWith('/');
-  const toHref = s => (!s?'':(s.startsWith('./')||s.startsWith('../')||isAbs(s))?s:'/'+s);
-  const prettyDate = d => (typeof d==='string'&&/^\d{4}-\d{2}-\d{2}/.test(d))?d.slice(0,10):'';
-  const tierOK = it => Number(it.tier??3)<=3;
-
-  async function loadJSON(url){
-    const r=await fetch(url,{cache:'no-store'});
-    if(!r.ok) throw new Error(url+' '+r.status);
-    return r.json();
-  }
-
-  // ✅ Show pills only for NON-primary links
-  function linkPills(it, hrefPrimary){
-    const norm = s => (s ? toHref(s) : "");
-    const primary = norm(hrefPrimary);
-
-    const candidates = [
-      ["Local",    it.path_html || it.path || it.filename || ""],
-      ["PDF",      it.pdf || ""],
-      ["External", it.external || ""],
-    ];
-
-    const pills = candidates
-      .filter(([_, url]) => url && norm(url) !== primary)
-      .map(([label, url]) => `<a href="${toHref(url)}" target="_blank" rel="noopener">${label}</a>`);
-
-    return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
-  }
-
-  // Fix thumbnails authored one level too shallow for this page.
-  function fixThumbPath(p){
-    if (!p) return '';
-    if (p.startsWith('../../assets/')) return '../' + p; // -> "../../../assets/..."
-    return p;
-  }
-
-  // Build a child base like "./tcgplayer/" from "./tcgplayer/index.html"
-  function childBase(child){
-    if (child?.index) return child.index.replace(/index\.html.*$/,'');
-    return `./${child.key}/`;
-  }
-
-  // Normalize an item coming from a child manifest so all local links work from THIS page
-  function normalizeItemFromChild(it, base){
-    const norm = (p) => {
-      if (!p) return '';
-      // If already absolute or starts with ./ or ../, keep it. Otherwise prefix the child base.
-      if (isAbs(p) || p.startsWith('./') || p.startsWith('../')) return p;
-      return base + p;
-    };
-    return {
-      ...it,
-      path_html: norm(it.path_html || it.path || ''), // prefer html/path
-      path:      norm(it.path || ''),
-      pdf:       norm(it.pdf || ''),
-      thumbnail: it.thumbnail ? norm(it.thumbnail) : ''
-    };
-  }
-
-  // Choose a sensible primary: prefer local (html/path/pdf), else external
-  function primaryHref(it){
-    const candidate = it.path_html || it.path || it.filename || it.pdf || '';
-    if (candidate) return toHref(candidate);
-    if (it.external) return it.external;
-    return '';
-  }
-
-  function feedRow(it){
-    const title = it.title || it.path_html || it.path || 'Untitled';
-    const href  = primaryHref(it);
-    return `
-      <div class="feed-item">
-        <div class="title"><a href="${toHref(href)}" target="_blank" rel="noopener">${title}</a></div>
-        <div class="meta">${prettyDate(it.date)}</div>
-        ${it.blurb?`<div>${it.blurb}</div>`:''}
-        ${linkPills(it, href)}
-      </div>
-    `;
-  }
-
-  async function render(){
-    try{
-      const root=await loadJSON(ROOT_MANIFEST);
-      let children=root.children||[];
-      // Order: TCGplayer → StarCityGames → Magic Academy → Brainburst → Sideboard → MiseTings → Dojo
-      const order=['tcgplayer','starcitygames','academy','brainburst','sideboard','misetings','dojo'];
-      children.sort((a,b)=>order.indexOf(a.key)-order.indexOf(b.key));
-
-      const collapsedKeys = new Set(['misetings','dojo']); // collapse these by default
-
-      for(const child of children){
-        const m=await loadJSON(child.manifest).catch(()=>({items:[]}));
-        const base = childBase(child);
-        // normalize each item so links resolve from /archive/writing/magic/
-        const items = (m.items||[])
-          .map(it => normalizeItemFromChild(it, base))
-          .filter(tierOK)
-          .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-
-        const shown=items.slice(0,Math.min(5,items.length));
-
-        const thumbSrc = fixThumbPath(child.thumbnail || '');
-        const thumb = thumbSrc
-          ? `<div class="thumb-box"><img class="thumb-img" src="${toHref(thumbSrc)}" alt=""></div>`
-          : '';
-
-        const openAttr = collapsedKeys.has(child.key) ? '' : ' open';
-        const html=`
-          <details class="archive-block" id="${child.key}"${openAttr}>
-            <summary>
-              ${thumb}
-              <div class="archive-info">
-                <h2><a href="${child.index}">${child.label}</a></h2>
-                <p>${child.blurb||''}</p>
-              </div>
-              <span class="chev">▸</span>
-            </summary>
-            <div class="feed-items">
-              ${shown.map(feedRow).join('')}
-              ${items.length>shown.length?`<div style="margin-top:.4rem;"><a href="${child.index}">View all ${items.length} →</a></div>`:''}
-            </div>
-          </details>`;
-        container.insertAdjacentHTML('beforeend',html);
-      }
-
-      // rotate chevron on open/close
-      container.addEventListener('toggle', e=>{
-        const d=e.target;
-        if(d.tagName!=='DETAILS') return;
-        const chev=d.querySelector('.chev');
-        if(chev) chev.textContent = d.open ? '▾' : '▸';
-      }, true);
-      // init chevrons
-      container.querySelectorAll('details.archive-block').forEach(d=>{
-        const chev=d.querySelector('.chev');
-        if(chev) chev.textContent = d.open ? '▾' : '▸';
-      });
-
-      statusEl.textContent='Loaded all Magic sub-archives.';
-      statusEl.classList.add('ok');statusEl.classList.remove('err');
-    }catch(e){
-      console.error(e);
-      statusEl.textContent='Error: '+e.message;
-      statusEl.classList.add('err');statusEl.classList.remove('ok');
-    }
-  }
-
-  render();
-  </script>
+    <ul class="source-list">
+      <li><a href="dojo/">The Dojo</a> <span class="count">1998 · 9 text files</span><p>Early tournament reports and Junior Super Series writing.</p></li>
+      <li><a href="misetings/">MiseTings</a> <span class="count">2001 · 10 PDFs</span><p>Satire and Magic Colony pieces.</p></li>
+      <li><a href="sideboard/">Sideboard</a> <span class="count">2003 · 7 PDFs</span><p><em>Week in Review</em>, feature writing, and coverage.</p></li>
+      <li><a href="brainburst/">Brainburst</a> <span class="count">2003–2005 · 11 articles</span><p>Reports, strategy, local PDFs, and surviving web captures.</p></li>
+      <li><a href="academy/">Magic Academy</a> <span class="count">2006–2007 · 31 PDFs</span><p>Beginner strategy series for Wizards of the Coast.</p></li>
+      <li><a href="starcitygames/">Star City Games</a> <span class="count">2001–2018 · 40 files</span><p>Columns, tournament writing, and HTML/PDF mirrors.</p></li>
+      <li><a href="tcgplayer/">TCGplayer</a> <span class="count">2019–2020 · 2 articles</span><p>Reflections on competitive Magic and the end of the Pro Tour.</p></li>
+    </ul>
+  </main>
 </body>
 </html>

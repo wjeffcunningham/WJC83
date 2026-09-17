@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Star City Games Archive | WJC83</title>
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../../../../style.css">
   <style>
     /* light structural styles; your ../style.css provides the look */
     .wrap{max-width:900px;margin:1.25rem auto 3rem;padding:0 1rem}
@@ -75,10 +75,14 @@
       return (a.title||'').localeCompare(b.title||'');
     };
 
-    // 4) split into series vs standalone
+    // 4) This archive contains many raw saved HTML pages alongside their PDFs.
+    // List the PDFs here: they are the stable, self-contained reading copies.
+    const readable = items.filter(it => (it.format || '').toLowerCase() === 'pdf');
+
+    // 5) split into series vs standalone
     const seriesMap = new Map();
     const standalone = [];
-    for(const it of deduped){
+    for(const it of readable){
       if(it.series){
         const key = it.series;
         if(!seriesMap.has(key)) seriesMap.set(key, []);
@@ -88,7 +92,7 @@
       }
     }
 
-    // 5) sort series blocks by newest item inside (desc); parts inside by part# then date
+    // 6) sort series blocks by newest item inside (desc); parts inside by part# then date
     const seriesBlocks = Array.from(seriesMap.entries()).map(([name, arr])=>{
       const itemsSorted = arr.slice().sort((a,b)=>{
         if(a.part && b.part) return a.part - b.part;
@@ -104,10 +108,10 @@
       return A.name.localeCompare(B.name);
     });
 
-    // 6) sort standalone by date desc
+    // 7) sort standalone by date desc
     standalone.sort(byDateDesc);
 
-    // 7) render — titles only, link goes to PDF (or whatever the deduper chose)
+    // 8) render — titles only, each link goes to a local PDF.
     const aTag = it => {
       // default link to PDF path; deduper already prefers pdf
       const href = it.path || it.pdf || it.path_html || '';

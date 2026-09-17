@@ -56,7 +56,7 @@
       "tags": ["philosophy", "academic", "aquinas", "medieval"],
       "blurb": "A (necessarily) confused first look.",
       "path": "archive/writing/academic/2016-01-11-aquinas-in-context.pdf",
-      "thumbnail": "assets/thumbs/pdf.png",
+      "thumbnail": "assets/thumbs/thesis.png",
       "professors": "Robiglio",
       "course": "Aquinas in Context",
       "school": "KU Leuven",
@@ -70,7 +70,7 @@
       "tier": 3,
       "blurb": "New Research (Scarpelli-Cory): In Aquinas, reflection is <i>not</i> commensurate with the natural numbers.",
       "path": "archive/writing/academic/2015-08-31-themes-in-medieval-philosophy.pdf",
-      "thumbnail": "assets/thumbs/pdf.png",
+      "thumbnail": "assets/thumbs/thesis.png",
       "professors": "Friedman; Steel",
       "school": "KU Leuven",
       "grade": "16"
@@ -83,7 +83,7 @@
       "tier": 3,
       "blurb": "Why does Aristotle, contra the Megarians, insist on the irreducibility of the Δύναμις/Ἐνέργεια κατὰ κίνησιν distinction?",
       "path": "archive/writing/academic/2015-08-26-themes-in-metaphysics.pdf",
-      "thumbnail": "assets/thumbs/pdf.png",
+      "thumbnail": "assets/thumbs/thesis.png",
       "professors": "Techtmeyer",
       "school": "KU Leuven",
       "grade": "16"
@@ -96,7 +96,7 @@
       "tier": 3,
       "blurb": "Aristotle on sense memory.",
       "path": "archive/writing/academic/2015-01-03-themes-in-ancient-philosophy.pdf",
-      "thumbnail": "assets/thumbs/pdf.png",
+      "thumbnail": "assets/thumbs/thesis.png",
       "professors": "Techtmeyer",
       "school": "KU Leuven",
       "grade": "16"
@@ -109,7 +109,7 @@
       "tier": 3,
       "blurb": "Unpacking Strauss' critique of the 'Universal Homogeneous State' \"perhaps... fated to come.\"",
       "path": "archive/writing/academic/2013-06-05-strauss-UHS.pdf",
-      "thumbnail": "assets/thumbs/pdf.png",
+      "thumbnail": "assets/thumbs/thesis.png",
       "professors": "Darby",
       "course": "POLI 3709",
       "school": "Carleton",
@@ -125,7 +125,7 @@
       "tags": ["criticism", "television", "culture"],
       "blurb": "In today’s cynical world, what even constitutes poor taste?",
       "pdf": "archive/writing/criticism/2023-05-01-big-ick-energy.pdf",
-      "thumbnail": "assets/thumbs/curse.jpg",
+      "thumbnail": "assets/thumbs/archive.png",
       "versions": [
         {
           "date": "2022-11-23",
@@ -159,7 +159,7 @@
       "blurb": "Ken & Roberta Williams’s VR remake of Colossal Cave Adventure (1977), the first ever computer-based text-adventure game.",
       "path": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
       "pdf": "archive/writing/criticism/2023-03-09-colossal-cave-review.pdf",
-      "thumbnail": "assets/thumbs/colossal-cave.jpg",
+      "thumbnail": "assets/thumbs/archive.png",
       "rating": 3,
       "rating_max": 5
     },
@@ -175,7 +175,7 @@
       "path": "archive/writing/criticism/2018-07-18-digital-exile.html",
       "pdf": "archive/writing/criticism/2018-07-18-digital-exile.pdf",
       "external": "https://jacksoncunningham.medium.com/digital-exile-how-i-got-banned-for-life-from-airbnb-615434c6eeba",
-      "thumbnail": "assets/thumbs/digital-exile.jpg",
+      "thumbnail": "assets/thumbs/archive.png",
       "accolade": ""
     },
     {
@@ -190,7 +190,14 @@
       "path": "archive/writing/criticism/2020-02-11-extinction.pdf",
       "pdf": "archive/writing/criticism/2020-02-11-extinction.pdf",
       "external": "https://jacksoncunningham.medium.com/extinction-amazon-and-the-end-of-the-american-entrepreneur-8c2645f38976",
-      "thumbnail": "assets/thumbs/digital-exile.jpg"
+      "thumbnail": "assets/thumbs/archive.png"
+    },
+    {
+      "bucket": "writing",
+      "type": "folder",
+      "category": "magic",
+      "title": "Magic: The Gathering archive",
+      "path": "archive/writing/magic/"
     },
     {
       "bucket": "movies",
@@ -261,24 +268,21 @@
       "type": "folder",
       "category": "video",
       "subcategory": "acting",
-      "title": "acting 🔒",
-      "path": "archive/movies/acting/"
+      "title": "acting 🔒"
     },
     {
       "bucket": "movies",
       "type": "folder",
       "category": "video",
       "subcategory": "camcorder",
-      "title": "pt houston '02 camcorder footage 🔒",
-      "path": "archive/movies/pt-houston-2002-camcorder-footage/"
+      "title": "pt houston '02 camcorder footage 🔒"
     },
     {
       "bucket": "movies",
       "type": "folder",
       "category": "video",
       "subcategory": "short-films",
-      "title": "short films (1999–2019) 🔒",
-      "path": "archive/movies/short-films-1999-2019/"
+      "title": "short films (1999–2019) 🔒"
     }
   ]
 }

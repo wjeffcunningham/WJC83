@@ -39,9 +39,47 @@
     const status = document.getElementById('status');
     const container = document.getElementById('list');
 
+    // The old manifest names now-defunct WotC HTML pages. The local PDF mirrors
+    // are the durable copies, so this map is the source of the visible links.
+    const PDF_BY_SLUG = {
+      'agresivo-combo-y-control': 'Aggro, Combo, and Control.pdf',
+      'card-evaluation': 'Card Evaluation.pdf',
+      'getting-better-at-sealed': 'Getting Better at Sealed.pdf',
+      'in-game-protocol': 'In-Game Protocol.pdf',
+      'introducing-sideboards': 'Introducing Sideboards.pdf',
+      'introduction-to-bluffing': 'Introduction to Bluffing.pdf',
+      'introduction-to-combat': 'Introduction to Combat.pdf',
+      'introduction-to-efficiency': 'Introduction to Efficiency.pdf',
+      'introduction-to-inevitability': 'Introduction to Inevitability.pdf',
+      'introduction-to-innovation': 'Introduction to Innovation.pdf',
+      'introduction-to-mana-base-part-2': 'Introduction to Mana Base, Part 2.pdf',
+      'introduction-to-mana-base': 'Introduction to Mana base.pdf',
+      'lessons-learned': 'Lessons Learned.pdf',
+      'mana-base-walkthrough': 'Mana Base Walkthrough.pdf',
+      'managing-mana-screw': 'Managing Mana Screw.pdf',
+      'metagame-workshop': 'Metagame Workshop.pdf',
+      'playing-against-aggro': 'Playing Against Aggro.pdf',
+      'playing-against-combo': 'Playing Against Combo.pdf',
+      'playing-against-control': 'Playing Against Control.pdf',
+      'playing-the-game': 'Playing the Game.pdf',
+      'sealed-deck-walkthrough': 'Sealed Deck Walkthrough.pdf',
+      'seven-steps-to-a-better-mana-base': 'Seven Steps to a Better Mana Base.pdf',
+      'strategies-and-techniques-for-booster-draft': 'Strategies and Techniques for Booster Draft.pdf',
+      'tactical-protocol-introduction-to-information-resources': 'Tactical Protocol_ Introduction to Information & Resources.pdf',
+      'tactical-protocol-your-opponents-turn': "Tactical Protocol_ Your Opponent's Turn.pdf",
+      'tactical-protocol-your-own-turn': 'Tactical Protocol_ Your Own Turn.pdf',
+      'ten-beginner-mistakes': 'Ten Beginner Mistakes.pdf',
+      'what-are-the-formats': 'What Are The Formats_.pdf',
+      'what-is-the-metagame': 'What is the Metagame_.pdf',
+      'your-first-sealed-deck': 'Your First Sealed Deck.pdf',
+      'your-first-tournament': 'Your First Tournament.pdf'
+    };
+    const localPdf = it => PDF_BY_SLUG[it.slug] ? encodeURI('./' + PDF_BY_SLUG[it.slug]) : '';
+
     const pillRow = (it) => {
       const pills = [];
-      if (it.url) pills.push(`<a href="${it.url}" target="_blank" rel="noopener">PDF</a>`);
+      const pdf = localPdf(it);
+      if (pdf) pills.push(`<a href="${pdf}" target="_blank" rel="noopener">PDF</a>`);
       if (it.external) pills.push(`<a href="${it.external}" target="_blank" rel="noopener">External</a>`);
       return pills.length ? `<div class="pills">${pills.join('')}</div>` : '';
     };
@@ -51,7 +89,7 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 
-      const items = Array.isArray(data.items) ? data.items.slice() : [];
+      const items = (Array.isArray(data.items) ? data.items : []).filter(it => localPdf(it) || it.external);
       // Sort by explicit 'order' (desc), falling back to date if present
       items.sort((a,b) => {
         const ao = Number(b.order||0) - Number(a.order||0);
@@ -63,7 +101,7 @@
 
       container.innerHTML = items.map(it => `
         <div class="item">
-          <div><a href="${it.url || it.external || '#'}" target="_blank" rel="noopener">${it.title || it.filename}</a></div>
+          <div><a href="${localPdf(it) || it.external}" target="_blank" rel="noopener">${it.title || it.filename}</a></div>
           <div class="meta">${[it.date || '', it.source || ''].filter(Boolean).join(' • ')}</div>
           ${pillRow(it)}
         </div>

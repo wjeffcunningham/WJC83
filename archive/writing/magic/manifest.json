@@ -9,7 +9,6 @@
       "label": "Magic Academy (2006–2007)",
       "index": "./academy/index.html",
       "manifest": "./academy/manifest.json",
-      "thumbnail": "../../assets/thumbs/magic-academy.png",
       "blurb": "Beginner series for WotC with PDF mirrors."
     },
     {
@@ -17,7 +16,6 @@
       "label": "Brainburst (2003–2005)",
       "index": "./brainburst/index.html",
       "manifest": "./brainburst/manifest.json",
-      "thumbnail": "../../assets/thumbs/tcgplayer.png",
       "blurb": "Reports, strategy, and reconstructions from the paywalled era."
     },
     {
@@ -25,7 +23,6 @@
       "label": "The Dojo (1998)",
       "index": "./dojo/index.html",
       "manifest": "./dojo/manifest.json",
-      "thumbnail": "../../assets/thumbs/dojo.gif",
       "blurb": "Preserved Dojo text files."
     },
     {
@@ -33,7 +30,6 @@
       "label": "MiseTings (2001)",
       "index": "./misetings/index.html",
       "manifest": "./misetings/manifest.json",
-      "thumbnail": "../../assets/thumbs/misetings.png",
       "blurb": "PDF captures; HTML optional."
     },
     {
@@ -41,7 +37,6 @@
       "label": "Sideboard: Week in Review (2003)",
       "index": "./sideboard/index.html",
       "manifest": "./sideboard/manifest.json",
-      "thumbnail": "../../assets/thumbs/sideboard.png",
       "blurb": "Columns with Wayback links/PDFs."
     },
     {
@@ -49,7 +44,6 @@
       "label": "Star City Games (2001–2018)",
       "index": "./starcitygames/index.html",
       "manifest": "./starcitygames/manifest.json",
-      "thumbnail": "../../assets/thumbs/scg.png",
       "blurb": "Columns, features, cleaned mirrors."
     },
     {
@@ -57,7 +51,6 @@
       "label": "TCGplayer (2019–2020)",
       "index": "./tcgplayer/index.html",
       "manifest": "./tcgplayer/manifest.json",
-      "thumbnail": ".../../assets/thumbs/tcgplayer.png",
       "blurb": "The return to the PT and reflections on competitive Magic"
     }
   ],

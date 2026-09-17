@@ -413,9 +413,9 @@ function linkPills(it, hrefPrimary){
       const categories=root.categories||{};
       let items=Array.isArray(root.items)?root.items.slice():[];
 
-      // Pull top 3 Tier-3 Magic items from sub-manifests, inject, then de-dupe
-      const magicTop3=await loadTopMagicFromChildren({limit:3,tier:3});
-      items=dedupeItems([...items, ...magicTop3]);
+      // Magic has a complete source index, represented here as one stable archive entry.
+      // Keeping it intact avoids a brittle partial feed assembled from unlike collections.
+      items=dedupeItems(items);
 
       // Group by bucket and render
       const byBucket={};
