@@ -70,6 +70,12 @@
   tr.st-doing td:first-child { box-shadow: inset 3px 0 0 var(--ink); }
   .needs { color: var(--quiet); font: 13px var(--sans); margin-top: 3px; }
   .notes { color: var(--ink); font-size: 14px; margin-top: 5px; white-space: pre-wrap; font-style: italic; }
+  .more-info { margin-top: 5px; font: 13px var(--sans); color: var(--quiet); }
+  .more-info summary { cursor: pointer; width: max-content; }
+  .more-info summary:hover { color: var(--ink); }
+  .more-info p { margin: 6px 0 0; color: var(--ink); font: 14px/1.45 Georgia, "Times New Roman", serif; max-width: 62ch; }
+  .more-info p.src { color: var(--quiet); font: 12px/1.4 var(--sans); }
+  .more-info a { word-break: break-all; }
   .flag { font: 700 10px var(--sans); color: var(--over); border: 1px solid var(--over); padding: 0 4px; margin-left: 6px; vertical-align: 2px; letter-spacing: .04em; }
   .size { display: inline-block; min-width: 24px; text-align: center; font: 700 12px var(--sans); padding: 2px 6px; }
   .size.S { background: var(--s-bg); color: var(--s-ink); }
@@ -187,6 +193,8 @@
       <label class="check full"><input type="checkbox" name="blocker"> Blocker (other tasks wait on this)</label>
       <label class="field full"><span>Needs / unblocks</span><input type="text" name="needs"></label>
       <label class="field full"><span>Notes</span><textarea name="notes"></textarea></label>
+      <label class="field full"><span>Details (shown under the fold)</span><textarea name="details"></textarea></label>
+      <label class="field full"><span>Source</span><input type="text" name="source"></label>
     </div>
     <div class="meta" id="dlgMeta"></div>
     <div class="actions">
@@ -271,6 +279,116 @@ const SEED = [
 ].map(([id,title,grant,category,owner,size,due,blocker,needs]) =>
   ({id,title,grant,category,owner,size,due,status:'todo',blocker:blocker?'yes':'',needs,notes:''}));
 
+/* ===== Revisions =====
+ * Each revision is applied to the shared sheet once (tracked by id), then never again,
+ * so later edits made on the page are not overwritten. Fields listed here replace the
+ * same fields on that task; fields not listed are left alone.
+ * Details format: "What this is" in plain words, then the application's own wording.
+ */
+const G = 'BCHDP Guidelines 2027–28 (the instructions PDF)';
+const F = 'BCHDP Application Form 2027–28 (the Word form)';
+const G_URL = 'https://ikblc.ubc.ca/?p=18772';
+const CCA = 'Canada Council application IA-0000258743, online portal';
+const D = (plain, says) => `What this is: ${plain}` + (says ? `\n\nThe application says: ${says}` : '');
+const PATCHES = [
+ { id: 'r1-details', tasks: [
+  { id:'t01', details: D('We need a written price from whoever scans the negatives: what they charge per hour, how many negatives they can do per hour, what scanner they use, and what kind of files they hand back. Most of the BCHDP budget and schedule is worked out from this one quote.', '“If working with contractors, or vendors, include quotes for services.” (2.06) · “Describe the equipment you will be using for digitization. If you are outsourcing your digitization, identify the equipment the vendor will be using.” (3.05)'),
+    source:`${G}, sections 2.05, 2.06, 3.05 (pp. 5–6, 8–9) — ${G_URL}` },
+  { id:'t02', title:'Applicant cash contribution: settle the figure and how it is presented', owner:'Jeff', size:'S', due:'2026-11-20', blocker:'', category:'Budget', needs:'Income table',
+    details: D('BCHDP pays at most $15,000 and wants us to put in cash worth at least half of what we ask for ($7,500 if we ask for $15,000). From our conversation with BCHDP this is not expected to be a problem; worst case, the family puts up the money as a stopgap. All that is left is deciding how to show it in the income table.', '“The applicant cash contribution to the project must equal at least 50% of the Learning Centre funds requested.” (7.01) · Other funding “needs to be confirmed by January 30, 2027.” (2.04)'),
+    source:`${G}, sections 2.04 and 7.01 (pp. 4, 13); Jeff, Oct 7, 2026 — ${G_URL}` },
+  { id:'t03', details: D('Arca is the free online collection site BCHDP recommends for putting the scans online. BCHDP asks us to email their support team before we apply if we plan to use it. Ask: is there any cost, how do files get uploaded, which file types they take, and how they want items described.', '“If you plan to use Arca, please reach out to the BCHDP Support Service in advance of submitting your application via digisupport@bceln.ca” (4.01) · “please contact digisupport@bceln.ca to discuss metadata guidelines.” (4.03)'),
+    source:`${G}, sections 4.01 and 4.03 (pp. 9, 11) — https://bceln.github.io/bchdp-docs/arcahosting/` },
+  { id:'t04', details: D('Two questions for BCHDP: is there an earlier date they would like applications by (only the final deadline is published), and when will they announce results? The results date tells us when the Canada Council project can start.', null),
+    source:`BCHDP applicant information page (deadline: Monday, Dec 7, 2026, 9:00 am) — ${G_URL}` },
+  { id:'t05', details: D('BCHDP funds organizations, not individuals, so we need the official name of the family entity and to know who can sign for it.', '“Private or public institutions and agencies are eligible to apply for funding.” (Eligibility) · Form asks for “Applicant institution/organization” and an “Authorized Signature.”'),
+    source:`${G}, Program Eligibility (p. 2); ${F}, section 1 and Affirmation` },
+  { id:'t06', details: D('Take screenshots of the four Canada Council screens we have not seen yet, so we can plan them: the Expenses tab of the budget, Last details, Support material, and Declaration.', null),
+    source: CCA },
+  { id:'t07', details: D('Our first letter to The Polygon Gallery asking them to be an exhibiting partner. We want a meeting, then their agreement to take part, what they would contribute (space, staff, installation), and a letter of support.', 'Canada Council asks: “Does your project involve artistic or presenting collaborators or partners?” and, in its help text, “Have they confirmed their participation in your project?” (Activity Plan)'),
+    source:`${CCA}, Activity Plan screen` },
+  { id:'t08', details: D('Everyone reads the Polygon letter before it goes out.', null), source:'Jeff, Oct 6, 2026' },
+  { id:'t09', details: D('Send the Polygon letter once everyone has read it, and ask for a meeting.', null), source:'Jeff, Oct 6, 2026' },
+  { id:'t10', details: D('Decide exactly which negatives get scanned in this round, and count them, with their date ranges and what they physically are (sizes, formats). BCHDP requires this to be finished before we apply.', '“Selection of materials to be digitized must be complete prior to the submission of your application.” (3.01)'),
+    source:`${G}, section 3.01 (p. 6) — ${G_URL}` },
+  { id:'t11', details: D('Bill was a staff photographer at The Province from 1944 to 1973, so the paper’s current owner, Postmedia, may have a claim on photos from those years. A signed letter from Postmedia saying they have no objection settles this. A lawyer’s opinion is still recommended.', '“Describe the copyright, permission, ownership, and/or custodianship considerations of the content… how you have done due diligence in contacting current copyright holders of the content.” (3.02)'),
+    source:`${G}, section 3.02 (p. 7)` },
+  { id:'t12', details: D('Why Bill’s photographs matter to BC history, and who gains from having them online. One of the main written answers.', '“Explain the significance and impact of the proposed project and the content to be digitized.” (2.02)'),
+    source:`${G}, section 2.02 (pp. 3–4)` },
+  { id:'t13', details: D('A plain list of what will be scanned: how many items, the years they cover, what they physically are, and how many image files we expect to end up with. Uses the list from the selection task.', '“Provide a detailed inventory or listing of the material to be digitized and the anticipated output. Please include item count, dates or date ranges and physical description information.” (3.01)'),
+    source:`${G}, section 3.01 (p. 6)` },
+  { id:'t14', details: D('If we name the BC Sports Hall of Fame as a second exhibitor in the Canada Council application, we first pitch them the exhibit, then ask for a letter.', null),
+    source:'Partner plan (Sept 2026), following the meeting with Jason' },
+  { id:'t15', details: D('Three small fixes on the first Canada Council screen: change the dates (they still say Mar 1 to Sep 1, 2027, but we decided to start after BCHDP results), add the dates to the one-sentence summary, and consider also ticking “Artistic research”, which covers curatorial research.', '“Give a one-sentence summary of your project.” Hint: “Provide your activity and dates.” · “Your start date must be after the date of submission.”'),
+    source:`${CCA}, Basic Information screen` },
+  { id:'t16', details: D('Meet The Polygon. We need three things from it: a yes to taking part, what they will contribute (space, staff, installation) so we can put a value on it in the budget, and a letter of support.', null),
+    source:`${CCA}, Activity Plan and Budget screens` },
+  { id:'t17', details: D('Two short answers: a summary of the whole project in 150 words or fewer, and who will use the photos once they are online and how.', '“Give a summary of the project (maximum of 150 words). Is this part of an ongoing or multi-year project?” (2.01) · “Identify the audience for content and describe how the content will be used (include statistics if appropriate).” (2.03)'),
+    source:`${G}, sections 2.01 and 2.03 (pp. 3–4)` },
+  { id:'t18', details: D('Explain who owns the rights to the photos, what we have done to check, and any privacy concerns about putting them online. Uses the Postmedia result.', '“Describe the copyright, permission, ownership, and/or custodianship considerations of the content.” (3.02)'),
+    source:`${G}, section 3.02 (p. 7)` },
+  { id:'t19', details: D('How the scanning will be done to a recognized standard (name the standard), what file types we will make, and how we will check the scans are good, including our own checks on the technician’s work.', '“Explain how digitization best practices will be applied and describe formats and standards to be used.” (3.03) · “Projects naming specific standards will receive a higher score.” · “Describe how quality control and testing will be incorporated.” (3.04)'),
+    source:`${G}, sections 3.03–3.04 (p. 8)` },
+  { id:'t20', details: D('Where the scans will live online (Arca is the likely answer) and how each photo will be described (a standard labelling system such as Dublin Core). Worth 30 of 100 points.', '“Will you be using a digital asset management system (repository) to provide access to the digitized materials?” (4.01) · “Do you use or plan to use a standard metadata scheme to describe the materials to be digitized?” (4.03)'),
+    source:`${G}, sections 4.01–4.04 (pp. 9–11)` },
+  { id:'t21', details: D('Two answers: how the files will be kept safe for the long term (backups, file formats that will last), and how we will tell people the collection is online.', '“How will you ensure the preservation of the digitized content, taking into account the challenges of media failure and technological change?” (5.01) · “Outline your plans for publicizing your project.” (6.01)'),
+    source:`${G}, sections 5.01 and 6.01 (pp. 12–13)` },
+  { id:'t22', details: D('The main Canada Council answer: what we plan to do, why, and what will come out of it. Up to 7,000 characters. It carries most of the score: Artistic is 50% (we need at least 35 of 50) and Impact is 30%.', '“Describe your proposed activities. (7,000 characters maximum)”'),
+    source:`${CCA}, Activity Description screen and assessment criteria` },
+  { id:'t23', details: D('Work out who will write the descriptions for each scanned item and how many hours it will take. This feeds the BCHDP schedule and the wages line.', '“Outline the work plan… Please use hours for your calculations.” (2.05)'),
+    source:`${G}, sections 2.05 and 7.01 (pp. 5, 13–14)` },
+  { id:'t24', details: D('A list of anything we would buy (drives, software, etc.) with prices. Anything bought before we apply cannot be counted, so hold off on purchases.', 'Applicant contribution may not include “Hardware and software purchased prior to the application.” (7.01) · “Please include quote(s) or screenshot(s) for equipment purchases.” (3.05)'),
+    source:`${G}, sections 3.05 and 7.01 (pp. 8–9, 13)` },
+  { id:'t25', details: D('BCHDP expects anyone paid on the project to earn at least a living wage. The current Metro Vancouver living wage is $27.85/hour (2025 figure, released Nov 2025). A new figure usually comes out in November, so check again before submitting.', '“There is an expectation that all staff roles will be compensated with a living wage.” (7.01)'),
+    source:`${G}, section 7.01 (p. 14) — https://www.livingwagebc.ca/ ; 2025 figure reported at https://dailyhive.com/vancouver/living-wage-bc-vancouver-2025` },
+  { id:'t26', details: D('Unpaid family time can count toward the budget at $16.75 per hour, because the project is run mostly by volunteers. We need an estimate of those hours.', '“Only organizations predominantly staffed by volunteer workers may claim volunteer hours spent on the project as in-kind contributions at a valuation of $16.75 per hour.” (7.01)'),
+    source:`${G}, section 7.01 (p. 14)` },
+  { id:'t27', details: D('The cost of storing and backing up the scan files (drives, cloud storage). Supports the preservation answer.', null), source:`${G}, section 5.01 (p. 12)` },
+  { id:'t28', details: D('Archival sleeves, cotton gloves and other supplies for handling the negatives.', null), source:'Task brief, Oct 6, 2026' },
+  { id:'t29', details: D('A budget line for running the project (coordinating, scheduling, reporting). It can be no more than 5% of the total cost.', '“Project Management: can only be up to 5% of total project costs and be sure to include description of project management tasks.” (7.01)'),
+    source:`${G}, section 7.01 (p. 14)` },
+  { id:'t30', details: D('Decide how much to ask BCHDP for (the most they give is $15,000) and add up the total cost of the project from all sources.', '“The Learning Centre will provide matching financial contributions for digitization projects to a yearly maximum of $15,000 per applicant.” (Program Description)'),
+    source:`${G}, Program Description (p. 2)` },
+  { id:'t31', details: D('Fill in the two BCHDP budget tables (money in, money out). Each line must say where the money comes from. Some things cannot count as our contribution, such as partners’ in-kind help and publicity costs.', '“For each budget line, please specify if money will be from BCHDP funding, applicant cash contribution, applicant in-kind contribution, or other sources (e.g. additional grants.)” (Budget)'),
+    source:`${G}, section 7.01 and budget tables (pp. 13, 15–17)` },
+  { id:'t32', details: D('A short explanation of how each budget number was worked out (hours times rate, prices, etc.).', '“Provide a description detailing the basis for calculating various expenditures.” (7.01)'),
+    source:`${G}, section 7.01 (pp. 13–14)` },
+  { id:'t33', details: D('Three answers that depend on the quote: what resources we are putting in, a schedule in hours, and who does what (with the quote and any partner letters attached).', '“Detail the resources your organization would dedicate to this project.” (2.04) · “Provide a detailed project schedule for all activities.” (2.05) · “Identify the role, responsibilities and/or project-related tasks of key participants.” (2.06)'),
+    source:`${G}, sections 2.04–2.06 (pp. 4–6)` },
+  { id:'t34', details: D('The front page of the BCHDP form: names, contacts, dates, amounts. It also asks whether we used AI to help write the application; we did, so we say which tool, what for, and how much.', '“Have you used Generative AI in the writing of this application? If so, please disclose the specific tool, purpose and extent of content.” (section 1)'),
+    source:`${F}, section 1` },
+  { id:'t35', details: D('Any organization we name as a partner in the BCHDP application needs to send a letter of support (or sign an agreement).', '“If you are partnering with another organization, include documentation such as letters of support from project partners or a memorandum of understanding.” (2.06)'),
+    source:`${G}, section 2.06 (p. 5)` },
+  { id:'t36', details: D('Canada Council answer on why we are able to do this project: past work like it, and our partners’ experience. Up to 3,500 characters.', '“What is your capacity and experience to carry out the activities? (3,500 characters maximum)”'),
+    source:`${CCA}, Activity Plan screen` },
+  { id:'t37', details: D('Everyone reads the full BCHDP application before it is signed and sent.', null), source:'Task brief, Oct 6, 2026' },
+  { id:'t38', details: D('The person who can sign for the family entity signs and dates the declaration page.', '“I affirm that the information in this application is accurate and complete…” followed by “Authorized Signature.”'),
+    source:`${F}, Affirmation` },
+  { id:'t39', details: D('Canada Council answer laying out the project’s main steps and roughly when each happens. Up to 3,500 characters.', '“What is your project timeline? Provide important milestones. (3,500 characters maximum)”'),
+    source:`${CCA}, Activity timeline screen` },
+  { id:'t40', details: D('Email the finished BCHDP application, with quotes and letters, to bc.historydigitization@ubc.ca. The deadline is Monday, Dec 7, 2026 at 9:00 am; we aim for Thursday, Dec 3.', null),
+    source:`BCHDP applicant information page — ${G_URL}` },
+  { id:'t41', details: D('Decide how much to ask the Canada Council for. The maximum is $75,000.', 'Help panel: “Up to $75,000 per application.”'),
+    source:`${CCA}, Budget screen help panel` },
+  { id:'t42', details: D('Set a fee for Jeff’s work on the project at a fair rate. The Canada Council scores whether people are paid fairly.', '“A detailed budget that demonstrates fair payment of participants and efficient use of resources.” (Feasibility)'),
+    source:`${CCA}, assessment criteria` },
+  { id:'t43', details: D('Fees for anyone else paid through the Canada Council grant: technician, printer, designer, installers.', null), source:`${CCA}, Budget screen` },
+  { id:'t44', details: D('Get prices for printing, framing and mounting the exhibition photos.', null), source:`${CCA}, Budget screen` },
+  { id:'t45', details: D('Put a dollar value on what the galleries contribute (space, installation, staff). It goes in the Canada Council budget, which allows it; the BCHDP budget does not.', 'Canada Council budget line: “In-kind Support (Private and public sector).”'),
+    source:`${CCA}, Budget revenue tab` },
+  { id:'t46', details: D('Make sure no cost is paid for twice. BCHDP pays for the scanning; the Canada Council pays for the artistic and exhibition work. If BCHDP money appears in the Canada Council budget, mark it “pending”.', null),
+    source:'Task brief, Oct 6, 2026' },
+  { id:'t47', details: D('Fill in the Canada Council budget. Each line has a note of up to 500 characters; say whether each source is confirmed or pending. Equipment is capped at $2,000 per item and 15% of the request in total.', 'Help panel: “identify if a revenue source is confirmed or pending” · equipment “up to a maximum of $2,000 per item purchased… up to 15% of the requested grant amount.”'),
+    source:`${CCA}, Budget screen` },
+  { id:'t48', details: D('Upload at least one example of the work, for example sample scans of Bill’s photos.', '“You will need to provide at least 1 example of artistic work that helps to further understand your project.”'),
+    source:`${CCA}, Activity Description help panel` },
+  { id:'t49', details: D('The quick yes/no questions near the end: four about Indigenous content (check the selected photos first), whether we have partners, and the screens we have not seen yet.', '“Do your activities include the participation of First Nations, Inuit or Métis individuals or communities?” (one of four)'),
+    source:`${CCA}, Respectful and Ethical Cultural and Artistic Practices screen; Activity Plan screen` },
+  { id:'t50', details: D('Family read-through, then submit in the Canada Council portal. The start date must be after the day we submit.', '“Your start date must be after the date of submission.”'),
+    source:`${CCA}, Basic Information help panel` },
+ ]},
+];
+
 /* ===== State ===== */
 let tasks = [];
 let live = false;
@@ -289,26 +407,43 @@ async function api(body) {
   const res = await fetch(API_URL, opts);
   const data = await res.json();
   if (!data.ok) throw new Error(data.error || 'Request failed');
-  return data.tasks;
+  return data;
 }
 function setSync(kind, text) {
   $('#syncState').innerHTML = `<span class="dot ${kind}"></span>${text}`;
 }
+function applyLocal(list) {
+  for (const p of PATCHES) for (const u of p.tasks) {
+    const t = list.find(x => x.id === u.id);
+    if (t) Object.assign(t, u); else list.push({ status: 'todo', ...u });
+  }
+  return list;
+}
+const linkify = s => esc(s).replace(/https?:\/\/[^\s<]+/g, u => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\//, '')}</a>`);
 async function load() {
   if (!API_URL) {
-    tasks = store.get('preview', null) || SEED.map(t => ({ ...t }));
+    tasks = store.get('preview', null) || applyLocal(SEED.map(t => ({ ...t })));
     setSync('', 'Preview mode: changes stay in this browser');
     render(); return;
   }
   try {
     setSync('', 'Syncing…');
-    tasks = await api();
+    let data = await api();
+    tasks = data.tasks;
+    const applied = data.applied || [];
+    if (tasks.length) {
+      for (const p of PATCHES) {
+        if (applied.includes(p.id)) continue;
+        data = await api({ action: 'patch', id: p.id, tasks: p.tasks });
+        tasks = data.tasks;
+      }
+    }
     live = true;
     setSync('live', 'Shared · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
     $('#banner').innerHTML = tasks.length ? '' :
       `<div class="banner">The shared sheet is empty. <button class="btn" id="seedBtn" type="button">Load the starter tasks</button></div>`;
     const sb = $('#seedBtn');
-    if (sb) sb.onclick = async () => { sb.disabled = true; tasks = await api({ action: 'seed', tasks: SEED }); load(); };
+    if (sb) sb.onclick = async () => { sb.disabled = true; await api({ action: 'seed', tasks: SEED }); load(); };
   } catch (e) {
     setSync('err', 'Couldn’t reach the shared sheet: ' + e.message);
   }
@@ -321,14 +456,14 @@ async function save(task) {
   if (i >= 0) tasks[i] = task; else tasks.push(task);
   render();
   if (!API_URL) { store.set('preview', tasks); return; }
-  try { tasks = await api({ action: 'upsert', task }); setSync('live', 'Saved'); render(); }
+  try { tasks = (await api({ action: 'upsert', task })).tasks; setSync('live', 'Saved'); render(); }
   catch (e) { setSync('err', 'Save failed: ' + e.message + '. Refresh and try again.'); }
 }
 async function remove(id) {
   tasks = tasks.filter(t => t.id !== id);
   render();
   if (!API_URL) { store.set('preview', tasks); return; }
-  try { tasks = await api({ action: 'delete', id }); render(); }
+  try { tasks = (await api({ action: 'delete', id })).tasks; render(); }
   catch (e) { setSync('err', 'Delete failed: ' + e.message); }
 }
 
@@ -408,7 +543,8 @@ function render() {
     html += `<tr class="task st-${esc(t.status)}" data-id="${esc(t.id)}">
       <td><div class="title">${esc(t.title)}${t.blocker && t.status !== 'done' ? '<span class="flag">BLOCKER</span>' : ''}</div>
         ${t.needs ? `<div class="needs">${esc(t.needs)}</div>` : ''}
-        ${t.notes ? `<div class="notes">${esc(t.notes)}</div>` : ''}</td>
+        ${t.notes ? `<div class="notes">${esc(t.notes)}</div>` : ''}
+        ${t.details || t.source ? `<details class="more-info"><summary>Details</summary>${t.details ? t.details.split(/\n\n+/).map(x => `<p>${esc(x)}</p>`).join('') : ''}${t.source ? `<p class="src">Source: ${linkify(t.source)}</p>` : ''}</details>` : ''}</td>
       <td class="c-owner" data-label="Owner">${esc(t.owner || '—')}</td>
       <td class="c-size"><span class="size ${esc(t.size)}">${esc(t.size || '?')}</span></td>
       <td class="c-grant"><span class="grant">${esc(t.grant)}</span></td>
@@ -472,7 +608,7 @@ function openDialog(t) {
   dlg.returnValue = '';
   const d = t || { title: '', owner: $('#me').value || '', due: '', size: 'M', grant: 'BCHDP', status: 'todo', category: 'Writing', blocker: '', needs: '', notes: '' };
   $('#dlgTitle').textContent = t ? 'Edit task' : 'Add task';
-  for (const k of ['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes']) form[k].value = d[k] || '';
+  for (const k of ['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes', 'details', 'source']) form[k].value = d[k] || '';
   form.blocker.checked = !!d.blocker;
   $('#delBtn').style.display = t ? '' : 'none';
   $('#dlgMeta').textContent = t && t.updated ? `Last changed ${new Date(t.updated).toLocaleString()}${t.updatedBy ? ' by ' + t.updatedBy : ''}` : '';
@@ -481,7 +617,7 @@ function openDialog(t) {
 $('#addBtn').onclick = () => openDialog(null);
 dlg.addEventListener('close', () => {
   if (dlg.returnValue !== 'save') return;
-  const vals = Object.fromEntries(['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes'].map(k => [k, form[k].value.trim()]));
+  const vals = Object.fromEntries(['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes', 'details', 'source'].map(k => [k, form[k].value.trim()]));
   vals.blocker = form.blocker.checked ? 'yes' : '';
   const id = editing ? editing.id : 't' + Date.now().toString(36);
   save({ ...(editing || {}), ...vals, id });
