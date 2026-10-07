@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Grant Tracker | W. Jeff Cunningham</title>
+<link rel="icon" type="image/png" href="/favicon-tab-transparent-20260917.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-tab-transparent-20260917-16.png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20260917-2">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* Tracker-specific additions on top of the site stylesheet. */
+  :root {
+    --surface: #fff; --tint: #f4f4f2;
+    --s-bg: #e6efe1; --s-ink: #2f5a22;
+    --m-bg: #f6ecc9; --m-ink: #6b4f00;
+    --l-bg: #f4d9d5; --l-ink: #8a2a1e;
+    --over: #b3261e; --soon: #8a5a00; --ok: #2f6f3a; --accent: #171717;
+    --sans: Arial, Helvetica, sans-serif;
+  }
+  body { max-width: 1120px; }
+  main.tracker { padding-top: 32px; }
+  .tracker h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 6px; }
+  .lede { color: var(--quiet); margin: 0; }
+  .meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 10px; font: 13px var(--sans); color: var(--quiet); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: var(--quiet); margin-right: 5px; }
+  .dot.live { background: var(--ok); } .dot.err { background: var(--over); }
+  .spacer { flex: 1; }
+
+  .deadlines { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; margin: 24px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+  .dl { padding: 10px 14px 10px 0; font-family: var(--sans); }
+  .dl .k { font-size: 11px; color: var(--quiet); text-transform: uppercase; letter-spacing: .05em; }
+  .dl .v { font-weight: 700; margin-top: 2px; font-size: 15px; }
+  .dl .c { font-size: 13px; color: var(--quiet); }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: end; padding: 0 0 14px; margin-bottom: 10px; border-bottom: 1px solid var(--line); font-family: var(--sans); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field > span { font: 11px var(--sans); color: var(--quiet); text-transform: uppercase; letter-spacing: .05em; }
+  select, input[type=text], input[type=date], textarea {
+    font: 14px var(--sans); color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+    border-radius: 0; padding: 6px 8px; min-height: 34px; }
+  textarea { min-height: 80px; resize: vertical; width: 100%; font-family: Georgia, serif; font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 5px 10px; font: 13px var(--sans); cursor: pointer; }
+  .chip:hover { border-color: var(--ink); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  label.check { display: flex; gap: 6px; align-items: center; font: 14px var(--sans); color: var(--ink); min-height: 34px; }
+  .btn { font: 700 14px var(--sans); padding: 7px 12px; cursor: pointer; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+  .btn:hover { background: #333; }
+  .btn.ghost { background: transparent; color: var(--ink); font-weight: 400; }
+  .btn.ghost:hover { background: var(--tint); }
+  .btn.danger { background: transparent; color: var(--over); border-color: var(--over); font-weight: 400; }
+
+  .summary { display: flex; gap: 16px; flex-wrap: wrap; font: 13px var(--sans); color: var(--quiet); margin: 0 0 10px; }
+  .summary b { color: var(--ink); }
+
+  .tbl { width: 100%; border-collapse: collapse; }
+  .tbl th { text-align: left; font: 700 11px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--quiet);
+    padding: 8px 8px 8px 0; border-bottom: 1px solid var(--ink); white-space: nowrap; }
+  .tbl th button { all: unset; cursor: pointer; }
+  .tbl th button:hover { color: var(--ink); }
+  .tbl th .arrow { margin-left: 4px; }
+  .tbl td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; font: 14px var(--sans); }
+  .tbl td:first-child { font-family: Georgia, "Times New Roman", serif; font-size: 16px; padding-left: 8px; }
+  .tbl tr.group td { font: 700 13px var(--sans); padding: 18px 0 6px; border-bottom: 1px solid var(--ink); }
+  .tbl tr.task:hover td { background: var(--tint); }
+  tr.st-done td .title { color: var(--quiet); text-decoration: line-through; }
+  tr.st-blocked td:first-child { box-shadow: inset 3px 0 0 var(--over); }
+  tr.st-doing td:first-child { box-shadow: inset 3px 0 0 var(--ink); }
+  .needs { color: var(--quiet); font: 13px var(--sans); margin-top: 3px; }
+  .notes { color: var(--ink); font-size: 14px; margin-top: 5px; white-space: pre-wrap; font-style: italic; }
+  .flag { font: 700 10px var(--sans); color: var(--over); border: 1px solid var(--over); padding: 0 4px; margin-left: 6px; vertical-align: 2px; letter-spacing: .04em; }
+  .size { display: inline-block; min-width: 24px; text-align: center; font: 700 12px var(--sans); padding: 2px 6px; }
+  .size.S { background: var(--s-bg); color: var(--s-ink); }
+  .size.M { background: var(--m-bg); color: var(--m-ink); }
+  .size.L { background: var(--l-bg); color: var(--l-ink); }
+  .grant { font: 12px var(--sans); border: 1px solid var(--line); padding: 1px 5px; white-space: nowrap; }
+  .due { white-space: nowrap; }
+  .due .rel { display: block; font-size: 12px; color: var(--quiet); }
+  .due.over .rel { color: var(--over); font-weight: 700; }
+  .due.soon .rel { color: var(--soon); font-weight: 700; }
+  td select.status { min-height: 30px; padding: 3px 6px; font-size: 13px; }
+  .edit { all: unset; cursor: pointer; font: 13px var(--sans); text-decoration: underline; text-underline-offset: .14em; }
+  .empty { padding: 30px; text-align: center; color: var(--quiet); }
+
+  dialog { border: 1px solid var(--ink); border-radius: 0; background: var(--surface); color: var(--ink);
+    width: min(580px, calc(100vw - 32px)); padding: 20px; }
+  dialog::backdrop { background: rgba(0,0,0,.35); }
+  dialog h2 { margin: 0 0 14px; font-size: 1.2rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 .full { grid-column: 1 / -1; }
+  .grid2 input, .grid2 select { width: 100%; }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+
+  .banner { border: 1px solid var(--ink); padding: 10px 12px; font: 14px var(--sans); margin-bottom: 14px; }
+  .banner button { margin-left: 8px; }
+
+  @media (max-width: 760px) {
+    .tbl thead { display: none; }
+    .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
+    .tbl tr.task { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    .tbl tr.task td { border: 0; padding: 3px 0; }
+    .tbl tr.task td:first-child { padding-left: 8px; }
+    .tbl td[data-label]::before { content: attr(data-label) ": "; color: var(--quiet); font-size: 12px; }
+    .tbl tr.task td.c-size, .tbl tr.task td.c-grant, .tbl tr.task td.c-owner { display: inline-block; width: auto; margin-right: 10px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <a class="site-name" href="../">W. Jeff Cunningham</a>
+</header>
+<main class="tracker">
+  <div>
+    <h1>Grant Tracker</h1>
+    <p class="lede">Bill Cunningham archive · BCHDP 2027–28 and Canada Council Artistic Creation</p>
+    <div class="meta">
+      <span id="syncState"><span class="dot"></span>Loading…</span>
+      <span class="spacer"></span>
+      <label class="check">I am
+        <select id="me"></select>
+      </label>
+      <button class="btn ghost" id="refresh" type="button">Refresh</button>
+    </div>
+  </div>
+
+  <section class="deadlines" aria-label="Key dates">
+    <div class="dl"><div class="k">BCHDP internal</div><div class="v">Thu Dec 3</div><div class="c" data-count="2026-12-03"></div></div>
+    <div class="dl"><div class="k">BCHDP final</div><div class="v">Mon Dec 7, 9:00 am</div><div class="c" data-count="2026-12-07"></div></div>
+    <div class="dl"><div class="k">CCA target</div><div class="v">Week of Dec 14</div><div class="c" data-count="2026-12-16"></div></div>
+    <div class="dl"><div class="k">BCHDP funding confirmed</div><div class="v">Jan 30, 2027</div><div class="c" data-count="2027-01-30"></div></div>
+  </section>
+
+  <div id="banner"></div>
+
+  <section class="controls" aria-label="Sort and filter">
+    <div class="field"><span>Sort by</span>
+      <select id="sort">
+        <option value="pressing">Most pressing</option>
+        <option value="person">Person</option>
+        <option value="difficulty">Difficulty (L → S)</option>
+        <option value="due">Due date</option>
+        <option value="grant">Grant</option>
+      </select>
+    </div>
+    <div class="field"><span>Person</span><div class="chips" id="personChips"></div></div>
+    <div class="field"><span>Grant</span>
+      <select id="grantFilter"><option value="">All</option><option>BCHDP</option><option>CCA</option><option>Both</option></select>
+    </div>
+    <div class="field"><span>Size</span>
+      <select id="sizeFilter"><option value="">All</option><option value="L">L</option><option value="M">M</option><option value="S">S</option></select>
+    </div>
+    <label class="check"><input type="checkbox" id="hideDone" checked> Hide done</label>
+    <span class="spacer"></span>
+    <button class="btn" id="addBtn" type="button">+ Add task</button>
+  </section>
+
+  <div class="summary" id="summary"></div>
+
+  <table class="tbl">
+    <thead><tr>
+      <th><button data-sort="pressing">Task</button></th>
+      <th><button data-sort="person">Owner</button></th>
+      <th><button data-sort="difficulty">Size</button></th>
+      <th><button data-sort="grant">Grant</button></th>
+      <th><button data-sort="due">Due</button></th>
+      <th>Status</th>
+      <th></th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <h2 id="dlgTitle">Edit task</h2>
+    <div class="grid2">
+      <label class="field full"><span>Task</span><input type="text" name="title" required></label>
+      <label class="field"><span>Owner</span><input type="text" name="owner" list="owners" placeholder="e.g. Jeff / Darryl"></label>
+      <label class="field"><span>Due</span><input type="date" name="due"></label>
+      <label class="field"><span>Size</span><select name="size"><option>S</option><option>M</option><option>L</option></select></label>
+      <label class="field"><span>Grant</span><select name="grant"><option>BCHDP</option><option>CCA</option><option>Both</option></select></label>
+      <label class="field"><span>Status</span><select name="status"></select></label>
+      <label class="field"><span>Category</span><select name="category"><option>Ask</option><option>Writing</option><option>Budget</option><option>Partner</option><option>Admin</option><option>Review</option></select></label>
+      <label class="check full"><input type="checkbox" name="blocker"> Blocker (other tasks wait on this)</label>
+      <label class="field full"><span>Needs / unblocks</span><input type="text" name="needs"></label>
+      <label class="field full"><span>Notes</span><textarea name="notes"></textarea></label>
+    </div>
+    <div class="meta" id="dlgMeta"></div>
+    <div class="actions">
+      <button class="btn" value="save" type="submit">Save</button>
+      <button class="btn ghost" value="cancel" type="submit" formnovalidate>Cancel</button>
+      <span class="spacer"></span>
+      <button class="btn danger" id="delBtn" type="button">Delete</button>
+    </div>
+  </form>
+</dialog>
+<datalist id="owners"></datalist>
+
+<script>
+/* ===== Settings ===== */
+// Paste your Apps Script web-app URL (ends in /exec) between the quotes.
+// Leave empty to run in preview mode (changes stay in this browser only).
+const API_URL = '';
+const PEOPLE = ['Jeff', 'William', 'Darryl', 'Everyone'];
+const STATUSES = [['todo', 'To do'], ['doing', 'In progress'], ['blocked', 'Blocked'], ['done', 'Done']];
+
+/* ===== Starter tasks (loaded into an empty sheet once) ===== */
+const SEED = [
+  // Week of Oct 6
+  ['t01','Get written quote from scanning technician: hourly rate, frames/hour, equipment, file specs','BCHDP','Ask','Darryl','L','2026-10-09',1,'Drives 2.05, 2.06, 3.05 and most of the budget'],
+  ['t02','Confirm applicant cash amount (min. 50% of request) and who provides it','BCHDP','Budget','Everyone','M','2026-10-09',1,'Income table; must be confirmed by Jan 30, 2027'],
+  ['t03','Email digisupport@bceln.ca re: Arca hosting, cost and metadata guidance','BCHDP','Ask','Jeff','S','2026-10-09',0,'Feeds 4.02 / 4.04 and hosting cost line'],
+  ['t04','Ask contact.bchdp@ubc.ca: recommended submit-by date? Results date?','Both','Ask','Jeff','S','2026-10-09',0,'Results date sets the CCA start date'],
+  ['t05','Confirm incorporation / legal name and business number timeline','BCHDP','Admin','William','M','2026-10-09',1,'Applicant name, signatory, §1'],
+  ['t06','Screenshot remaining CCA screens: Expenses tab, Last details, Support material, Declaration','CCA','Admin','Jeff','S','2026-10-09',0,''],
+  // Polygon
+  ['t07','Draft Polygon Gallery approach letter (major partner; get it right)','CCA','Partner','Jeff','L','2026-10-14',1,'Opens meeting, in-kind and support letter'],
+  ['t08','Team review of Polygon letter','CCA','Review','Everyone','M','2026-10-16',1,'After draft'],
+  ['t09','Send Polygon letter and request a meeting','CCA','Partner','Jeff','S','2026-10-19',1,'After team review'],
+  // Oct 13–23
+  ['t10','Finish selection of packets/negatives to digitize; final counts and date ranges','BCHDP','Admin','Darryl','L','2026-10-23',1,'Must be complete before submission; feeds 3.01, 2.05'],
+  ['t11','Postmedia approach for letter re: staff-era (1944–73) negatives','BCHDP','Ask','William','M','2026-10-23',1,'With older family member; feeds 3.02'],
+  ['t12','Draft BCHDP 2.02 Significance and impact','BCHDP','Writing','Jeff','L','2026-10-23',0,''],
+  ['t13','Draft BCHDP 3.01 Inventory and anticipated output','BCHDP','Writing','Jeff','L','2026-10-23',0,'Needs selection (Darryl)'],
+  ['t14','Pitch exhibit to BC Sports Hall of Fame (Jason); request letter','CCA','Partner','Jeff / Darryl','M','2026-10-23',0,'Partner letters; exhibition in-kind'],
+  ['t15','Reset CCA dates, one-sentence summary (add dates) and activity types','CCA','Writing','Jeff','S','2026-10-23',0,'Needs BCHDP results date'],
+  // Oct 26–Nov 6
+  ['t16','Polygon meeting','CCA','Partner','Jeff','M','2026-11-06',0,'Partner Y/N; in-kind amounts; letter'],
+  ['t17','Draft BCHDP 2.01 Summary (150 words) and 2.03 Audience','BCHDP','Writing','Jeff','M','2026-11-06',0,''],
+  ['t18','Draft BCHDP 3.02 Copyright and privacy','BCHDP','Writing','Jeff / William','M','2026-11-06',0,'Postmedia status'],
+  ['t19','Draft BCHDP 3.03 Standards and 3.04 QC','BCHDP','Writing','Jeff','M','2026-11-06',0,'Technician specs'],
+  ['t20','Draft BCHDP 4.01–4.04 Repository and metadata','BCHDP','Writing','Jeff','M','2026-11-06',0,'Arca reply'],
+  ['t21','Draft BCHDP 5.01 Preservation and 6.01 Promotion','BCHDP','Writing','Jeff','M','2026-11-06',0,''],
+  ['t22','Draft CCA Activity Description (7,000 characters)','CCA','Writing','Jeff','L','2026-11-06',0,'Builds on BCHDP 2.02; Artistic + Impact scores'],
+  // BCHDP budget inputs
+  ['t23','Metadata / description labour: who and how many hours','BCHDP','Budget','Jeff / Darryl','M','2026-11-13',0,''],
+  ['t24','Equipment and software list with costs (nothing bought before applying)','BCHDP','Budget','Darryl','M','2026-11-13',0,''],
+  ['t25','Living wage rate for paid roles (Living Wage BC, Metro Vancouver)','BCHDP','Budget','Jeff','S','2026-11-13',0,''],
+  ['t26','Volunteer in-kind hours at $16.75/hr','BCHDP','Budget','Jeff','S','2026-11-13',0,''],
+  ['t27','Ongoing preservation storage cost','BCHDP','Budget','Darryl','S','2026-11-13',0,''],
+  ['t28','Handling supplies (sleeves, gloves)','BCHDP','Budget','Darryl','S','2026-11-13',0,''],
+  ['t29','Project management line (5% cap)','BCHDP','Budget','Jeff','S','2026-11-13',0,''],
+  ['t30','Request amount and total project cost ($15k cap)','BCHDP','Budget','Jeff','S','2026-11-13',0,''],
+  // Nov 9–20
+  ['t31','Build BCHDP income and expense tables (no exhibition / promotion lines)','BCHDP','Budget','Jeff','M','2026-11-20',0,'Quote + cash confirmation'],
+  ['t32','Draft BCHDP 7.01 Budget explanation','BCHDP','Writing','Jeff','M','2026-11-20',0,''],
+  ['t33','Draft BCHDP 2.04 Resources, 2.05 Schedule (hours), 2.06 Roles','BCHDP','Writing','Jeff','M','2026-11-20',0,'Quote; selection counts'],
+  ['t34','Fill BCHDP §1 fields and Generative AI disclosure','BCHDP','Writing','Jeff','S','2026-11-20',0,'Incorporation'],
+  ['t35','Support letters / MOU from any partner named in 2.06','BCHDP','Partner','Jeff / Darryl','M','2026-11-20',0,'Only if a partner is named'],
+  ['t36','Draft CCA Capacity and experience (3,500 characters)','CCA','Writing','Jeff','L','2026-11-20',0,'Partner confirmations'],
+  // Nov 23–27
+  ['t37','Family read-through of BCHDP; final edits','BCHDP','Review','Everyone','M','2026-11-27',0,''],
+  ['t38','Authorized signature on BCHDP affirmation','BCHDP','Admin','William','S','2026-11-27',0,'Signatory depends on incorporation'],
+  ['t39','Draft CCA Activity timeline (3,500 characters)','CCA','Writing','Jeff','L','2026-11-27',0,'Dates reset; BCHDP schedule'],
+  // Submit BCHDP
+  ['t40','Assemble and email BCHDP application to bc.historydigitization@ubc.ca','BCHDP','Admin','Jeff','S','2026-12-03',1,'Fri Dec 4 is buffer; deadline Mon Dec 7, 9 am'],
+  // CCA budget + finish
+  ['t41','CCA request amount (max $75,000)','CCA','Budget','Jeff','S','2026-12-09',0,''],
+  ['t42','Artist fee for Jeff at a fair rate (check CARFAC schedule)','CCA','Budget','Jeff','M','2026-12-09',0,''],
+  ['t43','Fees for others: technician, printer, designer, installers','CCA','Budget','Jeff / Darryl','M','2026-12-09',0,''],
+  ['t44','Exhibition production quotes: printing, framing, mounting','CCA','Budget','Darryl','M','2026-12-09',0,''],
+  ['t45','Exhibition partners’ in-kind amounts (Polygon / BCSHOF)','CCA','Budget','Jeff','M','2026-12-09',0,''],
+  ['t46','Cost split check: nothing funded by both BCHDP and CCA','Both','Budget','Jeff','S','2026-12-09',0,''],
+  ['t47','CCA budget: revenue and expenses tabs with notes; balance check','CCA','Budget','Jeff','M','2026-12-11',0,'BCHDP budget final'],
+  ['t48','CCA support material (min. 1 example of artistic work)','CCA','Admin','Jeff / Darryl','M','2026-12-11',0,'Sample scans from selection'],
+  ['t49','CCA RECAP Y/N, partners Y/N, last details, declaration','CCA','Admin','Jeff','S','2026-12-14',0,''],
+  ['t50','CCA family read-through; submit in portal','CCA','Review','Jeff / Everyone','S','2026-12-16',1,'Target week of Dec 14'],
+].map(([id,title,grant,category,owner,size,due,blocker,needs]) =>
+  ({id,title,grant,category,owner,size,due,status:'todo',blocker:blocker?'yes':'',needs,notes:''}));
+
+/* ===== State ===== */
+let tasks = [];
+let live = false;
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('gt.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('gt.' + k, JSON.stringify(v)); } catch {} }
+};
+const view = store.get('view', { sort: 'pressing', people: [], grant: '', size: '', hideDone: true });
+
+/* ===== Data layer ===== */
+async function api(body) {
+  const opts = body
+    ? { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) }
+    : {};
+  const res = await fetch(API_URL, opts);
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || 'Request failed');
+  return data.tasks;
+}
+function setSync(kind, text) {
+  $('#syncState').innerHTML = `<span class="dot ${kind}"></span>${text}`;
+}
+async function load() {
+  if (!API_URL) {
+    tasks = store.get('preview', null) || SEED.map(t => ({ ...t }));
+    setSync('', 'Preview mode: changes stay in this browser');
+    render(); return;
+  }
+  try {
+    setSync('', 'Syncing…');
+    tasks = await api();
+    live = true;
+    setSync('live', 'Shared · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
+    $('#banner').innerHTML = tasks.length ? '' :
+      `<div class="banner">The shared sheet is empty. <button class="btn" id="seedBtn" type="button">Load the starter tasks</button></div>`;
+    const sb = $('#seedBtn');
+    if (sb) sb.onclick = async () => { sb.disabled = true; tasks = await api({ action: 'seed', tasks: SEED }); load(); };
+  } catch (e) {
+    setSync('err', 'Couldn’t reach the shared sheet: ' + e.message);
+  }
+  render();
+}
+async function save(task) {
+  task.updatedBy = $('#me').value || '';
+  task.updated = new Date().toISOString();
+  const i = tasks.findIndex(t => t.id === task.id);
+  if (i >= 0) tasks[i] = task; else tasks.push(task);
+  render();
+  if (!API_URL) { store.set('preview', tasks); return; }
+  try { tasks = await api({ action: 'upsert', task }); setSync('live', 'Saved'); render(); }
+  catch (e) { setSync('err', 'Save failed: ' + e.message + '. Refresh and try again.'); }
+}
+async function remove(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  render();
+  if (!API_URL) { store.set('preview', tasks); return; }
+  try { tasks = await api({ action: 'delete', id }); render(); }
+  catch (e) { setSync('err', 'Delete failed: ' + e.message); }
+}
+
+/* ===== Helpers ===== */
+const SIZE_RANK = { L: 3, M: 2, S: 1 };
+const STATUS_RANK = { blocked: 0, doing: 1, todo: 2, done: 9 };
+const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+const parseDate = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const daysUntil = s => { const d = parseDate(s); return d ? Math.round((d - today()) / 864e5) : 9999; };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const firstOwner = o => (o || 'Unassigned').split('/')[0].trim();
+const ownsTask = (t, person) => {
+  const names = (t.owner || '').split('/').map(s => s.trim().toLowerCase());
+  return names.includes(person.toLowerCase()) || (person !== 'Everyone' && names.includes('everyone'));
+};
+function relDue(t) {
+  if (!t.due) return { cls: '', text: '' };
+  const n = daysUntil(t.due);
+  if (t.status === 'done') return { cls: '', text: '' };
+  if (n < 0) return { cls: 'over', text: `${-n} day${n === -1 ? '' : 's'} overdue` };
+  if (n === 0) return { cls: 'soon', text: 'today' };
+  if (n <= 7) return { cls: 'soon', text: `in ${n} day${n === 1 ? '' : 's'}` };
+  return { cls: '', text: `in ${n} days` };
+}
+const fmtDate = s => { const d = parseDate(s); return d ? d.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }) : '—'; };
+
+// Lower = more pressing: overdue/soonest first, blockers ahead within the same date, bigger jobs first.
+const pressing = t => [
+  t.status === 'done' ? 1 : 0,
+  daysUntil(t.due),
+  t.blocker ? 0 : 1,
+  STATUS_RANK[t.status] ?? 5,
+  -(SIZE_RANK[t.size] || 0),
+];
+const cmp = (a, b) => { for (let i = 0; i < a.length; i++) { if (a[i] < b[i]) return -1; if (a[i] > b[i]) return 1; } return 0; };
+const SORTS = {
+  pressing: (a, b) => cmp(pressing(a), pressing(b)),
+  due: (a, b) => cmp([a.status === 'done', daysUntil(a.due)], [b.status === 'done', daysUntil(b.due)]),
+  difficulty: (a, b) => cmp([a.status === 'done', -(SIZE_RANK[a.size] || 0), ...pressing(a)], [b.status === 'done', -(SIZE_RANK[b.size] || 0), ...pressing(b)]),
+  person: (a, b) => firstOwner(a.owner).localeCompare(firstOwner(b.owner)) || cmp(pressing(a), pressing(b)),
+  grant: (a, b) => (a.grant || '').localeCompare(b.grant || '') || cmp(pressing(a), pressing(b)),
+};
+const GROUP = {
+  person: t => firstOwner(t.owner),
+  grant: t => t.grant || 'Other',
+  difficulty: t => ({ L: 'Large', M: 'Medium', S: 'Small' }[t.size] || 'Unsized'),
+};
+
+/* ===== Render ===== */
+function render() {
+  const list = tasks
+    .filter(t => !view.hideDone || t.status !== 'done')
+    .filter(t => !view.grant || t.grant === view.grant)
+    .filter(t => !view.size || t.size === view.size)
+    .filter(t => !view.people.length || view.people.some(p => ownsTask(t, p)))
+    .sort(SORTS[view.sort]);
+
+  const open = tasks.filter(t => t.status !== 'done');
+  const overdue = open.filter(t => t.due && daysUntil(t.due) < 0).length;
+  const week = open.filter(t => t.due && daysUntil(t.due) >= 0 && daysUntil(t.due) <= 7).length;
+  const blocked = open.filter(t => t.status === 'blocked').length;
+  const done = tasks.length - open.length;
+  $('#summary').innerHTML =
+    `<span><b>${open.length}</b> open</span><span><b>${overdue}</b> overdue</span>` +
+    `<span><b>${week}</b> due in the next 7 days</span><span><b>${blocked}</b> blocked</span>` +
+    `<span><b>${done}</b> done</span><span>Showing ${list.length}</span>`;
+
+  const statusOpts = cur => STATUSES.map(([v, l]) => `<option value="${v}"${v === cur ? ' selected' : ''}>${l}</option>`).join('');
+  let html = '', lastGroup = null;
+  const groupFn = GROUP[view.sort];
+  for (const t of list) {
+    if (groupFn) {
+      const g = groupFn(t);
+      if (g !== lastGroup) { html += `<tr class="group"><td colspan="7">${esc(g)}</td></tr>`; lastGroup = g; }
+    }
+    const r = relDue(t);
+    html += `<tr class="task st-${esc(t.status)}" data-id="${esc(t.id)}">
+      <td><div class="title">${esc(t.title)}${t.blocker && t.status !== 'done' ? '<span class="flag">BLOCKER</span>' : ''}</div>
+        ${t.needs ? `<div class="needs">${esc(t.needs)}</div>` : ''}
+        ${t.notes ? `<div class="notes">${esc(t.notes)}</div>` : ''}</td>
+      <td class="c-owner" data-label="Owner">${esc(t.owner || '—')}</td>
+      <td class="c-size"><span class="size ${esc(t.size)}">${esc(t.size || '?')}</span></td>
+      <td class="c-grant"><span class="grant">${esc(t.grant)}</span></td>
+      <td class="due ${r.cls}" data-label="Due">${fmtDate(t.due)}<span class="rel">${r.text}</span></td>
+      <td><select class="status" aria-label="Status">${statusOpts(t.status)}</select></td>
+      <td><button class="edit" type="button">Edit</button></td>
+    </tr>`;
+  }
+  $('#rows').innerHTML = html || `<tr><td colspan="7" class="empty">No tasks match these filters.</td></tr>`;
+
+  document.querySelectorAll('.tbl th button').forEach(b => {
+    b.querySelector('.arrow')?.remove();
+    if (b.dataset.sort === view.sort) b.insertAdjacentHTML('beforeend', '<span class="arrow">▾</span>');
+  });
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const n = daysUntil(el.dataset.count);
+    el.textContent = n > 0 ? `${n} days away` : n === 0 ? 'Today' : 'Passed';
+  });
+  const owners = [...new Set(tasks.map(t => t.owner).filter(Boolean))].sort();
+  $('#owners').innerHTML = owners.map(o => `<option value="${esc(o)}">`).join('');
+}
+
+/* ===== Controls ===== */
+function persist() { store.set('view', view); render(); }
+$('#personChips').innerHTML = PEOPLE.map(p => `<button class="chip" type="button" data-p="${p}" aria-pressed="${view.people.includes(p)}">${p}</button>`).join('');
+$('#personChips').onclick = e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const p = b.dataset.p;
+  view.people = view.people.includes(p) ? view.people.filter(x => x !== p) : [...view.people, p];
+  b.setAttribute('aria-pressed', view.people.includes(p));
+  persist();
+};
+$('#sort').value = view.sort; $('#sort').onchange = e => { view.sort = e.target.value; persist(); };
+$('#grantFilter').value = view.grant; $('#grantFilter').onchange = e => { view.grant = e.target.value; persist(); };
+$('#sizeFilter').value = view.size; $('#sizeFilter').onchange = e => { view.size = e.target.value; persist(); };
+$('#hideDone').checked = view.hideDone; $('#hideDone').onchange = e => { view.hideDone = e.target.checked; persist(); };
+document.querySelectorAll('.tbl th button').forEach(b => b.onclick = () => { view.sort = b.dataset.sort; $('#sort').value = view.sort; persist(); });
+$('#refresh').onclick = load;
+
+$('#me').innerHTML = '<option value="">—</option>' + PEOPLE.filter(p => p !== 'Everyone').map(p => `<option>${p}</option>`).join('');
+$('#me').value = store.get('me', '');
+$('#me').onchange = e => store.set('me', e.target.value);
+
+$('#rows').addEventListener('change', e => {
+  if (!e.target.matches('select.status')) return;
+  const id = e.target.closest('tr').dataset.id;
+  const t = tasks.find(x => x.id === id);
+  save({ ...t, status: e.target.value });
+});
+$('#rows').addEventListener('click', e => {
+  if (!e.target.matches('.edit')) return;
+  openDialog(tasks.find(x => x.id === e.target.closest('tr').dataset.id));
+});
+
+/* ===== Dialog ===== */
+const dlg = $('#dlg'), form = $('#form');
+form.status.innerHTML = STATUSES.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+let editing = null;
+function openDialog(t) {
+  editing = t || null;
+  dlg.returnValue = '';
+  const d = t || { title: '', owner: $('#me').value || '', due: '', size: 'M', grant: 'BCHDP', status: 'todo', category: 'Writing', blocker: '', needs: '', notes: '' };
+  $('#dlgTitle').textContent = t ? 'Edit task' : 'Add task';
+  for (const k of ['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes']) form[k].value = d[k] || '';
+  form.blocker.checked = !!d.blocker;
+  $('#delBtn').style.display = t ? '' : 'none';
+  $('#dlgMeta').textContent = t && t.updated ? `Last changed ${new Date(t.updated).toLocaleString()}${t.updatedBy ? ' by ' + t.updatedBy : ''}` : '';
+  dlg.showModal();
+}
+$('#addBtn').onclick = () => openDialog(null);
+dlg.addEventListener('close', () => {
+  if (dlg.returnValue !== 'save') return;
+  const vals = Object.fromEntries(['title', 'owner', 'due', 'size', 'grant', 'status', 'category', 'needs', 'notes'].map(k => [k, form[k].value.trim()]));
+  vals.blocker = form.blocker.checked ? 'yes' : '';
+  const id = editing ? editing.id : 't' + Date.now().toString(36);
+  save({ ...(editing || {}), ...vals, id });
+});
+$('#delBtn').onclick = () => {
+  if (editing && confirm('Delete this task for everyone?')) { dlg.close('cancel'); remove(editing.id); }
+};
+
+load();
+setInterval(() => { if (API_URL && !dlg.open && document.visibilityState === 'visible') load(); }, 60000);
+</script>
+</body>
+</html>
